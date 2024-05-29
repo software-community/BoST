@@ -2,6 +2,7 @@ import NextAuth, { AuthError } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import connectMongoDB from "./libs/db";
 import Admin from "./models/admin";
+import { NextResponse } from "next/server";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -10,6 +11,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
+  pages: {
+    error: '/error'
+},
   callbacks: {
     signIn: async ({ user, account }) => {
       if (account.provider == "google") {
@@ -17,8 +21,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const { email, name, image, id } = user;
           await connectMongoDB();
           const alreadyUserexists = await Admin.findOne({ email });
-          if (!alreadyUserexists) await Admin.create({ name, email, image, googleId: id });
-          return true;
+          if (!alreadyUserexists) return false;
+          else return NextResponse.json({message:"welcome back"})
         } catch (error) {
 
           throw new AuthError("Error while creating user")

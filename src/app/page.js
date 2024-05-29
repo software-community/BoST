@@ -1,7 +1,14 @@
-import Image from "next/image";
+import { signIn } from "@/auth.js"
 
 export default function Home() {
   return (
-   <div>Hello world</div>
+    <form
+      action={async () => {
+        "use server"
+        await signIn("google")
+      }}
+    >
+      <button className="border border-black" type="submit">Signin with Google</button>
+    </form>
   );
 }
