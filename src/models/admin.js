@@ -4,6 +4,7 @@ const adminSchema=new Schema(
     {
         email:String,
         googleId:String,
+        name:String,
         image:String,
     }
 );

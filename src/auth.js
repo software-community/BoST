@@ -12,8 +12,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    error: '/error'
-},
+    error: "/error",
+  },
   callbacks: {
     signIn: async ({ user, account }) => {
       if (account.provider == "google") {
@@ -22,10 +22,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           await connectMongoDB();
           const alreadyUserexists = await Admin.findOne({ email });
           if (!alreadyUserexists) return false;
-          else return NextResponse.json({message:"welcome back"})
+          else return NextResponse.json({ message: "welcome back" });
         } catch (error) {
-
-          throw new AuthError("Error while creating user")
+          throw new AuthError("Error while creating user");
         }
       }
     },
