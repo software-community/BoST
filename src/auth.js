@@ -1,6 +1,6 @@
 import NextAuth, { AuthError } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import connectMongoDB from "./libs/db";
+import connectMongoDB from "./lib/db";
 import Admin from "./models/admin";
 import { NextResponse } from "next/server";
 

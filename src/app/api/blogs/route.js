@@ -1,4 +1,4 @@
-import connectMongoDB from "@/libs/db";
+import connectMongoDB from "@/lib/db";
 import Blog from "@/models/blog";
 import { NextResponse } from "next/server";
 
@@ -37,3 +37,5 @@ export async function POST(request) {
     await Blog.findByIdAndDelete(id)
     return NextResponse.json({message:"Blog deleted"},{status:200})
   }
+
+  
