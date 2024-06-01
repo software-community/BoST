@@ -1,21 +1,9 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/lJwnQlHSEBA
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 "use client";
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
-import { useEffect } from "react";
 
-let session
-export default  function Navbar() {
-    
-
-   
-    
-    
+export default function Navbar() {
   return (
     <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
       <Sheet>
@@ -24,7 +12,6 @@ export default  function Navbar() {
             <MenuIcon className="h-6 w-6" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
-          
         </SheetTrigger>
         <SheetContent side="right">
           <Link className="mr-6 hidden lg:flex" href="#">
@@ -89,7 +76,7 @@ export default  function Navbar() {
           Contact
         </Link>
       </nav>
-      <MountainIcon className="lg:hidden"/>
+      <MountainIcon className="lg:hidden" />
     </header>
   );
 }
