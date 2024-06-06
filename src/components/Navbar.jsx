@@ -7,6 +7,7 @@ import { auth } from "@/auth";
 
 export default async function Navbar() {
   const session =await auth()
+  
   return (
     <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
       <Sheet>
