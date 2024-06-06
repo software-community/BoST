@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
-import { signIn} from "next-auth/react";
+import { handleLogin } from "@/app/actions";
+import { auth } from "@/auth";
 
-export default function Navbar({session}){
- 
-
+export default async function Navbar() {
+  const session =await auth()
   return (
     <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
       <Sheet>
@@ -25,17 +25,21 @@ export default function Navbar({session}){
             {session ? (
               <Link
                 className="flex w-full items-center py-2 text-lg font-semibold"
-                href="/Dashboard"
+                href="/dashboard"
               >
                 Dashboard
               </Link>
             ) : (
-              <Button
-                onClick={() => signIn()}
-                className="flex w-full items-center py-2 text-lg font-semibold"
-              >
-                Sign In
-              </Button>
+              <form action={handleLogin}>
+                <Button
+                  type="submit"
+                  value="google"
+                  name="action"
+                  className="flex w-full items-center py-2 text-lg font-semibold"
+                >
+                  Login
+                </Button>
+              </form>
             )}
           </div>
         </SheetContent>
@@ -45,22 +49,25 @@ export default function Navbar({session}){
         <span className="sr-only">Acme Inc</span>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
-        {session ?(
-              <Link
-                className="flex w-full items-center py-2 text-lg font-semibold"
-                href="/Dashboard"
-              >
-                Dashboard
-              </Link>
-            ) : (
-              <Button
-                onClick={() => signIn()}
-                className="flex w-full items-center py-2 text-lg font-semibold"
-              >
-                Sign In
-              </Button>
-            )
-        }
+        {session ? (
+          <Link
+            className="flex w-full items-center py-2 text-lg font-semibold"
+            href="/dashboard"
+          >
+            Dashboard
+          </Link>
+        ) : (
+          <form action={handleLogin}>
+            <Button
+              type="submit"
+              value="google"
+              name="action"
+              className="flex w-full items-center py-2 text-lg font-semibold"
+            >
+              Login
+            </Button>
+          </form>
+        )}
       </nav>
       <MountainIcon className="lg:hidden" />
     </header>

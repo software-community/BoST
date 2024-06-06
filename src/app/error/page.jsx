@@ -2,6 +2,8 @@
 
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { revalidatePath } from "next/cache";
+import Link from "next/link";
 
 const errorMap = {
   Configuration: (
@@ -25,13 +27,13 @@ export default function AuthErrorPage() {
       
       <div className=" hover:cursor-pointer font-normal text-gray-700 dark:text-gray-400">
         
-      <a className="underline" onClick={() => router.push("/api/auth/signin")}> {errorMap[error] || "Please contact us if this error persists."}
-      </a>
+      <Link className="underline"  href="/api/auth/signin"> {errorMap[error] || "Please contact us if this error persists."}
+      </Link>
       </div>
     
        
       <div className=" hover:cursor-pointer font-normal text-gray-700 dark:text-gray-400" >
-        <a className="underline" onClick={() => router.push("/")}>Go Back to Home</a>
+        <a href="/" className="underline" >Go Back to Home</a>
       </div>
 
       
