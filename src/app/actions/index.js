@@ -8,5 +8,5 @@ export async function handleLogin(formData) {
 }
 
 export async function handleLogout(){
-    await signOut({redirectTo:"/"})
+    await signOut()
 }

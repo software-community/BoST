@@ -5,9 +5,11 @@ import { redirect } from 'next/navigation'
 const page = async() => {
   const session=await auth()
 
-  if(!session)redirect("/api/auth/signin?callbackURL=/dashboard")
+  if(!session){
+    redirect("/")
+  }
   return (
-    <div>Welcome to Dashboard</div>
+    <div>Welcome to Dashboard {session?.user.name}</div>
   )
 }
 
