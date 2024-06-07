@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
 import { handleLogin } from "@/app/actions";
-import { auth } from "@/auth";
 
-export default async function Navbar() {
-  const session =await auth()
+
+export default  function Navbar({session}) {
+  
   
   return (
     <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
