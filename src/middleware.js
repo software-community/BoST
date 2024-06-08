@@ -4,7 +4,6 @@ export async function middleware(request) {
   const { nextUrl } = request;
   const session = await auth();
   const isAuthenticated = session?.user;
-  console.log(isAuthenticated, nextUrl.pathname);
   if (nextUrl.pathname.startsWith("/dashboard") && !isAuthenticated) {
     return NextResponse.redirect(new URL("/", request.url));
   }
