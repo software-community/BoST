@@ -1,12 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import NavDropdown from "./NavDropdown";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
-import { signIn} from "next-auth/react";
+import { handleLogin } from "@/app/actions";
 
-export default function Navbar({session}){
- 
-
+export default function Navbar({ session }) {
   return (
     <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
       <Sheet>
@@ -23,19 +22,29 @@ export default function Navbar({session}){
           </Link>
           <div className="grid gap-2 py-6">
             {session ? (
-              <Link
-                className="flex w-full items-center py-2 text-lg font-semibold"
-                href="/Dashboard"
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link
+                  className="flex w-full items-center py-1  border rounded-lg hover:bg-slate-400 transition-all px-2 border-black text-lg font-semibold"
+                  href="/dashboard"
+                >
+                  Dashboard
+                </Link>
+                <NavDropdown />
+              </>
             ) : (
-              <Button
-                onClick={() => signIn()}
-                className="flex w-full items-center py-2 text-lg font-semibold"
-              >
-                Sign In
-              </Button>
+              <>
+                <form action={handleLogin}>
+                  <Button
+                    type="submit"
+                    value="google"
+                    name="action"
+                    className="flex w-full items-center py-2 text-lg font-semibold"
+                  >
+                    Login
+                  </Button>
+                </form>
+                <NavDropdown />
+              </>
             )}
           </div>
         </SheetContent>
@@ -45,22 +54,33 @@ export default function Navbar({session}){
         <span className="sr-only">Acme Inc</span>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
-        {session ?(
-              <Link
-                className="flex w-full items-center py-2 text-lg font-semibold"
-                href="/Dashboard"
-              >
-                Dashboard
-              </Link>
-            ) : (
+        {session ? (
+          <>
+            <NavDropdown />
+
+            <Link
+              className="flex w-full border-2 hover:bg-slate-400 transition-all border-black items-center py-2  rounded-lg px-2 text-lg font-semibold"
+              href="/dashboard"
+            >
+              Dashboard
+            </Link>
+          </>
+        ) : (
+          <>
+            <NavDropdown />
+
+            <form action={handleLogin}>
               <Button
-                onClick={() => signIn()}
+                type="submit"
+                value="google"
+                name="action"
                 className="flex w-full items-center py-2 text-lg font-semibold"
               >
-                Sign In
+                Login
               </Button>
-            )
-        }
+            </form>
+          </>
+        )}
       </nav>
       <MountainIcon className="lg:hidden" />
     </header>
