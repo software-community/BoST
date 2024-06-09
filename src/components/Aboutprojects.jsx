@@ -6,22 +6,22 @@ const projects = {
         {
         title: "Project 1",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.",
-        image: "../home/person.jpeg",
+        image: "public/Home/person.jpg",
         },
         {
         title: "Project 2",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.",
-        image: "../home/person.jpeg",
+        image: "public/Home/person.jpg",
         },
         {
         title: "Project 3",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula yayyy.",
-        image: "../home/person.jpeg",
+        image: "public/Home/person.jpg",
         },
         {
         title: "Project 4",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.",
-        image: "../home/person.jpeg",
+        image: "public/Home/person.jpg",
         },
     ],
     };
@@ -39,7 +39,7 @@ const Aboutprojects = () => {
         </br>
         <br>
         </br>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="gap-20 md:gap-10 flex flex-row flex-wrap justify-center items-center w-full">
             {projects.projects.map((project, index) => (
                 <ProjectCard key = {index} title = {project.title} description = {project.description} image = {project.image} />
             ))}

@@ -7,22 +7,22 @@ const team = {
         {
         name: "John Doe",
         role: "CEO",
-        image: "./home/person.jpeg",
+        image: "public/Home/person.jpeg",
         },
         {
         name: "Jane Doe",
         role: "CTO",
-        image: "./home/person.jpeg",
+        image: "public/Home/person.jpeg",
         },
         {
         name: "Alice",
         role: "Developer",
-        image: "./home/person.jpeg",
+        image: "public/Home/person.jpeg",
         },
         {
         name: "Bob",
         role: "Designer",
-        image: "./home/person.jpeg",
+        image: "public/Home/person.jpeg",
         },
     ],
     };
@@ -41,7 +41,7 @@ export default function TeamPage() {
             </br>
             <br>
             </br>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 flex flex-row justify-center items-center">
+            <div className="gap-6 flex flex-row flex-wrap justify-center items-center w-full ">
                 {team.members.map((member, index) => (
                     <TeamMember key = {index} name = {member.name} role = {member.role} image = {member.image} />
                 ))}
