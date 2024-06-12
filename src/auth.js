@@ -17,17 +17,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     signIn: async ({ user, account }) => {
       if (account.provider == "google") {
-        // try {
-        //   const { email, name, image, id } = user;
-        //   await connectMongoDB();
-        //   const alreadyUserexists = await Admin.findOne({ email });
-        //   if (!alreadyUserexists) return false;
-        //   else return NextResponse.json({ message: "welcome back" });
-        // } catch (error) {
-        //   throw new AuthError("Error while creating user");
-        // }
-        console.log(user);
-        return NextResponse.json({ message: "welcome back" });
+        try {
+          const { email, name, image, id } = user;
+          // await connectMongoDB();
+          // const alreadyUserexists = await Admin.findOne({ email });
+          // if (!alreadyUserexists) return false;
+          // else return NextResponse.json({ message: "welcome back" });
+          return true;
+        } catch (error) {
+          throw new AuthError("Error while creating user");
+        }
       }
     },
   },
