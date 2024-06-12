@@ -19,14 +19,16 @@ const Gallery = () => {
 
     const containerStyle = {
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-        gridGap: '10px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(295px, 1fr))',
+        gridGap: '10px',
+        padding:'8px'
     };
 
     const imgStyle = {
         width: '100%',
         height: '300px',
-        borderRadius: '14px'
+        borderRadius: '14px',
+        objectFit: 'cover',
     };
 
     return (
