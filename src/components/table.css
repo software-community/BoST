@@ -1,0 +1,63 @@
+@media (max-width: 1100px) {
+  .table-auto
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .table-auto tr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    width:50% !important;
+    min-width: 300px !important;
+    
+  }
+  .table-auto td {
+    width: 80%;
+  }
+  .TableStyle {
+    display: none;
+  }
+  .title {
+    text-decoration: underline blue;
+    text-align: center !important;
+  }
+  .editButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  .slash {
+    display: none;
+  }
+  .tbody
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: left;
+  }
+  
+  /* specially for the teamPage styles */
+  .Image
+  {
+    display:inline;
+    margin-right: 1rem;
+    height:4rem;
+    width:4rem;
+  }
+  .MemberName
+  {
+    display:inline;
+    font-size: 1.2rem;
+  }
+}
