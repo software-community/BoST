@@ -64,4 +64,5 @@ const ColumnData = ["Team Member", "Email", "Club", "Position", "Edit / Delete"]
   )
 }
 
-export default page
+
+export default page;

@@ -28,9 +28,9 @@ export default function AuthErrorPage() {
       </div>
 
       <div className=" hover:cursor-pointer font-normal text-gray-700 dark:text-gray-400">
-        <a href="/" className="underline">
+        <Link href="/" className="underline">
           Go Back to Home
-        </a>
+        </Link>
       </div>
     </div>
   );
