@@ -1,5 +1,5 @@
 import React from 'react'
-import { handleLogout } from '@/app/actions'
+import { handleLogout } from '@/app/actions/authentication'
 import Navlinks from './Navlinks'
 const Sidenav = () => {
   return (
