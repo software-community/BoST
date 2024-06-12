@@ -1,7 +1,7 @@
 import NextAuth, { AuthError } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import connectMongoDB from "./lib/db";
-import Admin from "./models/admin";
+// import connectMongoDB from "./lib/db";
+// import Admin from "./models/admin";
 import { NextResponse } from "next/server";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

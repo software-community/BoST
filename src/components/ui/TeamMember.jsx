@@ -1,8 +1,8 @@
 export default function TeamMember({ name, role, image }) {
     return (
-        <div className="transform transition duration-300 hover:scale-110 rounded-lg shadow-lg lg:h-42 lg:w-70 gap-2 justify-around hover:shadow-xl bg-white p-2 ">
-        <img
-            className="w-24 h-24 rounded-full mb-4 justfiy-center mx-auto items-center"
+        <div className="text-black bg-slate-100 w-72 h-48 rounded-lg flex flex-col flex-none justify-center items-center transform transition duration-300 hover:scale-110">
+            <img
+            className="w-28 h-26 mb-4 rounded-lg justfiy-center mx-auto items-center"
             src="/Home/person.jpeg"
             alt={name}
         />

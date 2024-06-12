@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import NavDropdown from "./NavDropdown";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
-import { handleLogin } from "@/app/actions";
+import { handleLogin } from "@/app/actions/authentication";
 
 export default function Navbar({ session }) {
   return (
