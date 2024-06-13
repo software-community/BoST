@@ -1,5 +1,5 @@
 import React from "react";
-import TeamMember from "./ui/TeamMember";
+import TeamMember from "../ui/TeamMember";
 
 
 const team = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import ListItem from './ui/listItem';
+import ListItem from '../ui/listItem';
 
 const achievementsData = [
   {

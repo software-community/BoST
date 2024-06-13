@@ -1,12 +1,8 @@
 import React from 'react'
-import Form from '@/components/Team/create-form'
-
+import Form from '@/components/Project/create-form'
 const page = () => {
   return (
-    <>
     <Form/>
-    </>
-
   )
 }
 

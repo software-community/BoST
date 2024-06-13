@@ -1,6 +1,5 @@
 import React from 'react'
-import Project from '@/components/Project/createProject';
-import Table from '@/components/tableProjectPage'
+import Table from '@/components/Project/table';
 
 
 let columnData = ["Title", "Description", "Status", "Club", "Edit/Delete"];
@@ -51,7 +50,10 @@ let blogData = [
 
 const page = () => {
   return (
-    <Table colData={columnData} page="projects" data={blogData}></Table>
+    <div>
+      <h1 className="text-left  text-2xl font-bold">Project Details </h1>
+      <Table colData={columnData} page="projects" data={blogData}></Table>
+    </div>
   )
 }
 

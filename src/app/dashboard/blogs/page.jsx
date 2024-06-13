@@ -1,5 +1,4 @@
 import React from 'react'
-import Blog from '@/components/Blog/createBlog';
 
 const clubs = [
   { id: 1, name: "Chess Club" },
@@ -7,7 +6,7 @@ const clubs = [
   { id: 3, name: "Music Club" }
 ];
 
-import Table from '@/components/tableBlogPage'
+import Table from '@/components/Blog/table';
 
 const page = () => {
   let columnData = ["Title", "Body", "Author", "Club", "Edit/Delete"];
@@ -51,6 +50,7 @@ const page = () => {
 
   return (
     <div>
+       <h1 className="text-left  text-2xl font-bold">Blog Details </h1>
       <Table page="blogs" data={blogData} colData = {columnData}></Table>
     </div>
   )

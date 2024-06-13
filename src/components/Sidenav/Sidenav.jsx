@@ -11,7 +11,6 @@ const Sidenav = () => {
           type="submit"
           value="logout"
           name="action">
-            {/* <PowerIcon className="w-6" /> */}
            Logout
           </button>
         </form>

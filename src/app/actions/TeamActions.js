@@ -5,7 +5,6 @@ import TeamMember from "@/models/teamMember";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-
 const FormSchema = z.object({
   name: z.string().min(1, "Name is required."),
   position: z.string().min(1, "Position is required."),
@@ -16,6 +15,7 @@ const FormSchema = z.object({
 
 export async function createTeamMember(prevState, formData) {
   // Validate form using Zod
+  console.log(formData.get("name"));
   const validatedFields = FormSchema.safeParse({
     name: formData.get("name"),
     position: formData.get("position"),
@@ -93,4 +93,29 @@ export async function updateTeamMember(_id, prevState, formData) {
   // Revalidate the cache for the team members page and redirect the user.
   revalidatePath("/dashboard/team");
   redirect("/dashboard/team");
+}
+
+export async function deleteTeamMember(id) {
+  // Connect to the database
+  try {
+    await connectMongoDB();
+
+    // Attempt to delete the team member by their ID
+    const result = await TeamMember.findByIdAndDelete(id);
+
+    // Check if the team member was not found
+    if (!result) {
+      return {
+        message: "Team member not found.",
+      };
+    }
+  } catch (error) {
+    // If a database error occurs, return a more specific error
+    return {
+      message: "Database Error: Failed to delete team member.",
+    };
+  }
+
+  // Revalidate the cache for the team members page and redirect the user
+  revalidatePath("/dashboard/team");
 }

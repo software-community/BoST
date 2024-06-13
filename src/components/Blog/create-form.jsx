@@ -9,7 +9,7 @@ const clubs = [
   { id: 3, name: "SoftCom" }
 ];
 
-const Blogs = (dispatch) => {
+const Form = (dispatch) => {
   return (
     <form action={dispatch}>
       <div className='py-5'>
@@ -138,4 +138,4 @@ const Blogs = (dispatch) => {
   )
 }
 
-export default Blogs;
+export default Form;

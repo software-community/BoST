@@ -7,7 +7,7 @@ import { usePathname } from 'next/navigation';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'Home', href: '/' },
+  { name: 'Dashboard', href: '/dashboard' },
   {
     name: 'Projects',
     href: '/dashboard/projects',
@@ -15,6 +15,7 @@ const links = [
   },
   { name: 'Blogs', href: '/dashboard/blogs'},
   { name: 'Team', href: '/dashboard/team'},
+  { name: 'Home', href: '/'},
 ];
 
 export default function Navlinks() {

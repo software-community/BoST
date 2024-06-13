@@ -6,7 +6,6 @@ import { useFormState } from 'react-dom';
 export default function Form({memberDetails}) {
   const initialState = { message: null, errors: {} };
   const updateMemberWithId = updateTeamMember.bind(null, memberDetails._id);
-  console.log(memberDetails)
   const [state, dispatch] = useFormState(updateMemberWithId, initialState);
   const errors = state?.errors || {}; // Ensure errors is always an object
 

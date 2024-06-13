@@ -24,7 +24,7 @@ const developmentStatus = [
   { id: 3, name: "Completed" },
 ];
 
-const Project = (dispatch) => {
+const Form = (dispatch) => {
   const { register, handleSubmit, control } = useForm({defaultValues: {
     repoLinks: [{ value: "" }], // Initialize with one empty field
     teamMembers: [{ value: "" }] // Initialize with one empty field
@@ -342,4 +342,4 @@ const Project = (dispatch) => {
   );
 };
 
-export default Project;
+export default Form;

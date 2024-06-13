@@ -1,25 +1,57 @@
 import React from "react";
-import Image from "next/image";
-import { IconSearch } from "@tabler/icons-react"; // importing Icons from React Js
-import "./table.css"
-
+import "../table.css";
+import { IconSearch, IconPointFilled, IconCheck } from "@tabler/icons-react"; // importing Icons from React Js
+import Link from "next/link";
+import TruncateText from "../utils/truncateText";
+import { IconPlus } from "@tabler/icons-react";
 
 export default function Table(props) {
   let UserData = props.data;
   let header = props.colData;
 
+  const renderStatus = (status) => {
+    const lowerStatus = status.toLowerCase();
+    if (lowerStatus === "completed") {
+      return (
+        <>
+          {status} <IconCheck className="inline" color="green" />
+        </>
+      );
+    } else if (lowerStatus === "ongoing") {
+      return (
+        <>
+          {status} <IconPointFilled className="inline" color="#2196f3" />
+        </>
+      );
+    } else if (lowerStatus === "pending") {
+      return (
+        <>
+          {status} <IconPointFilled className="inline" color="red" />
+        </>
+      );
+    } else {
+      return status;
+    }
+  };
+
   return (
-    <div>
+    <div className="">
       <form action="" className="mb-12 mt-8">
-        <div className="flex justify-center">
-          <input
-            type="text"
-            placeholder="Search"
-            className=" border-solid border-2 border-slate-500 w-8/12 px-4 rounded-lg h-8 flex place-content:center"
-          />
-          <button>
-            <IconSearch className="h-7 relative right-8" stroke={2} />
-          </button>
+        <div className="flex justify-start w-full gap-4">
+          <div className="flex relative w-3/4  items-center justify-center">
+            <IconSearch className=" absolute left-2 text-gray-500" stroke={2} />
+            <input
+              type="text"
+              placeholder="search projects"
+              className=" border-solid w-full border-2 border-slate-500  pl-12 py-2  rounded-md  flex place-content:center"
+            />
+          </div>
+          <Link
+            href="/dashboard/projects/create"
+            className="bg-blue-600 flex items-center justify-center rounded-md px-2  text-white"
+          >
+            <IconPlus size={20} />
+          </Link>
         </div>
       </form>
       <table className="min-w-full text-gray-900 table-auto">
@@ -37,27 +69,28 @@ export default function Table(props) {
         <tbody className="bg-white">
           {UserData.map(({ image_url, ...rest }, index) => {
             return (
-              <tr
-                key={rest.id}
-                className={`content-row row-${index}`}
-              >
-                <td className="whitespace-wrap py-3 ml-6">
-                  <div className="xl:flex xl:items-center gap-3 image-container">
-                    <Image
-                      src={image_url}
-                      className="rounded-full Image"
-                      width={28}
-                      height={28}
-                      alt={`${rest.name}'s profile picture`}
-                    />
-                    <p className="MemberName">{rest.name}</p>
+              <tr key={rest.id} className={`content-row row-${index}`}>
+                <td className=" py-3 ml-6 ">
+                  <div className="gap-3 title pr-8">
+                    <p>
+                      <b>{rest.Title}</b>
+                    </p>
                   </div>
                 </td>
-
-                <td className="whitespace-wrap py-3">{rest.email}</td>
-                <td className="whitespace-wrap py-3">{rest.Club}</td>
-                <td className="whitespace-wrap py-3">{rest.Position}</td>
-                <td className="whitespace-wrap py-3 editButton">
+                <td className="py-1  text-left max-w-60">
+                  <TruncateText
+                    idBlog={rest.id}
+                    text={rest.Desc}
+                    maxLength={80}
+                  ></TruncateText>
+                </td>
+                <td className="py-3 ml-6 status">
+                  {renderStatus(rest.Status)}
+                </td>
+                <td className="py-3 ml-6 club">
+                  <p>{rest.Club}</p>
+                </td>
+                <td className="py-3 editButton">
                   <form
                     className="inline"
                     action={`/dashboard/${props.page}/${rest.id}/edit`}
@@ -75,19 +108,15 @@ export default function Table(props) {
                         strokeLinejoin="round"
                         className="icon inline icon-tabler icons-tabler-outline icon-tabler-edit"
                       >
-                        <path
-                          stroke="none"
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
                         <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
                         <path d="M16 5l3 3" />
                       </svg>
                     </button>
                   </form>
-
                   <span className="font-bold mr-1 slash">/</span>
+
                   <form
                     className="inline"
                     action={`/dashboard/${props.page}/${rest.id}/delete`}
@@ -106,11 +135,7 @@ export default function Table(props) {
                         strokeLinejoin="round"
                         className="icon inline icon-tabler icons-tabler-outline icon-tabler-trash"
                       >
-                        <path
-                          stroke="none"
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M4 7l16 0" />
                         <path d="M10 11l0 6" />
                         <path d="M14 11l0 6" />

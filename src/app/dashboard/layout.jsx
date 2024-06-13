@@ -1,4 +1,4 @@
-import Sidenav from "@/components/Sidenav";
+import Sidenav from "@/components/Sidenav/Sidenav";
  
 export default function Layout({ children }) {
   return (

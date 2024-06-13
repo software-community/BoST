@@ -1,26 +1,28 @@
-"use client"
-
 import React from "react";
-import "./table.css";
+import "../table.css";
+import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react"; // importing Icons from React Js
-import TruncateText from "./truncateText";
-
+import TruncateText from "../utils/truncateText";
+import { IconPlus } from "@tabler/icons-react";
 export default function Table(props) {
   let UserData = props.data;
   let header = props.colData;
 
   return (
     <div >
-      <form action="" className="mb-12 mt-8">
-        <div className="flex justify-center">
-          <input
-            type="text"
-            placeholder="Search"
-            className=" border-solid border-2 border-slate-500 w-8/12 px-4 rounded-lg h-8 flex place-content:center"
-          />
-          <button>
-            <IconSearch className="h-7 relative right-8" stroke={2} />
-          </button>
+       <form action="" className="mb-12 mt-8">
+        <div className="flex justify-start w-full gap-4">
+          <div className="flex relative w-3/4  items-center justify-center">
+            <IconSearch className=" absolute left-2 text-gray-500" stroke={2} />
+            <input
+              type="text"
+              placeholder="search blogs"
+              className=" border-solid w-full border-2 border-slate-500  pl-12 py-2  rounded-md  flex place-content:center"
+            />
+          </div>
+          <Link href="/dashboard/blogs/create" className="bg-blue-600 flex items-center justify-center rounded-md px-2  text-white">
+            <IconPlus size={20} />
+          </Link>
         </div>
       </form>
       <table className=" min-w-full text-gray-900 table-auto">
