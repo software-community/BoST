@@ -15,7 +15,6 @@ const FormSchema = z.object({
 
 export async function createTeamMember(prevState, formData) {
   // Validate form using Zod
-  console.log(formData.get("name"));
   const validatedFields = FormSchema.safeParse({
     name: formData.get("name"),
     position: formData.get("position"),
