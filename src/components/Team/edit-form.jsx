@@ -139,7 +139,7 @@ console.log(memberDetails.image)
         </div>
 
         {/* Team Member Club */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="club" className="mb-2 block text-sm font-medium">
             Club
           </label>
@@ -160,7 +160,7 @@ console.log(memberDetails.image)
                 </p>
               ))}
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="mt-6 flex justify-end gap-4">

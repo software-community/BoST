@@ -4,6 +4,7 @@ import connectMongoDB from "@/lib/db";
 import TeamMember from "@/models/teamMember";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 const FormSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -14,13 +15,15 @@ const FormSchema = z.object({
 });
 
 export async function createTeamMember(prevState, formData) {
+  const session = await auth();
+  const _club = session?.user.email.split("@")[0];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     name: formData.get("name"),
     position: formData.get("position"),
     image: formData.get("image"),
     email: formData.get("email"),
-    club: formData.get("club"),
+    club: _club,
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -52,13 +55,15 @@ export async function createTeamMember(prevState, formData) {
 
 // here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
 export async function updateTeamMember(_id, prevState, formData) {
+  const session = await auth();
+  const _club = session?.user.email.split("@")[0];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     name: formData.get("name"),
     position: formData.get("position"),
     image: formData.get("image"),
     email: formData.get("email"),
-    club: formData.get("club"),
+    club: _club,
   });
 
   // If form validation fails, return errors early. Otherwise, continue.

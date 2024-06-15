@@ -5,11 +5,16 @@ import Image from "next/image";
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { getAllTeamMembers } from "@/app/actions/TeamData";
+import { auth } from "@/auth";
 import { UpdateMemberBtn, DeleteMemberBtn } from "./buttons";
 
 export default async function Table({ colData }) {
-  let UserData = await getAllTeamMembers();
-
+  const session = await auth();
+  const club = session?.user.email.split('@')[0];
+  console.log(club);
+  let UserData = await getAllTeamMembers(club);
+  console.log(UserData);
+  
   let header = colData;
 
   return (

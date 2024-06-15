@@ -4,6 +4,7 @@ import connectMongoDB from "@/lib/db";
 import Project from "@/models/project";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 const FormSchema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -22,6 +23,8 @@ const FormSchema = z.object({
 });
 
 export async function createProject(prevState, formData) {
+  const session = await auth();
+  const _club = session?.user.email.split("@")[0];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
@@ -34,7 +37,7 @@ export async function createProject(prevState, formData) {
       return { title, url };
     }),
     status: formData.get("status"),
-    club: formData.get("club"),
+    club: _club,
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -66,6 +69,8 @@ export async function createProject(prevState, formData) {
 
 // here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
 export async function updateProject(_id, prevState, formData) {
+  const session = await auth();
+  const _club = session?.user.email.split("@")[0];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
@@ -78,7 +83,7 @@ export async function updateProject(_id, prevState, formData) {
       return { title, url };
     }),
     status: formData.get("status"),
-    club: formData.get("club"),
+    club: _club,
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
