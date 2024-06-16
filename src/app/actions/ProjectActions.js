@@ -10,12 +10,12 @@ const FormSchema = z.object({
   title: z.string().min(1, "Title is required."),
   description: z.string().min(1, "Description is required."),
   members: z.array(z.string()).min(1, "Members are required."),
-  images: z.array(z.string()).min(1, "Images are required."),
+  // images: z.array(z.string()).min(1, "Images are required."),
   relatedLinks: z.array(
     z.object({
-      title: z.string().min(1, "Title is required."),
+      // title: z.string().min(1, "Title is required."),
       url: z.string().min(1, "URL is required."),
-      // icon: z.string().min(1, "Icon is required."), // We can do the favicon trick
+      icon: z.string().min(1, "Icon is required."), // We can do the favicon trick
     })
   ),
   status: z.string().min(1, "Status is required."),
@@ -25,17 +25,22 @@ const FormSchema = z.object({
 export async function createProject(prevState, formData) {
   const session = await auth();
   const _club = session?.user.email.split("@")[0];
+  const _members = JSON.parse(formData.get("members")).map((item) => item.value);
+  const _relatedLinks = JSON.parse(formData.get("relatedLinks")).map((item) => { 
+    return {
+      url: item.value,
+      icon: "https://s2.googleusercontent.com/s2/favicons?domain_url=" + item.value
+    }
+  });
+  console.log(_members);
+  console.log(_relatedLinks);
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description"),
-    members: formData.getAll("members"),
-    images: formData.getAll("images"),
-    relatedLinks: formData.getAll("relatedLinks").map((link) => {
-      // TODO: Check how to implement this splitting thing
-      const [title, url] = link.split(",");
-      return { title, url };
-    }),
+    members: _members,
+    // images: formData.getAll("images"),
+    relatedLinks: _relatedLinks,
     status: formData.get("status"),
     club: _club,
   });
@@ -63,25 +68,30 @@ export async function createProject(prevState, formData) {
   }
 
   // Revalidate the cache for the projects page and redirect the user.
-  revalidatePath("/dashboard/project");
-  redirect("/dashboard/project");
+  revalidatePath("/dashboard/projects");
+  redirect("/dashboard/projects");
 }
 
 // here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
 export async function updateProject(_id, prevState, formData) {
   const session = await auth();
   const _club = session?.user.email.split("@")[0];
+  const _members = JSON.parse(formData.get("members")).map((item) => item.value);
+  const _relatedLinks = JSON.parse(formData.get("relatedLinks")).map((item) => { 
+    return {
+      url: item.value,
+      icon: "https://s2.googleusercontent.com/s2/favicons?domain_url=" + item.value
+    }
+  });
+  console.log(_members);
+  console.log(_relatedLinks);
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description"),
-    members: formData.getAll("members"),
-    images: formData.getAll("images"),
-    relatedLinks: formData.getAll("relatedLinks").map((link) => {
-      // TODO: Check how to implement this splitting thing
-      const [title, url] = link.split(",");
-      return { title, url };
-    }),
+    members: _members,
+    // images: formData.getAll("images"),
+    relatedLinks: _relatedLinks,
     status: formData.get("status"),
     club: _club,
   });
@@ -109,8 +119,8 @@ export async function updateProject(_id, prevState, formData) {
   }
 
   // Revalidate the cache for the projects page and redirect the user.
-  revalidatePath("/dashboard/project");
-  redirect("/dashboard/project");
+  revalidatePath("/dashboard/projects");
+  redirect("/dashboard/projects");
 }
 
 export async function deleteProject(id) {
@@ -135,5 +145,5 @@ export async function deleteProject(id) {
   }
 
   // Revalidate the cache for the projects page and redirect the user
-  revalidatePath("/dashboard/project");
+  revalidatePath("/dashboard/projects");
 }

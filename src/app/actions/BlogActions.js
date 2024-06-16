@@ -19,7 +19,7 @@ export async function createBlog(prevState, formData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
-    content: formData.get("content"),
+    content: formData.get("body"),
     author: formData.get("author"),
     club: _club,
   });
@@ -47,8 +47,8 @@ export async function createBlog(prevState, formData) {
   }
 
   // Revalidate the cache for the blogs page and redirect the user.
-  revalidatePath("/dashboard/blog");
-  redirect("/dashboard/blog");
+  revalidatePath("/dashboard/blogs");
+  redirect("/dashboard/blogs");
 }
 
 // here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
@@ -58,7 +58,7 @@ export async function updateBlog(_id, prevState, formData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
-    content: formData.get("content"),
+    content: formData.get("body"),
     author: formData.get("author"),
     club: _club,
   });
@@ -86,8 +86,8 @@ export async function updateBlog(_id, prevState, formData) {
   }
 
   // Revalidate the cache for the blogs page and redirect the user.
-  revalidatePath("/dashboard/blog");
-  redirect("/dashboard/blog");
+  revalidatePath("/dashboard/blogs");
+  redirect("/dashboard/blogs");
 }
 
 export async function deleteBlog(id) {
@@ -112,5 +112,5 @@ export async function deleteBlog(id) {
   }
 
   // Revalidate the cache for the blogs page and redirect the user
-  revalidatePath("/dashboard/blog");
+  revalidatePath("/dashboard/blogs");
 }
