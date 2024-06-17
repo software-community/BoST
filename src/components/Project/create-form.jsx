@@ -11,12 +11,9 @@ import DynamicField from "@/components/ui/dynamic-input-field";
 //   SelectValue,
 // } from "@/components/ui/select";
 import { useFieldArray, useForm, Controller } from "react-hook-form";
+import { useFormState } from "react-dom";
+import { createProject } from "@/app/actions/ProjectActions";
 
-const clubs = [
-  { id: 1, name: "SoftCom" },
-  { id: 2, name: "Aeromodelling" },
-  { id: 3, name: "Coding" },
-];
 
 const developmentStatus = [
   { id: 1, name: "Not Started" },
@@ -24,27 +21,37 @@ const developmentStatus = [
   { id: 3, name: "Completed" },
 ];
 
-const Form = (dispatch) => {
+const Form = () => {
   const { register, handleSubmit, control } = useForm({defaultValues: {
     repoLinks: [{ value: "" }], // Initialize with one empty field
     teamMembers: [{ value: "" }] // Initialize with one empty field
   }});
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
+  
   const handleClear = () => {
     window.location.reload();
   };
-
+    
   const initialState = {
     repoLinks: [""],
     teamMembers: [""],
   };
+  const [state, dispatch] = useFormState(createProject, initialState);
+      
+  const onSubmit = (data) => {
+    console.log(data);
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    formData.set('members', JSON.stringify(data.teamMembers));
+    formData.set('relatedLinks', JSON.stringify(data.repoLinks));
+    console.log(formData.get('members'));
+    console.log(formData.get('relatedLinks'));
+    dispatch(formData);
+  };
 
-  // function reducer(state, action) {
-  //   switch (action.type) {
+
+      // function reducer(state, action) {
+        //   switch (action.type) {
   //     case "ADD_ENTRY":
   //       return {
   //         ...state,
@@ -109,69 +116,8 @@ const Form = (dispatch) => {
   // };
 
   return (
-    <form action={dispatch} onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* Club Name */}
-        <div className="mb-4">
-          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose club
-          </label>
-          <div className="relative">
-            <select
-              id="club"
-              name="clubId"
-              className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue=""
-              aria-describedby="club-error"
-            >
-              <option value="" disabled>
-                Select a club
-              </option>
-              {clubs.map((club) => (
-                <option key={club.id} value={club.id}>
-                  {club.name}
-                </option>
-              ))}
-            </select>
-            {/* <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
-          </div>
-          {/* <div id="club-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.clubId &&
-              state.errors.clubId.map((error) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div> */}
-        </div>
-        {/* <div className="mb-4">
-          <label htmlFor="club" className="mb-2 block text-sm font-medium">
-            Club
-          </label>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select club" />
-            </SelectTrigger>
-            <SelectContent className="SelectContent">
-              {clubs.map((club) => (
-                <SelectItem key={club.id} value={club.id.toString()}>
-                  {club.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select> */}
-        {/* <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" /> */}
-
-        {/* <div id="club-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.clubId &&
-              state.errors.clubId.map((error) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div> */}
-        {/* </div> */}
-
         {/* Title */}
         <div className="mb-4">
           <label htmlFor="title" className="mb-2 block text-sm font-medium">

@@ -13,7 +13,7 @@ const page = async () => {
   return (
     <div>
       <h1 className="text-left  text-2xl font-bold">Team Details </h1>
-      <Table colData={ColumnData}  page="team"></Table>
+      <Table colData={ColumnData} page="team"></Table>
     </div>
   );
 };

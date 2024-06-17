@@ -25,12 +25,12 @@ export async function getTeamMemberById(memberid) {
 
 
 
-export async function getAllTeamMembers() {
+export async function getAllTeamMembers(club) {
   noStore(); // Ensure no caching is done
 
   try {
     await connectMongoDB(); // Connect to the database
-    const members = await TeamMember.find(); // Fetch all team members
+    const members = await TeamMember.find({ club }); // Fetch all team members
 
     return members; // Return the fetched team members
   } catch (error) {
