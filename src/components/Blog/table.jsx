@@ -4,8 +4,14 @@ import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react"; // importing Icons from React Js
 import TruncateText from "../utils/truncateText";
 import { IconPlus } from "@tabler/icons-react";
-export default function Table(props) {
-  let UserData = props.data;
+import { getAllBlogs } from "@/app/actions/BlogData";
+import { auth } from "@/auth";
+
+export default async function Table(props) {
+  
+  const session = await auth();
+  const club = session?.user.email.split('@')[0];
+  let UserData = await getAllBlogs(club);
   let header = props.colData;
 
   return (
@@ -38,7 +44,7 @@ export default function Table(props) {
           </tr>
         </thead>
         <tbody className="bg-white tbody">
-          {UserData.map(({ image_url, ...rest }, index) => {
+          {UserData.map((rest, index) => {
             return (
               <tr
                 key={rest.id}
@@ -46,13 +52,13 @@ export default function Table(props) {
               >
                 <td className="whitespace-wrap py-3 ml-6">
                   <div className="gap-3 title">
-                    <p><b>{rest.Title}</b></p>
+                    <p><b>{rest.title}</b></p>
                   </div>
                 </td>
 
-                <td className="whitespace-wrap py-1 max-w-60"><TruncateText idBlog={rest.id} text={rest.Body} maxLength={80} ></TruncateText></td>
-                <td className="whitespace-wrap py-3">{rest.Author}</td>
-                <td className="whitespace-wrap py-3">{rest.Club}</td>
+                <td className="whitespace-wrap py-1 max-w-60"><TruncateText idBlog={rest.id} text={rest.content} maxLength={80} ></TruncateText></td>
+                <td className="whitespace-wrap py-3">{rest.author}</td>
+                <td className="whitespace-wrap py-3">{rest.club}</td>
                 <td className="whitespace-wrap py-3 editButton">
                   <form
                     className="inline"

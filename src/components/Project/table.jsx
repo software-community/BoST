@@ -18,7 +18,7 @@ export default async function Table(props) {
   const session = await auth();
   const club = session?.user.email.split('@')[0];
   let UserData = await getAllProjects(club);
-  console.log(UserData);
+  // console.log(UserData);
   let header = props.colData;
 
   const renderStatus = (status) => {

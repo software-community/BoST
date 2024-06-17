@@ -1,11 +1,5 @@
 import React from 'react'
 
-const clubs = [
-  { id: 1, name: "Chess Club" },
-  { id: 2, name: "Art Club" },
-  { id: 3, name: "Music Club" }
-];
-
 import Table from '@/components/Blog/table';
 
 const page = () => {
@@ -51,7 +45,7 @@ const page = () => {
   return (
     <div>
        <h1 className="text-left  text-2xl font-bold">Blog Details </h1>
-      <Table page="blogs" data={blogData} colData = {columnData}></Table>
+      <Table page="blogs" colData = {columnData}></Table>
     </div>
   )
 }
