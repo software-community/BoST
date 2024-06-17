@@ -4,9 +4,21 @@ import { IconSearch, IconPointFilled, IconCheck } from "@tabler/icons-react"; //
 import Link from "next/link";
 import TruncateText from "../utils/truncateText";
 import { IconPlus } from "@tabler/icons-react";
+import { getAllProjects } from "@/app/actions/ProjectData";
+import { auth } from "@/auth";
 
-export default function Table(props) {
-  let UserData = props.data;
+const statusMap = {
+  'completed': "Completed",
+  'in_progress': "In Progress",
+  'not_started': "Not Started"
+}
+
+export default async function Table(props) {
+  
+  const session = await auth();
+  const club = session?.user.email.split('@')[0];
+  let UserData = await getAllProjects(club);
+  console.log(UserData);
   let header = props.colData;
 
   const renderStatus = (status) => {
@@ -14,19 +26,19 @@ export default function Table(props) {
     if (lowerStatus === "completed") {
       return (
         <>
-          {status} <IconCheck className="inline" color="green" />
+          {statusMap[lowerStatus]} <IconCheck className="inline" color="green" />
         </>
       );
-    } else if (lowerStatus === "ongoing") {
+    } else if (lowerStatus === "in_progress") {
       return (
         <>
-          {status} <IconPointFilled className="inline" color="#2196f3" />
+          {statusMap[lowerStatus]} <IconPointFilled className="inline" color="#2196f3" />
         </>
       );
-    } else if (lowerStatus === "pending") {
+    } else if (lowerStatus === "not_started") {
       return (
         <>
-          {status} <IconPointFilled className="inline" color="red" />
+          {statusMap[lowerStatus]} <IconPointFilled className="inline" color="red" />
         </>
       );
     } else {
@@ -67,28 +79,29 @@ export default function Table(props) {
           </tr>
         </thead>
         <tbody className="bg-white">
-          {UserData.map(({ image_url, ...rest }, index) => {
+          {UserData.map((rest, index) => {
+            console.log(rest);
             return (
               <tr key={rest.id} className={`content-row row-${index}`}>
                 <td className=" py-3 ml-6 ">
                   <div className="gap-3 title pr-8">
                     <p>
-                      <b>{rest.Title}</b>
+                      <b>{rest.title}</b>
                     </p>
                   </div>
                 </td>
                 <td className="py-1  text-left max-w-60">
                   <TruncateText
                     idBlog={rest.id}
-                    text={rest.Desc}
+                    text={rest.description}
                     maxLength={80}
                   ></TruncateText>
                 </td>
                 <td className="py-3 ml-6 status">
-                  {renderStatus(rest.Status)}
+                  {renderStatus(rest.status)}
                 </td>
                 <td className="py-3 ml-6 club">
-                  <p>{rest.Club}</p>
+                  <p>{rest.club}</p>
                 </td>
                 <td className="py-3 editButton">
                   <form
