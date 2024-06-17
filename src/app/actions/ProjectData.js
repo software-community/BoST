@@ -14,7 +14,7 @@ export async function getProjectById(projectid) {
     if (!foundProject) {
       return { error: "Project not found", status: 404 };
     }
-    return foundProject
+    return foundProject.toJSON();
   } catch (error) {
     return {
       error: "An error occurred while retrieving the project",
