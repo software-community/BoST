@@ -36,7 +36,7 @@ export default function Form({ memberDetails }) {
             className="peer px-2 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
           />
           <div id="name-error" aria-live="polite" aria-atomic="true">
-            {errors?.name &&
+            {state.errors?.name &&
               errors.name.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
@@ -60,7 +60,7 @@ export default function Form({ memberDetails }) {
             className="peer px-2 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
           />
           <div id="position-error" aria-live="polite" aria-atomic="true">
-            {errors?.position &&
+            {state.errors?.position &&
               errors.position.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
@@ -101,7 +101,7 @@ export default function Form({ memberDetails }) {
             />
           </div>
           <div id="image-error" aria-live="polite" aria-atomic="true">
-            {errors?.image &&
+            {state.errors?.image &&
               errors.image.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
@@ -125,7 +125,7 @@ export default function Form({ memberDetails }) {
             className="peer px-2 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
           />
           <div id="email-error" aria-live="polite" aria-atomic="true">
-            {errors?.email &&
+            {state.errors?.email &&
               errors.email.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}

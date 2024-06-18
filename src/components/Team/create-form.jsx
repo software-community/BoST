@@ -9,8 +9,7 @@ export default function Form() {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(createTeamMember, initialState);
   const [avatarURL, setavatarURL] = useState("");
-  const errors = state?.errors || {}; // Ensure errors is always an object
-  
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -36,8 +35,8 @@ export default function Form() {
             className="peer px-4 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
           />
           <div id="name-error" aria-live="polite" aria-atomic="true">
-            {errors?.name &&
-              errors.name.map((error) => (
+            {state.errors?.name &&
+              state.errors.name.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -59,8 +58,8 @@ export default function Form() {
             className="peer px-4 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
           />
           <div id="position-error" aria-live="polite" aria-atomic="true">
-            {errors?.position &&
-              errors.position.map((error) => (
+            {state.errors?.position &&
+              state.errors.position.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -100,8 +99,8 @@ export default function Form() {
             />
           </div>
           <div id="image-error" aria-live="polite" aria-atomic="true">
-            {errors?.image &&
-              errors.image.map((error) => (
+            {state.errors?.image &&
+              state.errors.image.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -123,8 +122,8 @@ export default function Form() {
             className="peer px-4 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
           />
           <div id="email-error" aria-live="polite" aria-atomic="true">
-            {errors?.email &&
-              errors.email.map((error) => (
+            {state.errors?.email &&
+              state.errors.email.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>

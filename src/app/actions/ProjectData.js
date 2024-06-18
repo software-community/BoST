@@ -11,7 +11,7 @@ export async function getProjectById(projectid) {
 
   try {
     const foundProject = await Project.findOne({ _id: projectid });
-    console.log("foundProject",foundProject)
+   
     if (!foundProject) {
       return { error: "Project not found", status: 404 };
     }

@@ -1,11 +1,10 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import DynamicField from "@/components/ui/dynamic-input-field";
-import { useFieldArray, useForm, Controller } from "react-hook-form";
 import { useFormState } from "react-dom";
 import { createProject } from "@/app/actions/ProjectActions";
+import { UploadButton } from "@uploadthing/react";
 
 const developmentStatus = [
   { id: 1, name: "Not Started" },
@@ -14,24 +13,24 @@ const developmentStatus = [
 ];
 
 const Form = () => {
-  const { register, handleSubmit, control } = useForm({
-    defaultValues: {
-      repoLinks: [{ value: "" }], // Initialize with one empty field
-      teamMembers: [{ value: "" }], // Initialize with one empty field
-    },
-  });
+  // const { register, handleSubmit, control } = useForm({
+  //   defaultValues: {
+  //     repoLinks: [{ value: "" }],
+  //     teamMembers: [{ value: "" }],
+  //   },
+  // });
 
   const initialState = {
     repoLinks: [""],
     teamMembers: [""],
   };
   const [state, dispatch] = useFormState(createProject, initialState);
+  const [projectImageURL, setProjectImageURL] = useState("");
 
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    // formData.set("members", JSON.stringify(data.teamMembers));
-    // formData.set("relatedLinks", JSON.stringify(data.repoLinks));
+    formData.set("image", projectImageURL);
     dispatch(formData);
   };
 
@@ -51,6 +50,14 @@ const Form = () => {
             placeholder="Enter title"
             aria-describedby="title-error"
           />
+          <div id="title-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.title &&
+              state.errors.title.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
         </div>
 
         {/* Description */}
@@ -69,25 +76,15 @@ const Form = () => {
             rows="3"
             aria-describedby="description-error"
           ></textarea>
+          {state.errors?.description &&
+            state.errors.description.map((error) => (
+              <p className="mt-2 text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))}
         </div>
 
         <div className="mb-4">
-         
-          {/* <DynamicField
-            control={control}
-            name="repoLinks"
-            label="Github Repo and related Links"
-            placeholder="Enter link"
-          />
-
-         
-          <DynamicField
-            control={control}
-            name="teamMembers"
-            label="Team Members"
-            placeholder="Enter team Member"
-          /> */}
-
           {/* Status */}
           <div className="mb-4">
             <label htmlFor="status" className="mb-2 block text-sm font-medium">
@@ -100,13 +97,120 @@ const Form = () => {
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
               aria-describedby="status-error"
             >
-              <option value="" disabled>
-                Select a club
-              </option>
               <option value="not_started">Not started</option>
               <option value="in_progress">In Progress</option>
               <option value="completed">Completed</option>
             </select>
+            {state.errors?.status &&
+              state.errors.status.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="image" className="mb-2 block text-sm font-medium">
+            Image URL
+          </label>
+          <div className="w-full flex flex-col md:flex-row max-w-[900px] gap-8 items-center">
+            <input
+              id="image"
+              name="image"
+              type="text"
+              aria-describedby="image-error"
+              placeholder="Upload project image"
+              value={projectImageURL} // Control the input field value with avatarURL state
+              className="peer px-4 block w-full md:w-1/2 h-8 rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
+              readOnly
+            />
+            <UploadButton
+              endpoint="imageUploader"
+              className="ut-uploading:pointer-events-none"
+              appearance={{
+                container: "w-1/4",
+              }}
+              onClientUploadComplete={(res) => {
+                alert("Upload Completed");
+                setProjectImageURL(res[0].url);
+              }}
+              onUploadError={(error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
+          <div id="image-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.image &&
+              state.errors.image.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="github" className="mb-2 block text-sm font-medium">
+            GitHub
+          </label>
+          <input
+            id="github"
+            name="github"
+            type="text"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
+            placeholder="Enter GitHub link (optional)"
+            // aria-describedby="github-error"
+          />
+          {/* <div id="github-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.github &&
+              state.errors.github.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div> */}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="website" className="mb-2 block text-sm font-medium">
+            Website
+          </label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
+            placeholder="Enter website link (optional)"
+            // aria-describedby="website-error"
+          />
+          {/* <div id="website-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.website &&
+              state.errors.website.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div> */}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="members" className="mb-2 block text-sm font-medium">
+            Members
+          </label>
+          <input
+            type="text"
+            id="members"
+            name="members"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
+            placeholder="Enter members (comma-separated)"
+            aria-describedby="members-error"
+          />
+          <div id="members-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.members &&
+              state.errors.members.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
         </div>
 
