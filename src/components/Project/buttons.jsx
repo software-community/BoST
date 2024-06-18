@@ -2,7 +2,7 @@ import { deleteProject } from "@/app/actions/ProjectActions";
 import Link from "next/link";
 export function UpdateProjectBtn({ id }) {
   return (
-    <Link href={`/dashboard/team/${id}/edit`} className="mr-1">
+    <Link href={`/dashboard/projects/${id}/edit`} className="mr-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

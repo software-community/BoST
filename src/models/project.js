@@ -4,13 +4,13 @@ const projectSchema = new Schema(
   {
     title: String,
     description: String,
-    members: [String],
-    relatedLinks:[{
-      // title: String,
-      url: String,
-      icon: String,
-    }],
-    images: [String],
+    // members: [String],
+    // relatedLinks:[{
+    //   // title: String,
+    //   url: String,
+    //   icon: String,
+    // }],
+    // images: [String],
     status: String,
     club: String,
   },

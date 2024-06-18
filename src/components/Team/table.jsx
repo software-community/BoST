@@ -11,9 +11,7 @@ import { UpdateMemberBtn, DeleteMemberBtn } from "./buttons";
 export default async function Table({ colData }) {
   const session = await auth();
   const club = session?.user.email.split('@')[0];
-  console.log(club);
   let UserData = await getAllTeamMembers(club);
-  console.log(UserData);
   
   let header = colData;
 

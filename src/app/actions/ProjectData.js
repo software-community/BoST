@@ -11,10 +11,11 @@ export async function getProjectById(projectid) {
 
   try {
     const foundProject = await Project.findOne({ _id: projectid });
+    console.log("foundProject",foundProject)
     if (!foundProject) {
       return { error: "Project not found", status: 404 };
     }
-    return foundProject.toJSON();
+    return foundProject
   } catch (error) {
     return {
       error: "An error occurred while retrieving the project",
@@ -25,12 +26,12 @@ export async function getProjectById(projectid) {
 
 
 
-export async function getAllProjects() {
+export async function getAllProjects(club) {
   noStore(); // Ensure no caching is done
 
   try {
     await connectMongoDB(); // Connect to the database
-    const projects = await Project.find(); // Fetch all projects
+    const projects = await Project.find({club}); // Fetch all projects
 
     return projects; // Return the fetched projects
   } catch (error) {

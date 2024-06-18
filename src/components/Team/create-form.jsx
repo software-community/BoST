@@ -131,29 +131,6 @@ export default function Form() {
               ))}
           </div>
         </div>
-
-        {/* Team Member Club */}
-        {/* <div className="mb-4">
-          <label htmlFor="club" className="mb-2 block text-sm font-medium">
-            Club
-          </label>
-          <input
-            id="club"
-            name="club"
-            type="text"
-            aria-describedby="club-error"
-            placeholder="Enter club"
-            className="peer px-4 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
-          />
-          <div id="club-error" aria-live="polite" aria-atomic="true">
-            {errors?.club &&
-              errors.club.map((error) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
-        </div> */}
       </div>
 
       <div className="mt-6 flex justify-end gap-4">
@@ -163,7 +140,7 @@ export default function Form() {
         >
           Cancel
         </Link>
-        <button type="submit">Create Team Member</button>
+        <button type="submit" className="bg-black text-white p-2 rounded-lg">Create Team Member</button>
       </div>
     </form>
   );

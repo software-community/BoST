@@ -75,7 +75,7 @@ export async function updateTeamMember(_id, prevState, formData) {
   }
 
   // Extract validated data
-  const { name, position, image, email, club } = validatedFields.data;
+  const { name, position, image, email } = validatedFields.data;
 
   // Insert data into the database
   try {
@@ -85,7 +85,6 @@ export async function updateTeamMember(_id, prevState, formData) {
       position,
       image,
       email,
-      club,
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.

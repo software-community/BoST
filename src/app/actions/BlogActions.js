@@ -19,13 +19,14 @@ export async function createBlog(prevState, formData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
-    content: formData.get("body"),
+    content: formData.get("content"),
     author: formData.get("author"),
     club: _club,
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
+    console.log(validatedFields.error.flatten().fieldErrors);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing or invalid fields. Failed to create blog.",
@@ -58,7 +59,7 @@ export async function updateBlog(_id, prevState, formData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
-    content: formData.get("body"),
+    content: formData.get("content"),
     author: formData.get("author"),
     club: _club,
   });
@@ -72,12 +73,12 @@ export async function updateBlog(_id, prevState, formData) {
   }
 
   // Extract validated data
-  const { title, content, author, club } = validatedFields.data;
+  const { title, content, author } = validatedFields.data;
 
   // Insert data into the database
   try {
     await connectMongoDB();
-    await Blog.findByIdAndUpdate(_id, { title, content, author, club });
+    await Blog.findByIdAndUpdate(_id, { title, content, author });
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {

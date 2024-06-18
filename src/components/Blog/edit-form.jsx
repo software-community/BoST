@@ -1,31 +1,23 @@
 "use client";
 import React from "react";
 import { Button } from "@/components/ui/button";
-import Link from 'next/link';
+import Link from "next/link";
 // import { UserCircleIcon } from '@heroicons/react/solid';
 import { useFormState } from "react-dom";
 import { updateBlog } from "@/app/actions/BlogActions";
 
-const Form = ({blogDetails}) => {
+const Form = ({ blogDetails }) => {
   const initialState = { message: null, errors: {} };
   const updateBlogById = updateBlog.bind(null, blogDetails._id);
   const [state, dispatch] = useFormState(updateBlogById, initialState);
-  
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    dispatch(formData);
-  };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className='py-5'>
-        <h2>
-          Add a blog
-        </h2>
+    <form action={dispatch}>
+      <div className="py-5">
+        <h2>Add a blog</h2>
       </div>
-      
-        <div className="rounded-md bg-gray-50 p-4 md:p-6">
+
+      <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Club Name */}
         {/* <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
@@ -62,7 +54,7 @@ const Form = ({blogDetails}) => {
 
         {/* Title */}
         <div className="mb-4">
-        <label htmlFor="title" className="mb-2 block text-sm font-medium">
+          <label htmlFor="title" className="mb-2 block text-sm font-medium">
             Title
           </label>
           <input
@@ -74,43 +66,42 @@ const Form = ({blogDetails}) => {
             placeholder="Enter title"
             aria-describedby="title-error"
           />
-            {/* <div id="title-error" aria-live="polite" aria-atomic="true">
+          <div id="title-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title &&
               state.errors.title.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
               ))}
-          </div> */}
+          </div>
         </div>
 
-
-      {/* Body */}
-      <div className="mb-4">
-        <label htmlFor="body" className="mb-2 block text-sm font-medium">
-          Body
-        </label>
-        <textarea
-          id="body"
-          name="body"
-          defaultValue={blogDetails.content}
-          className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
-          placeholder="Enter body text"
-          rows="5"
-          aria-describedby="body-error"
-        ></textarea>
-        {/* <div id="body-error" aria-live="polite" aria-atomic="true">
-          {state.errors?.body &&
-            state.errors.body.map((error) => (
+        {/* content */}
+        <div className="mb-4">
+          <label htmlFor="content" className="mb-2 block text-sm font-medium">
+            Content
+          </label>
+          <textarea
+            id="content"
+            name="content"
+            defaultValue={blogDetails.content}
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
+            placeholder="Enter content text"
+            rows="5"
+            aria-describedby="content-error"
+          ></textarea>
+          <div id="content-error" aria-live="polite" aria-atomic="true">
+          {state.errors?.content &&
+            state.errors.content.map((error) => (
               <p className="mt-2 text-sm text-red-500" key={error}>
                 {error}
               </p>
             ))}
-        </div> */}
-      </div>
+        </div>
+        </div>
 
-      {/* Author */}
-      <div className="mb-4">
+        {/* Author */}
+        <div className="mb-4">
           <label htmlFor="author" className="mb-2 block text-sm font-medium">
             Author
           </label>
@@ -123,14 +114,14 @@ const Form = ({blogDetails}) => {
             placeholder="Enter author name"
             aria-describedby="author-error"
           />
-          {/* <div id="author-error" aria-live="polite" aria-atomic="true">
+          <div id="author-error" aria-live="polite" aria-atomic="true">
             {state.errors?.author &&
               state.errors.author.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
               ))}
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -139,13 +130,12 @@ const Form = ({blogDetails}) => {
           href="/dashboard/blogs"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
-          Clear
+          cancel
         </Link>
         <Button type="submit">Update Blog</Button>
       </div>
-
-   </form>
-  )
-}
+    </form>
+  );
+};
 
 export default Form;

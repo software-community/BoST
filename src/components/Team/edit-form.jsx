@@ -1,29 +1,25 @@
-'use client';
-import Link from 'next/link';
-import { updateTeamMember } from '@/app/actions/TeamActions';
-import { useFormState } from 'react-dom';
+"use client";
+import Link from "next/link";
+import { updateTeamMember } from "@/app/actions/TeamActions";
+import { useFormState } from "react-dom";
 import { UploadButton } from "@uploadthing/react";
 import { useState } from "react";
 
-
-export default function Form({memberDetails}) {
+export default function Form({ memberDetails }) {
   const initialState = { message: null, errors: {} };
-  const [avatarURL, setavatarURL] = useState(memberDetails.image|| "");
+  const [avatarURL, setavatarURL] = useState(memberDetails.image || "");
   const updateMemberWithId = updateTeamMember.bind(null, memberDetails._id);
   const [state, dispatch] = useFormState(updateMemberWithId, initialState);
   const errors = state?.errors || {}; // Ensure errors is always an object
-console.log(memberDetails.image)
   const handleSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent the default form submission
     const formData = new FormData(event.target);
     formData.set("image", avatarURL); // Set the image URL in the form data
-
     dispatch(formData);
   };
 
-
   return (
-    <form action={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Team Member Name */}
         <div className="mb-4">
@@ -122,7 +118,7 @@ console.log(memberDetails.image)
           <input
             id="email"
             name="email"
-            value={memberDetails?.email}
+            defaultValue={memberDetails?.email}
             type="email"
             aria-describedby="email-error"
             placeholder="Enter email"
@@ -137,30 +133,6 @@ console.log(memberDetails.image)
               ))}
           </div>
         </div>
-
-        {/* Team Member Club */}
-        {/* <div className="mb-4">
-          <label htmlFor="club" className="mb-2 block text-sm font-medium">
-            Club
-          </label>
-          <input
-            id="club"
-            name="club"
-            type="text"
-            defaultValue={memberDetails?.club}
-            aria-describedby="club-error"
-            placeholder="Enter club"
-            className="peer px-2 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
-          />
-          <div id="club-error" aria-live="polite" aria-atomic="true">
-            {errors?.club &&
-              errors.club.map((error) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
-        </div> */}
       </div>
 
       <div className="mt-6 flex justify-end gap-4">
@@ -170,9 +142,8 @@ console.log(memberDetails.image)
         >
           Cancel
         </Link>
-        <button type="submit">Edit Team Member</button>
+        <button type="submit" className="bg-black text-white p-2 rounded-lg">Edit Team Member</button>
       </div>
     </form>
-    
   );
 }

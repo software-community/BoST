@@ -6,5 +6,6 @@ export default async function Page({ params }) {
   const projectid = params.projectid;
   let data = await getProjectById(projectid);
   
+  
   return <Form projectDetails={data} />;
 }

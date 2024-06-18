@@ -19,10 +19,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account.provider == "google") {
         try {
           const { email, name, image, id } = user;
-          // await connectMongoDB();
-          // const alreadyUserexists = await Admin.findOne({ email });
-          // if (!alreadyUserexists) return false;
-          // else 
+          await connectMongoDB();
+          const alreadyUserexists = await Admin.findOne({ email });
+          if (!alreadyUserexists) return false;
+          // await Admin.create({email,name,image})
+
           return NextResponse.json({ message: "welcome back" });
         } catch (error) {
           throw new AuthError("Error while creating user");

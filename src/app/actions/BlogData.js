@@ -1,7 +1,5 @@
 import connectMongoDB from "@/lib/db";
 import Blog from "@/models/blog";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function getBlogById(blogid) {
@@ -25,12 +23,13 @@ export async function getBlogById(blogid) {
 
 
 
-export async function getAllBlogs() {
+export async function getAllBlogs(club) {
   noStore(); // Ensure no caching is done
+  
 
   try {
     await connectMongoDB(); // Connect to the database
-    const blogs = await Blog.find(); // Fetch all blogs
+    const blogs = await Blog.find({club}); // Fetch all blogs
 
     return blogs; // Return the fetched blogs
   } catch (error) {

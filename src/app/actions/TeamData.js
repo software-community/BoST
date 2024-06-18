@@ -30,7 +30,7 @@ export async function getAllTeamMembers(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
-    const members = await TeamMember.find({ club }); // Fetch all team members
+    const members = await TeamMember.find({ club }); // Fetch all team members in the club
 
     return members; // Return the fetched team members
   } catch (error) {

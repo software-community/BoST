@@ -19,7 +19,7 @@ export default async function Table(props) {
   const session = await auth();
   const club = session?.user.email.split('@')[0];
   let UserData = await getAllProjects(club);
-  // console.log(UserData);
+  console.log(UserData)
   let header = props.colData;
 
   const renderStatus = (status) => {
@@ -81,7 +81,6 @@ export default async function Table(props) {
         </thead>
         <tbody className="bg-white">
           {UserData.map((rest, index) => {
-            console.log(rest);
             return (
               <tr key={rest.id} className={`content-row row-${index}`}>
                 <td className=" py-3 ml-6 ">

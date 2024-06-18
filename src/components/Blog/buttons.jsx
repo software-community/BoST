@@ -2,7 +2,7 @@ import { deleteBlog } from "@/app/actions/BlogActions";
 import Link from "next/link";
 export function UpdateBlogBtn({ id }) {
   return (
-    <Link href={`/dashboard/team/${id}/edit`} className="mr-1">
+    <Link href={`/dashboard/blogs/${id}/edit`} className="mr-1">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
