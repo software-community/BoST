@@ -15,6 +15,7 @@ const links = [
   },
   { name: 'Blogs', href: '/dashboard/blogs'},
   { name: 'Team', href: '/dashboard/team'},
+  { name: 'Gallery', href: '/dashboard/gallery'},
   { name: 'Home', href: '/'},
 ];
 

@@ -1,7 +1,5 @@
 import connectMongoDB from "@/lib/db";
 import TeamMember from "@/models/teamMember";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function getTeamMemberById(memberid) {
