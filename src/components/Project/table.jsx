@@ -20,7 +20,6 @@ export default async function Table(props) {
   const club = session?.user.email.split('@')[0];
   let UserData = await getAllProjects(club);
   let header = props.colData;
-  console.log("UserData",UserData)
 
   const renderStatus = (status) => {
     const lowerStatus = status.toLowerCase();

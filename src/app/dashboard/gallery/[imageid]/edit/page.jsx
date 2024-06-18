@@ -7,7 +7,6 @@ export default async function Page({ params }) {
   const imagename = params.imageid;
  
   let data = await getImageByName(imagename);
-  console.log("Ye rha data of",data)
 
   return <EditImageForm imageDetails={data} />;
 }
