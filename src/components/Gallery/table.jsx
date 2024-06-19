@@ -65,8 +65,8 @@ export default async function Table({ colData }) {
                 <td className="whitespace-wrap py-3">{name}</td>
                 <td className="whitespace-wrap py-3">{club}</td>
                 <td className="whitespace-wrap py-3 deleteButton">
-                  {/* <UpdateGalleryImageBtn name={name} /> */}
-                  {/* <span className="font-bold mr-1 slash">/</span> */}
+                  <UpdateGalleryImageBtn name={name} club={club} />
+                  <span className="font-bold mr-1 slash">/</span>
                   <DeleteGalleryImageBtn name={name} />
                 </td>
               </tr>

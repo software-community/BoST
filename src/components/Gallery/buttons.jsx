@@ -1,8 +1,11 @@
 import { deleteImageByName } from "@/app/actions/GalleryActions";
 import Link from "next/link";
-export function UpdateGalleryImageBtn({ name }) {
+export function UpdateGalleryImageBtn({ name, club }) {
   return (
-    <Link href={`/dashboard/gallery/${name}/edit`} className="mr-1">
+    <Link
+      href={`/dashboard/gallery/${name}/edit?club=${club}`}
+      className="mr-1"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
@@ -25,31 +28,30 @@ export function UpdateGalleryImageBtn({ name }) {
 }
 
 export function DeleteGalleryImageBtn({ name }) {
-    const deleteImage = deleteImageByName.bind(null, name);
-    return (
-      <form className="inline" action={deleteImage}>
-        <button className="">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="icon inline icon-tabler icons-tabler-outline icon-tabler-trash"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M4 7l16 0" />
-            <path d="M10 11l0 6" />
-            <path d="M14 11l0 6" />
-            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-          </svg>
-        </button>
-      </form>
-    );
-  }
-  
+  const deleteImage = deleteImageByName.bind(null, name);
+  return (
+    <form className="inline" action={deleteImage}>
+      <button className="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="icon inline icon-tabler icons-tabler-outline icon-tabler-trash"
+        >
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 7l16 0" />
+          <path d="M10 11l0 6" />
+          <path d="M14 11l0 6" />
+          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+        </svg>
+      </button>
+    </form>
+  );
+}

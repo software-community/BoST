@@ -60,14 +60,15 @@ export async function addImage(prevState, formData) {
   revalidatePath("/dashboard/gallery");
   redirect("/dashboard/gallery");
 }
-export async function updateGalleryImageURL(formData) {
+export async function updateGalleryImageURL(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
   const club = session?.user.email.split("@")[0];
+  console.log(formData);
 
   // Extract the image name (UUID) and new URL from form data
   const name = formData.get("name");
-  const newUrl = formData.get("image");
+  const newUrl = formData.get("url");
 
   if (!newUrl) {
     return {
@@ -90,7 +91,7 @@ export async function updateGalleryImageURL(formData) {
     }
 
     // Find the image with the specified name (UUID)
-    const imageIndex = gallery.images.findIndex(img => img.name === name);
+    const imageIndex = gallery.images.findIndex((img) => img.name === name);
 
     if (imageIndex === -1) {
       return {
@@ -101,13 +102,10 @@ export async function updateGalleryImageURL(formData) {
 
     // Update the image URL
     gallery.images[imageIndex].url = newUrl;
+    // gallery.images[imageIndex].name = name;
 
-    // Save the updated gallery
+    // // Save the updated gallery
     await gallery.save();
-
-    // Revalidate the cache for the gallery page and redirect the user.
-    revalidatePath("/dashboard/gallery");
-    redirect("/dashboard/gallery");
   } catch (error) {
     console.error("Error updating image:", error);
     return {
@@ -115,48 +113,52 @@ export async function updateGalleryImageURL(formData) {
       status: 500,
     };
   }
+  revalidatePath("/dashboard/gallery");
+  redirect("/dashboard/gallery");
 }
 
 export async function deleteImageByName(imageName) {
-    const session = await auth();
-    const club = session?.user.email.split("@")[0];
-  
-    // Connect to the database
-    try {
-      await connectMongoDB();
-  
-      const gallery = await Gallery.findOne({ club });
-  
-      if (!gallery) {
-        return {
-          error: "Gallery not found for the club",
-          status: 404,
-        };
-      }
-  
-      // Filter out the image with the specified name (UUID)
-      const updatedImages = gallery.images.filter(image => image.name !== imageName);
-  
-      // If the image to delete was not found
-      if (updatedImages.length === gallery.images.length) {
-        return {
-          error: "Image not found",
-          status: 404,
-        };
-      }
-  
-      gallery.images = updatedImages;
-      await gallery.save();
-    } catch (error) {
-      console.error("Error deleting image:", error);
+  const session = await auth();
+  const club = session?.user.email.split("@")[0];
+
+  // Connect to the database
+  try {
+    await connectMongoDB();
+
+    const gallery = await Gallery.findOne({ club });
+
+    if (!gallery) {
       return {
-        error: "An error occurred while deleting the image",
-        status: 500,
+        error: "Gallery not found for the club",
+        status: 404,
       };
     }
-  
-    // Revalidate the cache for the images page
-    revalidatePath("/gallery");
-  
-    return { message: "Image deleted successfully" };
+
+    // Filter out the image with the specified name (UUID)
+    const updatedImages = gallery.images.filter(
+      (image) => image.name !== imageName
+    );
+
+    // If the image to delete was not found
+    if (updatedImages.length === gallery.images.length) {
+      return {
+        error: "Image not found",
+        status: 404,
+      };
+    }
+
+    gallery.images = updatedImages;
+    await gallery.save();
+  } catch (error) {
+    console.error("Error deleting image:", error);
+    return {
+      error: "An error occurred while deleting the image",
+      status: 500,
+    };
   }
+
+  // Revalidate the cache for the images page
+  revalidatePath("/gallery");
+
+  return { message: "Image deleted successfully" };
+}
