@@ -7,7 +7,7 @@ const Sidenav = async () => {
   const club = session?.user.email.split('@')[0];
   const isSuperAdmin=process.env.SUPER_ADMIN===club
   return (
-    <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">
+    <div className="flex grow flex-row justify-between overflow-hidden space-x-2 md:flex-col md:space-x-0 md:space-y-2">
         <Navlinks club={club} isSuperAdmin={isSuperAdmin} />
        
         <form action={handleLogout}>

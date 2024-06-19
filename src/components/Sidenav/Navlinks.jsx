@@ -1,55 +1,62 @@
-"use client"
+"use client";
+import clsx from "clsx";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  IconHome,
+  IconDashboard,
+  IconFriends,
+  IconPhotoEdit,
+  IconArticle,
+  IconBrandGithub,
+  IconList,
+} from "@tabler/icons-react";
 
-import clsx from 'clsx';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
-// Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
-const links = [
-  { name: 'Dashboard', href: '/dashboard' },
-  { name: 'Projects', href: '/dashboard/projects' },
-  { name: 'Blogs', href: '/dashboard/blogs' },
-  { name: 'Team', href: '/dashboard/team' },
-  { name: 'Gallery', href: '/dashboard/gallery' },
-  { name: 'Home', href: '/' },
+// Define the static links for the navigation
+const staticLinks = [
+  { name: "Dashboard", href: "/dashboard", Icon: IconDashboard },
+  { name: "Projects", href: "/dashboard/projects", Icon: IconBrandGithub },
+  { name: "Blogs", href: "/dashboard/blogs", Icon: IconArticle },
+  { name: "Team", href: "/dashboard/team", Icon: IconFriends },
+  { name: "Gallery", href: "/dashboard/gallery", Icon: IconPhotoEdit },
+  { name: "Home", href: "/", Icon: IconHome },
 ];
 
-export default function Navlinks({ club,isSuperAdmin }) {
+export default function Navlinks({ club, isSuperAdmin }) {
   const pathname = usePathname();
 
-  // Check if SUPER_ADMIN matches the club prop
-  
+  // Create a copy of static links to avoid mutating it directly
+  let links = [...staticLinks];
+
+  // Add Achievements link if user is super admin
+  if (isSuperAdmin) {
+    links.splice(5, 0, {
+      name: "Achievements",
+      href: "/dashboard/achievements",
+      Icon: IconList,
+    });
+  }
+
   return (
     <>
-      {links.map((link) => (
-        <Link
-          key={link.name}
-          href={link.href}
-          className={clsx(
-            "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-            {
-              "bg-sky-100 text-blue-600": pathname === link.href,
-            }
-          )}
-        >
-          <p className="hidden md:block">{link.name}</p>
-        </Link>
-      ))}
-      {isSuperAdmin && (
-        <Link
-          key="Achievements"
-          href="/dashboard/achievements"
-          className={clsx(
-            "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-            {
-              "bg-sky-100 text-blue-600": pathname === "/dashboard/achievements",
-            }
-          )}
-        >
-          <p className="hidden md:block">Achievements</p>
-        </Link>
-      )}
+      {links.map((link) => {
+        const LinkIcon = link.Icon;
+        return (
+          <Link
+            key={link.name}
+            href={link.href}
+            className={clsx(
+              "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
+              {
+                "bg-sky-100 text-blue-600": pathname === link.href,
+              }
+            )}
+          >
+            <LinkIcon className="w-6" />
+            <p className="hidden md:block">{link.name}</p>
+          </Link>
+        );
+      })}
     </>
   );
 }
