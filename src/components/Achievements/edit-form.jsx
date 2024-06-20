@@ -16,6 +16,9 @@ export default function EditAchievementForm({title,description,id}) {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="text-xl font-bold text-primary mb-4">
+        <h2>Edit Achievement</h2>
+      </div>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Title */}
         <div className="mb-4">
@@ -56,19 +59,19 @@ export default function EditAchievementForm({title,description,id}) {
             aria-describedby="description-error"
           ></textarea>
         </div>
-      </div>
-
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/achievements"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <button type="submit" className="bg-black text-white p-2 rounded-lg">
-          Edit Achievement
+        <button type="submit" className="bg-primary text-white px-3 p-2 rounded-lg">
+          Edit 
         </button>
       </div>
+      </div>
+
     </form>
   );
 }

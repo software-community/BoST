@@ -20,6 +20,9 @@ export default function Form({ memberDetails }) {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="text-xl font-bold text-primary mb-4">
+        <h2>Edit Member details</h2>
+      </div>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Team Member Name */}
         <div className="mb-4">
@@ -90,7 +93,7 @@ export default function Form({ memberDetails }) {
               className="ut-uploading:pointer-events-none"
               appearance={{
                 container: "w-1/4",
-              }}
+button:"bg-primary"              }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
                 setavatarURL(res[0].url);
@@ -133,17 +136,17 @@ export default function Form({ memberDetails }) {
               ))}
           </div>
         </div>
-      </div>
-
-      <div className="mt-6 flex justify-end gap-4">
+      <div className="mt-6 flex justify-end gap-2">
         <Link
           href="/dashboard/team"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <button type="submit" className="bg-black text-white p-2 rounded-lg">Edit Team Member</button>
+        <button type="submit" className="bg-primary text-white px-4 p-2 rounded-lg">Edit </button>
       </div>
+      </div>
+
     </form>
   );
 }

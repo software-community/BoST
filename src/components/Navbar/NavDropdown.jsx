@@ -24,7 +24,7 @@ const navdropdowndata = [
 const NavDropdown = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-lg rounded-lg py-1 outline-none  lg:px-4  bg-slate-400">Clubs</DropdownMenuTrigger>
+      <DropdownMenuTrigger className="text-lg rounded-lg py-1 outline-none  lg:px-4  bg-primary text-secondary">Clubs</DropdownMenuTrigger>
       <DropdownMenuContent className="mt-2">
         {navdropdowndata.map((item, i) => (
           <DropdownMenuItem>

@@ -19,11 +19,10 @@ export default function AddImageForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="text-xl font-bold text-primary mb-4">
+        <h2>Add an Image</h2>
+      </div>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-      
-    
-
-
         {/* Image Upload */}
         <div className="mb-4">
           <label htmlFor="image" className="mb-2 block text-sm font-medium">
@@ -45,6 +44,7 @@ export default function AddImageForm() {
               className="ut-uploading:pointer-events-none"
               appearance={{
                 container: "w-1/4",
+                button: "bg-primary",
               }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
@@ -64,19 +64,19 @@ export default function AddImageForm() {
               ))}
           </div>
         </div>
-      </div>
-
       <div className="mt-6 flex justify-end gap-4">
         <Link
           href="/dashboard/gallery"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+          className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
         >
           Cancel
         </Link>
-        <button type="submit" className="bg-black text-white p-2 rounded-lg">
+        <button type="submit" className="bg-primary text-white p-2 rounded-lg">
           Add Image
         </button>
       </div>
+      </div>
+
     </form>
   );
 }

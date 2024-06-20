@@ -1,87 +1,88 @@
 import React from "react";
 import { IconSearch } from "@tabler/icons-react"; // importing Icons from React Js
-import "../table.css";
 import Image from "next/image";
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { getAllTeamMembers } from "@/app/actions/TeamData";
 import { auth } from "@/auth";
 import { UpdateMemberBtn, DeleteMemberBtn } from "./buttons";
+import {
+  Table as ShadCnTable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default async function Table({ colData }) {
   const session = await auth();
-  const club = session?.user.email.split('@')[0];
+  const club = session?.user.email.split("@")[0];
   let UserData = await getAllTeamMembers(club);
-  
+
   let header = colData;
 
   return (
     <div>
       <form action="" className="mb-12 mt-8">
         <div className="flex justify-start w-full gap-4">
-          <div className="flex relative w-3/4  items-center justify-center">
-            <IconSearch className=" absolute left-2 text-gray-500" stroke={2} />
+          <div className="flex relative w-3/4 items-center justify-center">
+            <IconSearch className="absolute left-2 text-primary" stroke={2} />
             <input
               type="text"
               placeholder="Search members..."
-              className=" border-solid w-full border-2 border-slate-500  pl-12 py-2  rounded-md  flex place-content:center"
+              className="border-solid w-full border-2 border-primary pl-12 py-2 rounded-md flex place-content:center"
             />
           </div>
           <Link
             href="/dashboard/team/create"
-            className="bg-blue-600 flex items-center justify-center rounded-md px-2  text-white"
+            className="bg-primary flex items-center justify-center rounded-md px-4 text-white"
           >
-            <IconPlus size={20} />
+            <span className="hidden md:inline text-secondary">Create </span>
+            <IconPlus  className="md:ml-2" size={20} />
           </Link>
         </div>
       </form>
-      <table className="min-w-full text-gray-900 table-auto">
-        <thead className="TableStyle rounded-full text-left text-sm font-normal">
-          <tr>
-            {header.map((col, idx) => {
-              return (
-                <th key={idx} scope="col" className="py-5 font-medium">
+
+      {UserData.length === 0 ? (
+        <div className="text-center text-gray-500">No members added</div>
+      ) : (
+        <ShadCnTable>
+          <TableHeader>
+            <TableRow>
+              {header.map((col, idx) => (
+                <TableHead key={idx} className="w-[100px] text-primary primary">
                   {col}
-                </th>
-              );
-            })}
-          </tr>
-        </thead>
-        <tbody className="bg-white">
-          {UserData.map(
-            ({ _id, position, image, email, club, name }, index) => {
-              return (
-                <tr key={_id} className={`content-row row-${index}`}>
-                  <td className="whitespace-wrap py-3 ml-6">
-                    <div className="xl:flex xl:items-center gap-3 image-container">
-                    <Image
-                      src={image}
-                      className="rounded-full Image"
-                      width={28}
-                      height={28}
-                      alt={`${name}'s profile picture`}
-                    />
-                      <p className="MemberName">{name}</p>
-                    </div>
-                  </td>
-                  
-
-                  <td className="whitespace-wrap py-3">{email}</td>
-                  <td className="whitespace-wrap py-3">{club}</td>
-                  <td className="whitespace-wrap py-3">{position}</td>
-                  <td className="whitespace-wrap py-3 editButton">
-                    <UpdateMemberBtn id={_id} />
-
-                    <span className="font-bold mr-1 slash">/</span>
-
-                    <DeleteMemberBtn id={_id} />
-                  </td>
-                </tr>
-              );
-            }
-          )}
-        </tbody>
-      </table>
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {UserData.map(({ _id, position, image, email, club, name }) => (
+              <TableRow key={_id}>
+                <TableCell className="font-medium">
+                  <Image
+                    src={image}
+                    className="rounded-full"
+                    width={28}
+                    height={28}
+                    alt={`${name}'s profile picture`}
+                  />
+                </TableCell>
+                <TableCell className="text-sm">{name}</TableCell>
+                <TableCell className="text-sm">{email}</TableCell>
+                <TableCell>{club}</TableCell>
+                <TableCell>{position}</TableCell>
+                <TableCell>
+                  <UpdateMemberBtn id={_id} />
+                  <span className="font-bold mr-1">/</span>
+                  <DeleteMemberBtn id={_id} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </ShadCnTable>
+      )}
     </div>
   );
 }

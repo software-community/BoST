@@ -8,7 +8,8 @@ const TruncateText = ({ text, maxLength, idBlog}) => {
   const truncatedText = text.substring(0, maxLength) + '...';
 
   return (
-    <p>
+    <p >
+      Description:
       {truncatedText}
       <a className='text-slate-500' href={`/dashboard/blog/${idBlog}`}>Read More</a>
     </p>

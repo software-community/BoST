@@ -8,7 +8,7 @@ const page = () => {
 
   return (
     <div>
-       <h1 className="text-left  text-2xl font-bold">Blog Details </h1>
+       <h1 className="text-left  text-2xl font-bold text-primary">Blog Details </h1>
       <Table page="blogs" colData = {columnData}></Table>
     </div>
   )

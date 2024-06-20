@@ -36,6 +36,9 @@ const Form = () => {
 
   return (
     <form onSubmit={onSubmit}>
+       <div className="text-xl font-bold text-primary mb-4">
+        <h2>Create a Project</h2>
+      </div>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Title */}
         <div className="mb-4">
@@ -129,6 +132,7 @@ const Form = () => {
               className="ut-uploading:pointer-events-none"
               appearance={{
                 container: "w-1/4",
+button:"bg-primary"
               }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
@@ -217,9 +221,9 @@ const Form = () => {
         <div className="mt-6 flex justify-end gap-4">
           <Link
             href="/dashboard/projects"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+            className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
           >
-            cancel
+            Cancel
           </Link>
           <Button type="submit">Create Project</Button>
         </div>

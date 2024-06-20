@@ -49,6 +49,9 @@ export default function Form({ projectDetails }) {
 
   return (
     <form onSubmit={onSubmit}>
+      <div className="text-xl font-bold text-primary mb-4">
+        <h2>Update Project</h2>
+      </div>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Title */}
         <div className="mb-4">
@@ -102,23 +105,7 @@ export default function Form({ projectDetails }) {
         </div>
 
         <div className="mb-4">
-          {/* Github and related links */}
-          {/* <DynamicField
-            control={control}
-            name="repoLinks"
-            label="Github Repo and related Links"
-            placeholder="Enter link"
-          /> */}
-
-          {/* Team members */}
-          {/* <DynamicField
-            control={control}
-            name="teamMembers"
-            label="Team Members"
-            placeholder="Enter team Member"
-          /> */}
-
-          {/* Status */}
+         
           <div className="mb-4">
             <label htmlFor="status" className="mb-2 block text-sm font-medium">
               Status
@@ -162,6 +149,7 @@ export default function Form({ projectDetails }) {
                 className="ut-uploading:pointer-events-none"
                 appearance={{
                   container: "w-1/4",
+button:"bg-primary"                  
                 }}
                 onClientUploadComplete={(res) => {
                   alert("Upload Completed");
@@ -194,14 +182,6 @@ export default function Form({ projectDetails }) {
               placeholder="Enter GitHub link (optional)"
               // aria-describedby="github-error"
             />
-            {/* <div id="github-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.github &&
-              state.errors.github.map((error) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div> */}
           </div>
 
           <div className="mb-4">
@@ -253,7 +233,7 @@ export default function Form({ projectDetails }) {
         <div className="mt-6 flex justify-end gap-4">
           <Link
             href="/dashboard/projects"
-            className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+            className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
           >
             Cancel
           </Link>

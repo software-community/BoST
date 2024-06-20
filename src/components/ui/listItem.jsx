@@ -3,8 +3,8 @@ import React from "react";
 
 const ListItem = ({title, description}) => {
   return (
-    <div className="Achievement overflow-hidden flex items-center gap-4 border-r p-4 hover:bg-gray-100 duration-200 sm:p-6 lg:p-8">
-      <div className="AchieveIcon flex flex-none h-12 w-12 items-center justify-center rounded-md bg-gray-100">
+    <div className="Achievement overflow-hidden flex items-center gap-4 border-r p-4 hover:bg-secondary duration-200 sm:p-6 lg:p-8">
+      <div className="AchieveIcon flex flex-none h-12 w-12 items-center justify-center rounded-md bg-secondary">
         <img src="/achievement.png" className="h-6 w-6" />
       </div>
       <div className="grid gap-1">

@@ -21,6 +21,12 @@ export default withUt({
       },
     },
     extend: {
+      colors: {
+        'primary': '#020659',
+        'secondary':"#F2F2F2",
+        'tertiary':"#023373",
+        'primary-text':'#023059'
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
