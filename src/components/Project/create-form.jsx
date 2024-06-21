@@ -225,7 +225,7 @@ button:"bg-primary"
           >
             Cancel
           </Link>
-          <Button type="submit">Create Project</Button>
+          <Button type="submit" >Create Project</Button>
         </div>
       </div>
     </form>

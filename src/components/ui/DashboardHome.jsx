@@ -133,7 +133,7 @@ const Footer = () => {
     <footer className="mt-12">
       <p className="text-center text-zinc-400">
         Made with ❤️ by{" "}
-        <Link href="" className="text-red-300 hover:underline">
+        <Link href="" className="text-primary hover:underline font-bold tracking-widest">
           SoftCom
         </Link>
       </p>
