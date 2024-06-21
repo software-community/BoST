@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import Project from "@/models/project";
+import getProjectModel from "@/models/project";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -47,6 +47,7 @@ export async function createProject(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
+    const Project=await getProjectModel()
     await Project.create({
       title,
       description,
@@ -102,6 +103,7 @@ export async function updateProject(_id, prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
+    const Project=await getProjectModel()
     await Project.findByIdAndUpdate(_id, {
       title,
       description,
@@ -127,6 +129,7 @@ export async function deleteProject(id) {
   // Connect to the database
   try {
     await connectMongoDB();
+    const Project=await getProjectModel()
 
     // Attempt to delete the project by their ID
     const result = await Project.findByIdAndDelete(id);

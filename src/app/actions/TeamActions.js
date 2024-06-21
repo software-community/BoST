@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import TeamMember from "@/models/teamMember";
+import getTeamMemberModel from "@/models/teamMember";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -40,6 +40,7 @@ export async function createTeamMember(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
+    const TeamMember = await getTeamMemberModel();
     await TeamMember.create({ name, position, image, email, club });
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -53,7 +54,7 @@ export async function createTeamMember(prevState, formData) {
   redirect("/dashboard/team");
 }
 
-// here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
+// Here this _id is passed through binding and not directly as it is a sensitive information that may be used mischievously
 export async function updateTeamMember(_id, prevState, formData) {
   const session = await auth();
   const _club = session?.user.email.split("@")[0];
@@ -70,7 +71,7 @@ export async function updateTeamMember(_id, prevState, formData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing or invalid fields. Failed to create team member.",
+      message: "Missing or invalid fields. Failed to update team member.",
     };
   }
 
@@ -80,6 +81,7 @@ export async function updateTeamMember(_id, prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
+    const TeamMember = await getTeamMemberModel();
     await TeamMember.findByIdAndUpdate(_id, {
       name,
       position,
@@ -89,7 +91,7 @@ export async function updateTeamMember(_id, prevState, formData) {
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {
-      message: "Database Error: Failed to create team member.",
+      message: "Database Error: Failed to update team member.",
     };
   }
 
@@ -102,6 +104,7 @@ export async function deleteTeamMember(id) {
   // Connect to the database
   try {
     await connectMongoDB();
+    const TeamMember = await getTeamMemberModel();
 
     // Attempt to delete the team member by their ID
     const result = await TeamMember.findByIdAndDelete(id);

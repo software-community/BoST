@@ -5,8 +5,8 @@ const projectSchema = new Schema(
     title: String,
     description: String,
     members: String,
-    github:String,
-    website:String,
+    github: String,
+    website: String,
     image: String,
     status: String,
     club: String,
@@ -16,10 +16,14 @@ const projectSchema = new Schema(
   }
 );
 
-const Project =
-  mongoose.models?.Project || mongoose.model("Project", projectSchema);
+async function getProjectModel() {
+  if (!mongoose.models.Project) {
+    return mongoose.model("Project", projectSchema);
+  }
+  return mongoose.models.Project;
+}
 
-export default Project;
+export default getProjectModel;
 
 export function setIcons(l) {
   if (!l.icon) {
