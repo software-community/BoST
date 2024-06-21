@@ -1,5 +1,5 @@
-import Gallery from "@/models/Gallery";
 import connectMongoDB from "@/lib/db";
+import getGalleryModel from "@/models/Gallery";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function getAllImages(club) {
@@ -7,6 +7,7 @@ export async function getAllImages(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
+    const Gallery = await getGalleryModel();
     const gallery = await Gallery.findOne({ club }); // Find the gallery for the specified club
     if (!gallery) return [];
 
@@ -27,6 +28,7 @@ export async function getImageByName(club, imageName) {
 
   try {
     await connectMongoDB(); // Connect to the database
+    const Gallery = await getGalleryModel();
     const gallery = await Gallery.findOne({ club }); // Find the gallery for the specified club
 
     if (!gallery) {

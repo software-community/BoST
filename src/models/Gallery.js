@@ -15,7 +15,11 @@ const gallerySchema = new Schema(
   }
 );
 
-const Gallery =
-  mongoose.models?.Gallery || mongoose.model("Gallery", gallerySchema);
+async function getGalleryModel() {
+  if (!mongoose.models.Gallery) {
+    return mongoose.model("Gallery", gallerySchema);
+  }
+  return mongoose.models.Gallery;
+}
 
-export default Gallery;
+export default getGalleryModel;

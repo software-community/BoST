@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import Gallery from "@/models/Gallery";
+import getGalleryModel from "@/models/Gallery";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -38,6 +38,7 @@ export async function addImage(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
+    const Gallery = await getGalleryModel();
     const gallery = await Gallery.findOne({ club });
 
     if (gallery) {
@@ -60,6 +61,7 @@ export async function addImage(prevState, formData) {
   revalidatePath("/dashboard/gallery");
   redirect("/dashboard/gallery");
 }
+
 export async function updateGalleryImageURL(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
@@ -72,14 +74,14 @@ export async function updateGalleryImageURL(prevState, formData) {
 
   if (!newUrl) {
     return {
-      message: "new URL are required.",
+      message: "new URL is required.",
       status: 400,
     };
   }
 
   try {
     await connectMongoDB(); // Connect to the database
-
+    const Gallery = await getGalleryModel();
     // Find the gallery for the specified club
     const gallery = await Gallery.findOne({ club });
 
@@ -102,9 +104,8 @@ export async function updateGalleryImageURL(prevState, formData) {
 
     // Update the image URL
     gallery.images[imageIndex].url = newUrl;
-    // gallery.images[imageIndex].name = name;
 
-    // // Save the updated gallery
+    // Save the updated gallery
     await gallery.save();
   } catch (error) {
     console.error("Error updating image:", error);
@@ -113,6 +114,7 @@ export async function updateGalleryImageURL(prevState, formData) {
       status: 500,
     };
   }
+
   revalidatePath("/dashboard/gallery");
   redirect("/dashboard/gallery");
 }
@@ -124,7 +126,7 @@ export async function deleteImageByName(imageName) {
   // Connect to the database
   try {
     await connectMongoDB();
-
+    const Gallery = await getGalleryModel();
     const gallery = await Gallery.findOne({ club });
 
     if (!gallery) {

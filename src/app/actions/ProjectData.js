@@ -1,5 +1,5 @@
 import connectMongoDB from "@/lib/db";
-import Project from "@/models/project";
+import getProjectModel from "@/models/project";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { unstable_noStore as noStore } from "next/cache";
@@ -10,6 +10,7 @@ export async function getProjectById(projectid) {
   await connectMongoDB();
 
   try {
+    const Project=await getProjectModel()
     const foundProject = await Project.findOne({ _id: projectid });
    
     if (!foundProject) {
@@ -31,6 +32,7 @@ export async function getAllProjects(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
+    const Project=await getProjectModel()
     const projects = await Project.find({club}); // Fetch all projects
 
     return projects; // Return the fetched projects
