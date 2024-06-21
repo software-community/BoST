@@ -4,14 +4,17 @@ import NavDropdown from "./NavDropdown";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
 import { handleLogin } from "@/app/actions/authentication";
+import { usePathname } from "next/navigation";
 
 export default function Navbar({ session }) {
+  const pathname = usePathname();
+  if (pathname.startsWith("/dashboard")) return null;
   return (
     <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
-      <Sheet>
+      <Sheet >
         <SheetTrigger asChild>
-          <Button className="lg:hidden" size="icon" variant="outline">
-            <MenuIcon className="h-6 w-6" />
+          <Button className="lg:hidden rounded-md overflow-hidden p-0" size="icon" variant="outline">
+            <MenuIcon className="h-full w-full  bg-primary text-secondary" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
@@ -24,12 +27,12 @@ export default function Navbar({ session }) {
             {session ? (
               <>
                 <Link
-                  className="flex w-full items-center py-1  border rounded-lg hover:bg-slate-400 transition-all px-2 border-black text-lg font-semibold"
+                  className="flex w-full items-center py-1  border-2 rounded-lg bg-white transition-all px-2 border-primary text-lg font-semibold"
                   href="/dashboard"
                 >
                   Dashboard
                 </Link>
-                <NavDropdown />
+                <NavDropdown  />
               </>
             ) : (
               <>
@@ -59,7 +62,7 @@ export default function Navbar({ session }) {
             <NavDropdown />
 
             <Link
-              className="flex w-full border-2 hover:bg-slate-400 transition-all border-black items-center py-2  rounded-lg px-2 text-lg font-semibold"
+              className="flex w-full border-2 hover:bg-gray-300 transition-all border-primary items-center py-2  rounded-lg px-2 text-lg font-semibold"
               href="/dashboard"
             >
               Dashboard
