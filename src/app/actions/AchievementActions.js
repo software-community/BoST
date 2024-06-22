@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import Achievement from "@/models/achievement";
+import getAchievementModel from "@/models/achievement";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
@@ -37,6 +37,7 @@ export async function addAchievement(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
+    const Achievement = getAchievementModel(); // Get the achievement model
     const achievement = await Achievement.findOne({ club });
 
     if (achievement) {
@@ -91,6 +92,7 @@ export async function updateAchievement(prevState, formData) {
     await connectMongoDB(); // Connect to the database
 
     // Find the achievement for the specified club
+    const Achievement = getAchievementModel(); // Get the achievement model
     const achievement = await Achievement.findOne({ club });
 
     if (!achievement) {
@@ -137,6 +139,7 @@ export async function deleteAchievementById(id) {
   // Connect to the database
   try {
     await connectMongoDB();
+    const Achievement = getAchievementModel(); // Get the achievement model
 
     const achievement = await Achievement.findOne({ club });
 

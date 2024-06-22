@@ -1,5 +1,5 @@
 import connectMongoDB from "@/lib/db";
-import Blog from "@/models/blog";
+import getBlogModel from "@/models/blog";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function getBlogById(blogid) {
@@ -8,6 +8,7 @@ export async function getBlogById(blogid) {
   await connectMongoDB();
 
   try {
+    const Blog = getBlogModel();
     const foundBlog = await Blog.findOne({ _id: blogid });
     if (!foundBlog) {
       return { error: "Blog not found", status: 404 };
@@ -29,6 +30,7 @@ export async function getAllBlogs(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
+    const Blog = getBlogModel();
     const blogs = await Blog.find({club}); // Fetch all blogs
 
     return blogs; // Return the fetched blogs

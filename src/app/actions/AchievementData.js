@@ -1,4 +1,4 @@
-import Achievement from "@/models/achievement";
+import getAchievementModel from "@/models/achievement";
 import connectMongoDB from "@/lib/db";
 import { unstable_noStore as noStore } from "next/cache";
 
@@ -6,7 +6,7 @@ export async function getAllAchievements(club) {
   noStore(); // Ensure no caching is done
   try {
     await connectMongoDB(); // Connect to the database
-
+    const Achievement = getAchievementModel(); // Get the achievement model
     const achievement = await Achievement.findOne({ club }); // Find the achievement for the specified club
     if (!achievement) return []; // If no achievement found, return an empty array
 
@@ -28,6 +28,7 @@ export async function getAchievementById(club, achievementId) {
   try {
     await connectMongoDB(); // Connect to the database
 
+    const Achievement = getAchievementModel(); // Get the achievement model
     const achievement = await Achievement.findOne({ club });
 
     if (!achievement) {

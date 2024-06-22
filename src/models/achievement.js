@@ -12,8 +12,13 @@ const achievementSchema = new Schema(
   }
 );
 
-const Achievement =
-  mongoose.models?.Achievement ||
-  mongoose.model("Achievement", achievementSchema);
 
-export default Achievement;
+function getAchievementModel() {
+  if(!mongoose.models.Achievement){
+    mongoose.model("Achievement", achievementSchema);
+  } 
+  return mongoose.models.Achievement;
+}
+
+
+export default getAchievementModel;

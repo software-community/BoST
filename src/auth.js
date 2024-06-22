@@ -1,7 +1,7 @@
 import NextAuth, { AuthError } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import connectMongoDB from "./lib/db";
-import Admin from "./models/admin";
+import getAdminModel from "./models/admin";
 import { NextResponse } from "next/server";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -20,6 +20,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const { email, name, image, id } = user;
           await connectMongoDB();
+          const Admin = getAdminModel();
           const alreadyUserexists = await Admin.findOne({ email });
           if (!alreadyUserexists) return false;
           // await Admin.create({email,name,image})

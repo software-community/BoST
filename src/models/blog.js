@@ -12,6 +12,11 @@ const blogSchema=new Schema(
     }
 );
 
-const Blog=mongoose.models?.Blog|| mongoose.model("Blog",blogSchema)
+function getBlogModel() {
+  if(!mongoose.models.Blog){
+    mongoose.model("Blog", blogSchema);
+  } 
+  return mongoose.models.Blog;
+}
 
-export default Blog
+export default getBlogModel;
