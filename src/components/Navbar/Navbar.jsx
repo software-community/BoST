@@ -92,7 +92,9 @@ export default function Navbar({ session }) {
           </>
         )}
       </nav>
-      <MountainIcon onClick className="lg:hidden" />
+      <Link href="/">
+      <MountainIcon  className="lg:hidden" />
+      </Link>
     </header>
   );
 }
