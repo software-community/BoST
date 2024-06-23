@@ -16,10 +16,24 @@ export default function Navbar({ session }) {
     setIsSheetOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'L' || event.key === 'l') {
+        handleLogin();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   if (pathname.startsWith("/dashboard")) return null;
 
   return (
-    <header className="flex h-20 w-full justify-between shrink-0 items-center px-4 md:px-6">
+    <header className="flex select-none h-[10vh] w-full justify-between shrink-0 items-center px-4 md:px-6">
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button className="lg:hidden rounded-md overflow-hidden p-0" size="icon" variant="outline">
@@ -84,9 +98,10 @@ export default function Navbar({ session }) {
                 type="submit"
                 value="google"
                 name="action"
-                className="flex w-full items-center py-2 text-lg font-semibold"
+                className="flex w-full items-center py-2 bg-gray-800 hover:bg-gray-600 text-lg font-semibold"
               >
-                Login
+                <span>Login</span>
+                <span className="bg-gray-700 h-1/2 text-[12px] p-[8px] ml-2 font-bold rounded-sm flex items-center justify-center px-1">L</span>
               </Button>
             </form>
           </>

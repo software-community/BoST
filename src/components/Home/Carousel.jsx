@@ -36,11 +36,11 @@ export default function GalleryCarousel() {
             />
           </CarouselItem>
         </CarouselContent>
-        <CarouselPrevious className="absolute top-1/2 -translate-y-1/2 left-4 z-10 text-white hover:text-primary transition-colors">
-          <ChevronLeftIcon className="w-8 h-8" />
+        <CarouselPrevious className="absolute top-1/2  -translate-y-1/2 left-4 z-10 text-white hover:text-primary transition-colors">
+          <ChevronLeftIcon />
         </CarouselPrevious>
         <CarouselNext className="absolute top-1/2 -translate-y-1/2 right-4 z-10 text-white hover:text-primary transition-colors">
-          <ChevronRightIcon className="w-8 h-8" />
+          <ChevronRightIcon  />
         </CarouselNext>
        
       </Carousel>
