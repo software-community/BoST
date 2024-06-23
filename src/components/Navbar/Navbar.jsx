@@ -84,7 +84,7 @@ export default function Navbar({ session }) {
           <>
             <NavDropdown />
             <Link
-              className="flex w-full border-2 hover:bg-gray-300 transition-all border-primary items-center py-2 rounded-lg px-2 text-lg font-semibold"
+              className="flex w-full bg-gray-900 hover:bg-gray-700 text-secondary transition-all border-primary items-center py-2 rounded-lg px-2 text-lg font-semibold"
               href="/dashboard"
             >
               Dashboard

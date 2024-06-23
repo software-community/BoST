@@ -1,9 +1,11 @@
 import getAchievementModel from "@/models/achievement";
 import connectMongoDB from "@/lib/db";
 import { unstable_noStore as noStore } from "next/cache";
+import { auth } from "@/auth";
 
 export async function getAllAchievements(club) {
   noStore(); // Ensure no caching is done
+  
   try {
     await connectMongoDB(); // Connect to the database
     const Achievement = getAchievementModel(); // Get the achievement model

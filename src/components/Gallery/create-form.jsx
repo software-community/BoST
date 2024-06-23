@@ -54,7 +54,11 @@ export default function AddImageForm() {
                 alert(`ERROR! ${error.message}`);
               }}
             />
+            
+            
           </div>
+          <p className="text-gray-500 text-sm mt-8">A smaller resolution image around 200kbs is preferred as it is a part of gallery.</p>
+          <p className="text-gray-500 text-sm mb-8 mt-4"> ProTip: Try to keep total images a multiple of 3 or 2. </p>
           <div id="image-error" aria-live="polite" aria-atomic="true">
             {state.errors?.image &&
               state.errors.image.map((error) => (
