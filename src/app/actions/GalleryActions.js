@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import getGalleryModel from "@/models/Gallery";
+import Gallery from "@/models/Gallery";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -38,7 +38,6 @@ export async function addImage(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
-    const Gallery = await getGalleryModel();
     const gallery = await Gallery.findOne({ club });
 
     if (gallery) {
@@ -66,7 +65,7 @@ export async function updateGalleryImageURL(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
   const club = session?.user.email.split("@")[0];
-  console.log(formData);
+ 
 
   // Extract the image name (UUID) and new URL from form data
   const name = formData.get("name");
@@ -81,7 +80,6 @@ export async function updateGalleryImageURL(prevState, formData) {
 
   try {
     await connectMongoDB(); // Connect to the database
-    const Gallery = await getGalleryModel();
     // Find the gallery for the specified club
     const gallery = await Gallery.findOne({ club });
 
@@ -126,7 +124,6 @@ export async function deleteImageByName(imageName) {
   // Connect to the database
   try {
     await connectMongoDB();
-    const Gallery = await getGalleryModel();
     const gallery = await Gallery.findOne({ club });
 
     if (!gallery) {

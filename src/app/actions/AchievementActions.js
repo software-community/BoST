@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import getAchievementModel from "@/models/achievement";
+import Achievement from "@/models/achievement";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
@@ -32,12 +32,12 @@ export async function addAchievement(prevState, formData) {
 
   // Extract validated data
   const { title, description } = validatedFields.data;
-  console.log("ye rha title ,desc", title, description);
+ 
 
   // Insert data into the database
   try {
     await connectMongoDB();
-    const Achievement = getAchievementModel(); // Get the achievement model
+    
     const achievement = await Achievement.findOne({ club });
 
     if (achievement) {
@@ -51,7 +51,6 @@ export async function addAchievement(prevState, formData) {
     }
   } catch (error) {
     // If a database error occurs, return a more specific error.
-    console.log("error", error);
     return {
       message: "Database Error: Failed to add achievement.",
     };
@@ -92,7 +91,7 @@ export async function updateAchievement(prevState, formData) {
     await connectMongoDB(); // Connect to the database
 
     // Find the achievement for the specified club
-    const Achievement = getAchievementModel(); // Get the achievement model
+  
     const achievement = await Achievement.findOne({ club });
 
     if (!achievement) {
@@ -139,7 +138,7 @@ export async function deleteAchievementById(id) {
   // Connect to the database
   try {
     await connectMongoDB();
-    const Achievement = getAchievementModel(); // Get the achievement model
+
 
     const achievement = await Achievement.findOne({ club });
 

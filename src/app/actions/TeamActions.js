@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import getTeamMemberModel from "@/models/teamMember";
+import TeamMember from "@/models/teamMember";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -40,10 +40,10 @@ export async function createTeamMember(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
-    const TeamMember = await getTeamMemberModel();
     await TeamMember.create({ name, position, image, email, club });
   } catch (error) {
     // If a database error occurs, return a more specific error.
+    console.log(error)
     return {
       message: "Database Error: Failed to create team member.",
     };
@@ -77,11 +77,11 @@ export async function updateTeamMember(_id, prevState, formData) {
 
   // Extract validated data
   const { name, position, image, email } = validatedFields.data;
+  
 
   // Insert data into the database
   try {
     await connectMongoDB();
-    const TeamMember = await getTeamMemberModel();
     await TeamMember.findByIdAndUpdate(_id, {
       name,
       position,
@@ -104,7 +104,6 @@ export async function deleteTeamMember(id) {
   // Connect to the database
   try {
     await connectMongoDB();
-    const TeamMember = await getTeamMemberModel();
 
     // Attempt to delete the team member by their ID
     const result = await TeamMember.findByIdAndDelete(id);

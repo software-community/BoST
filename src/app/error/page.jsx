@@ -19,7 +19,7 @@ export default function AuthErrorPage() {
   const error = search.get("error");
 
   return (
-    <div className="flex flex-col gap-4 text-xl items-center justify-center w-full bg-black h-screen">
+    <div className="flex flex-col h-[90vh] gap-4 text-xl items-center justify-center w-full ">
       <div className=" hover:cursor-pointer font-normal text-gray-700 dark:text-gray-400">
         <Link className="underline" href="/api/auth/signin">
           {" "}

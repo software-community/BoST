@@ -42,7 +42,7 @@ const NavDropDownData = [
 
 const NavDropDown = () => {
   return (
-    <div className="flex h-auto justify-center items-center border-primary border-2  rounded-md px-3 py-1 ">
+    <div className="flex h-auto justify-center items-center border-primary border-2   px-3 py-1 ">
       <FlyoutLink FlyoutContent={PricingContent}>Clubs</FlyoutLink>
     </div>
   );

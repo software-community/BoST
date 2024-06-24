@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
 import connectMongoDB from "@/lib/db";
-import getBlogModel from "@/models/blog";
+import Blog from "@/models/blog";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
@@ -39,7 +39,6 @@ export async function createBlog(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
-    const Blog = getBlogModel();
     await Blog.create({ title, content, author, club });
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -79,7 +78,6 @@ export async function updateBlog(_id, prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
-    const Blog = getBlogModel();
     await Blog.findByIdAndUpdate(_id, { title, content, author });
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -99,7 +97,6 @@ export async function deleteBlog(id) {
     await connectMongoDB();
 
     // Attempt to delete the blog by their ID
-    const Blog = getBlogModel();
     const result = await Blog.findByIdAndDelete(id);
 
     // Check if the blog was not found

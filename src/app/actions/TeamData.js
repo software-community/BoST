@@ -1,5 +1,5 @@
 import connectMongoDB from "@/lib/db";
-import getTeamMemberModel from "@/models/teamMember";
+import TeamMember from "@/models/teamMember";
 import { unstable_noStore as noStore } from "next/cache";
 
 export async function getTeamMemberById(memberid) {
@@ -8,7 +8,6 @@ export async function getTeamMemberById(memberid) {
   await connectMongoDB();
 
   try {
-    const TeamMember = await getTeamMemberModel();
     const foundMember = await TeamMember.findOne({ _id: memberid });
     if (!foundMember) {
       return { error: "Team Member not found", status: 404 };
@@ -29,7 +28,6 @@ export async function getAllTeamMembers(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
-    const TeamMember = await getTeamMemberModel();
     const members = await TeamMember.find({ club }); // Fetch all team members in the club
 
     return members; // Return the fetched team members

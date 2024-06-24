@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer/Footer";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { auth } from "@/auth";
@@ -18,6 +19,7 @@ export default async function RootLayout({ children }) {
       <body className={`${inter.className} bg-secondary`}>
         <Navbar session={session} />
         {children}
+        <Footer/>
       </body>
     </html>
   );
