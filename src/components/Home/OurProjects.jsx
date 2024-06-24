@@ -44,6 +44,10 @@ const OurProjects = async () => {
           <ProjectCard
             key={index}
             title={project.title}
+            github={project.github}
+            website={project.website}
+            members={project.members}
+            status={project.status}
             description={project.description}
             image={project.image}
           />

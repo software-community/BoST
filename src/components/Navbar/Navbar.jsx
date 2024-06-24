@@ -10,7 +10,6 @@ import { usePathname, useRouter } from "next/navigation";
 
 export default function Navbar({ session }) {
   const pathname = usePathname();
-  const router = useRouter();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   useEffect(() => {
@@ -34,7 +33,7 @@ export default function Navbar({ session }) {
   if (pathname.startsWith("/dashboard")) return null;
 
   return (
-    <header className="flex select-none shadow-lg h-[10vh] bg-[#fefefe] w-full justify-between shrink-0 items-center px-4 md:px-6">
+    <header className="flex select-none  h-[10vh] bg-secondary w-full justify-between shrink-0 items-center px-4 md:px-6">
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button

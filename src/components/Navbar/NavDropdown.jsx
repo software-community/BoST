@@ -12,15 +12,15 @@ const NavDropDownData = [
   },
   {
     text: "Automotive",
-    link: "/automotive",
+    link: "/automotiveclub  ",
   },
   {
     text: "CIM",
-    link: "/cim",
+    link: "/cimclub",
   },
   {
     text: "Monochrome",
-    link: "/monochrome",
+    link: "/monochromeclub",
   },
   {
     text: "Robotics",
@@ -28,7 +28,7 @@ const NavDropDownData = [
   },
   {
     text: "Coding",
-    link: "/coding",
+    link: "/codingclub",
   },
   {
     text: "FINCOM",
@@ -36,7 +36,11 @@ const NavDropDownData = [
   },
   {
     text: "Zenith",
-    link: "/zenith",
+    link: "/zenithclub",
+  },
+  {
+    text: "meadityaraj0001",
+    link: "/meadityaraj0001",
   },
 ];
 
