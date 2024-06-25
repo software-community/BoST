@@ -8,6 +8,7 @@ import { auth } from "@/auth";
 
 const FormSchema = z.object({
   title: z.string().min(1, "Title is required."),
+  brief: z.string().min(1, "Brief is required.").max(100,"Brief is too Long, keep it below 100 characters"),
   content: z.string().min(1, "Content is required."),
   author: z.string().min(1, "Author is required."),
   club: z.string().min(1, "Club is required."),
@@ -19,6 +20,7 @@ export async function createBlog(prevState, formData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
+    brief: formData.get("brief"),
     content: formData.get("content"),
     author: formData.get("author"),
     club: _club,
@@ -34,12 +36,12 @@ export async function createBlog(prevState, formData) {
   }
 
   // Extract validated data
-  const { title, content, author, club } = validatedFields.data;
+  const { title, brief, content, author, club } = validatedFields.data;
 
   // Insert data into the database
   try {
     await connectMongoDB();
-    await Blog.create({ title, content, author, club });
+    await Blog.create({ title, brief, content, author, club });
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {
@@ -59,6 +61,7 @@ export async function updateBlog(_id, prevState, formData) {
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
+    brief: formData.get("brief"),
     content: formData.get("content"),
     author: formData.get("author"),
     club: _club,
@@ -73,12 +76,12 @@ export async function updateBlog(_id, prevState, formData) {
   }
 
   // Extract validated data
-  const { title, content, author } = validatedFields.data;
+  const { title, brief, content, author } = validatedFields.data;
 
   // Insert data into the database
   try {
     await connectMongoDB();
-    await Blog.findByIdAndUpdate(_id, { title, content, author });
+    await Blog.findByIdAndUpdate(_id, { title, brief, content, author });
   } catch (error) {
     // If a database error occurs, return a more specific error.
     return {

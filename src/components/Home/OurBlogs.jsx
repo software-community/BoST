@@ -1,6 +1,4 @@
 import React from "react";
-import TeamMember from "../ui/TeamMember";
-import { getAllTeamMembers } from "@/app/actions/TeamData";
 import { getAllBlogs } from "@/app/actions/BlogData";
 import { BlogCard } from "../ui/BlogCard";
 
@@ -13,11 +11,12 @@ export default async function OurBlogs() {
       </h2>
 
       <div className="gap-6 flex flex-row flex-wrap justify-center items-center w-full ">
-        {Blogs.map(({ id, title, content, author, club }, index) => (
+        {Blogs.map(({ id, title, brief, author, club }, index) => (
           <BlogCard
             key={id}
+            id={id}
             title={title}
-            content={content}
+            brief={brief}
             author={author}
             club={club}
           />

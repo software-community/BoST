@@ -76,7 +76,7 @@ export default function Navbar({ session }) {
         </SheetContent>
       </Sheet>
       <Link className="mr-6 hidden lg:flex" href="/">
-        <img src="./Logo.png" className=" h-[60px]"></img>
+        <img src="/Logo.png" className=" h-[60px]"></img>
       </Link>
       <nav className="ml-auto hidden lg:flex gap-6">
         {session ? (
@@ -109,7 +109,7 @@ export default function Navbar({ session }) {
         )}
       </nav>
       <Link href="/" className="lg:hidden">
-        <img src="./Logo.png" className=" h-[60px]"></img>
+        <img src="/Logo.png" className=" h-[60px]"></img>
       </Link>
     </header>
   );

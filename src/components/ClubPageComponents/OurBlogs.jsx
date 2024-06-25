@@ -13,11 +13,12 @@ export default async function OurBlogs({club}) {
       </h2>
 
       <div className="gap-6 flex flex-row flex-wrap justify-center items-center w-full ">
-        {Blogs.map(({ id, title, content, author, club }, index) => (
+        {Blogs.map(({ id, title, brief, author, club }, index) => (
           <BlogCard
             key={id}
             title={title}
-            content={content}
+            id={id}
+            brief={brief}
             author={author}
             club={club}
           />

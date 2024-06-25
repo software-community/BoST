@@ -3,7 +3,7 @@ import React from 'react'
 import Table from '@/components/Blog/table';
 
 const page = () => {
-  let columnData = ["Title", "Content", "Author", "Club", "Edit/Delete"];
+  let columnData = ["Title", "Brief", "Author", "Club", "Edit/Delete"];
 
 
   return (
