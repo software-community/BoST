@@ -22,3 +22,24 @@ body {
   font-style: normal;
 }
 
+:root {
+  --rdp-accent-color: indigo;
+  --rdp-background-color: black;
+}
+
+
+.events {
+  position: relative;
+}
+/* Strikeout */
+.events::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  z-index: 1;
+  transform: rotate(-45deg);
+}

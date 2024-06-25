@@ -5,7 +5,7 @@ import "react-quill/dist/quill.snow.css";
 import parse from "html-react-parser";
 export default function Editor({value,setValue}) {
   // const [value, setValue] = useState("");
-  // console.log(value)
+  console.log(value)
   // Customize the toolbar options
   const modules = {
     toolbar: [
