@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import {
   AlertDialog,
@@ -26,7 +26,7 @@ export function CreateEventModal({ Date, open, onOpenChange }) {
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Create Event on {Date}</AlertDialogTitle>
+          <AlertDialogTitle>Create Event </AlertDialogTitle>
 
           <form onSubmit={handleSubmit}>
             {/* Title */}
@@ -147,7 +147,12 @@ export function CreateEventModal({ Date, open, onOpenChange }) {
 
             <AlertDialogFooter>
               <AlertDialogCancel>Close</AlertDialogCancel>
-              <button type="submit" className="bg-primary text-white p-2">Create Event</button>
+              <button
+                type="submit"
+                className="bg-primary text-white rounded-md p-2"
+              >
+                Create Event
+              </button>
             </AlertDialogFooter>
           </form>
         </AlertDialogHeader>

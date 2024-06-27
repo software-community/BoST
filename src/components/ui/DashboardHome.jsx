@@ -102,7 +102,7 @@ const AboutBlock = ({ isSuperAdmin }) => (
         </span>
       </p>
     </Link>
-    <Link href="/dashboard/gallery">
+    <Link href="/dashboard/events">
       <p className="cursor-pointer">
         /Events{" "}
         <span className="text-zinc-400">

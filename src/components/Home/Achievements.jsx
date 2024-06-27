@@ -3,7 +3,7 @@ import ListItem from '../ui/listItem';
 import { getAllAchievements } from '@/app/actions/AchievementData';
 
 
-// const achievementsData = [
+
 //   {
 //     title: "First",
 //     description: "This is the first description",

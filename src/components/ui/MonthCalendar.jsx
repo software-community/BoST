@@ -12,7 +12,9 @@ function CustomDayContent({ date, eventDates }) {
     <span style={{ position: "relative", overflow: "visible" }}>
       {isEventDay ? (
         <div>
-          <span className="bg-primary text-white p-1 ">{date.getDate()}</span>
+          <span className="bg-primary text-white px-2 rounded-full ">
+            {date.getDate()}
+          </span>
         </div>
       ) : (
         date.getDate()
@@ -62,7 +64,7 @@ export default function Calendar({ serializedEvents }) {
           ),
           Caption: CustomCaptionComponent,
         }}
-        className="text-lg sm:text-xl"
+        className="text-lg  sm:text-xl"
       />
       {eventDaySelected && open && (
         <EventDetailDialog
@@ -72,7 +74,6 @@ export default function Calendar({ serializedEvents }) {
           onOpenChange={setOpen}
         />
       )}
-     
     </>
   );
 }

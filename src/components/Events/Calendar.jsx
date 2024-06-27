@@ -12,7 +12,7 @@ function CustomDayContent({ date, eventDates }) {
     <span style={{ position: "relative", overflow: "visible" }}>
       {isEventDay ? (
         <div>
-          <span className="bg-primary text-white p-1 ">{date.getDate()}</span>
+          <span className="bg-primary text-white rounded-full px-2 ">{date.getDate()}</span>
         </div>
       ) : (
         date.getDate()

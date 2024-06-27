@@ -43,7 +43,7 @@ export function ViewUpdateEventModal({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Update Event on {Date}</AlertDialogTitle>
+          <AlertDialogTitle>Update Event</AlertDialogTitle>
 
           <form onSubmit={handleSubmit}>
             {/* Title */}
@@ -166,7 +166,7 @@ export function ViewUpdateEventModal({
               </div>
             </div>
 
-            <AlertDialogFooter className="flex flex-col gap-2 flex-col-reverse" >
+            <AlertDialogFooter className="flex flex-col gap-2 flex-col-reverse">
               <AlertDialogCancel>Close</AlertDialogCancel>
               <button
                 type="button"
@@ -175,7 +175,10 @@ export function ViewUpdateEventModal({
               >
                 Delete Event
               </button>
-              <button type="submit" className="bg-primary  text-white p-2 rounded-md">
+              <button
+                type="submit"
+                className="bg-primary  text-white p-2 rounded-md"
+              >
                 Update Event
               </button>
             </AlertDialogFooter>

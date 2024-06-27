@@ -1,8 +1,9 @@
-import { MonthCalendar } from "@/components/Events/Calendar";
-import { auth } from "@/auth";
+import React from "react";
 import { getEventsForClub } from "@/app/actions/EventData";
+import Calendar from "../ui/MonthCalendar";
 
-const Page = async () => {
+const OurSchedule = async ({club}) => {
+  const fetchedEvents = await getEventsForClub(club);
   const monthNames = [
     "January",
     "February",
@@ -20,28 +21,21 @@ const Page = async () => {
   const month = new Date().getMonth(); // Call the function to get the month
   const year = new Date().getFullYear();
   const monthName = monthNames[month];
-  const session = await auth();
-  const club = session?.user.email.split("@")[0];
-  const events = await getEventsForClub(club);
-  // console.log(events)
-
   return (
-    <>
-      <div className="w-full h-full flex items-center justify-center flex-col">
+    <div className="w-full min-h-[50vh] py-12 flex items-center flex-col justify-center">
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
-        <div className="space-y-2 mb-0">
+        <div className="space-y-2 mb-12">
           <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl">
             {monthName} {year} Schedule
           </h2>
           <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Click on a coloured cell to view, edit, delete event. Click on uncoloured cell to create event.
+            Click on a coloured cell to  see event details
           </p>
         </div>
       </div>
-        <MonthCalendar serializedEvents={JSON.stringify(events)}/>
-      </div>
-    </>
+      <Calendar serializedEvents={JSON.stringify(fetchedEvents)}/>
+    </div>
   );
 };
 
-export default Page;
+export default OurSchedule;
