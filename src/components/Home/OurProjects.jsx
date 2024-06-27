@@ -2,35 +2,6 @@ import React from "react";
 import ProjectCard from "../ui/ProjectCard";
 import { getAllProjects } from "@/app/actions/ProjectData";
 
-// const projects = {
-//   projects: [
-//     {
-//       title: "Project 1",
-//       description:
-//         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.",
-//       image: "public/Home/person.jpg",
-//     },
-//     {
-//       title: "Project 2",
-//       description:
-//         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.",
-//       image: "public/Home/person.jpg",
-//     },
-//     {
-//       title: "Project 3",
-//       description:
-//         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula yayyy.",
-//       image: "public/Home/person.jpg",
-//     },
-//     {
-//       title: "Project 4",
-//       description:
-//         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula.",
-//       image: "public/Home/person.jpg",
-//     },
-//   ],
-// };
-
 const OurProjects = async () => {
     const projects=await getAllProjects(process.env.SUPER_ADMIN)
   return (
