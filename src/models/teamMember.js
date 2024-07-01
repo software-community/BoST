@@ -8,11 +8,7 @@ const teamMemberSchema = new Schema({
   club: String,
 });
 
-async function getTeamMemberModel() {
-  if (!mongoose.models.TeamMember) {
-    return mongoose.model("TeamMember", teamMemberSchema);
-  }
-  return mongoose.models.TeamMember;
-}
+const TeamMember =
+  mongoose.models?.TeamMember || mongoose.model("TeamMember", teamMemberSchema);
 
-export default getTeamMemberModel;
+export default TeamMember;

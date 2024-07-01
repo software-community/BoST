@@ -9,11 +9,6 @@ const adminSchema=new Schema(
     }
 );
 
-function getAdminModel() {
-  if(!mongoose.models.Admin){
-    mongoose.model("Admin", adminSchema);
-  } 
-  return mongoose.models.Admin;
-}
+const Admin=mongoose.models?.Admin|| mongoose.model("Admin",adminSchema)
 
-export default getAdminModel;
+export default Admin

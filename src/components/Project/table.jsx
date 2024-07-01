@@ -1,7 +1,7 @@
 import React from "react";
 import { IconSearch, IconPointFilled, IconCheck } from "@tabler/icons-react"; // importing Icons from React Js
 import Link from "next/link";
-import TruncateText from "../utils/truncateText";
+import Image from "next/image";
 import { IconPlus } from "@tabler/icons-react";
 import { getAllProjects } from "@/app/actions/ProjectData";
 import { auth } from "@/auth";
@@ -91,6 +91,15 @@ export default async function Table(props) {
           <TableBody>
             {UserData.map((rest, index) => (
               <TableRow key={rest.id}>
+                <TableCell className="font-medium">
+                  <Image
+                    src={rest.image}
+                    className=""
+                    width={44}
+                    height={44}
+                    alt={`${rest.title}'s profile picture`}
+                  />
+                  </TableCell>
                 <TableCell className="font-medium">{rest.title}</TableCell>
                 <TableCell className="text-sm">
                   {rest.description.length > 50

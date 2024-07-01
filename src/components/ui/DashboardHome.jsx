@@ -13,7 +13,8 @@ import {
     IconArticle,
     IconBrandGithub,
     IconList,
-    IconLogout
+    IconLogout,
+    IconCalendarEvent
 } from "@tabler/icons-react";
 
 export const DashboardHome = ({ isSuperAdmin }) => {
@@ -98,6 +99,14 @@ const AboutBlock = ({ isSuperAdmin }) => (
         /Gallery{" "}
         <span className="text-zinc-400">
           <IconPhotoEdit className="inline" />: Create, Update, delete your gallery images
+        </span>
+      </p>
+    </Link>
+    <Link href="/dashboard/events">
+      <p className="cursor-pointer">
+        /Events{" "}
+        <span className="text-zinc-400">
+          <IconCalendarEvent className="inline" />: Create, Update, delete your Events
         </span>
       </p>
     </Link>

@@ -3,6 +3,7 @@ import mongoose,{Schema} from "mongoose";
 const blogSchema=new Schema(
     {
         title:String,
+        brief:String,
         content:String,
         author:String,
         club:String
@@ -12,11 +13,6 @@ const blogSchema=new Schema(
     }
 );
 
-function getBlogModel() {
-  if(!mongoose.models.Blog){
-    mongoose.model("Blog", blogSchema);
-  } 
-  return mongoose.models.Blog;
-}
+const Blog=mongoose.models?.Blog|| mongoose.model("Blog",blogSchema)
 
-export default getBlogModel;
+export default Blog

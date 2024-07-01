@@ -7,7 +7,6 @@ export default async function Page({ params, searchParams }) {
   const club = searchParams.club;
 
   let data = await getAchievementById(club, achievementid);
-  console.log(data)
 
   return (
     <EditAchievementForm title={data.title} description={data.description} id={data.id}/>

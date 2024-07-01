@@ -63,7 +63,7 @@ export default async function Table({ colData }) {
                 <TableCell className="font-medium">
                   <Image
                     src={url}
-                    className="rounded-full"
+                    className=""
                     width={56}
                     height={56}
                     alt={`${name} `}

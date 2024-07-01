@@ -1,43 +1,20 @@
 import React from 'react';
+import { getAllImages } from '@/app/actions/GalleryData';
 
-const Gallery = () => {
-    const arr = [
-        "./GalleryImages/img1.png",
-        "./GalleryImages/img2.jpg",
-        "./GalleryImages/img3.jpg",
-        "./GalleryImages/img2.jpg",
-        "./GalleryImages/img1.png",
-        "./GalleryImages/img2.jpg",
-        "./GalleryImages/img3.jpg",
-        "./GalleryImages/img2.jpg",
-        "./GalleryImages/img1.png"
-    ];
-
-    const mainStyle = {
-        paddingBottom: '20px'
-    };
-
-    const containerStyle = {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(295px, 1fr))',
-        gridGap: '10px',
-        padding:'8px'
-    };
-
-    const imgStyle = {
-        width: '100%',
-        height: '300px',
-        borderRadius: '14px',
-        objectFit: 'cover',
-    };
+const Gallery = async () => {
+    const arr = await getAllImages(process.env.SUPER_ADMIN);
 
     return (
-        <div style={mainStyle}>
-            <h1 className='text-3xl font-bold text-center my-5'>Gallery</h1>
-            <div style={containerStyle}>
+        <div className='mt-12 pb-0'>
+            <h1 className='text-4xl sm:text-5xl font-bold text-center mb-8'>Gallery</h1>
+            <div className='flex flex-wrap'>
                 {arr.map((item, index) => (
-                    <div key={index} className='content'>
-                        <img src={item} alt={`Gallery Image ${index + 1}`} style={imgStyle} />
+                    <div key={index} className='w-full sm:w-1/2 lg:w-1/3 '>
+                        <img
+                            src={item.url}
+                            alt={`Gallery Image ${index + 1}`}
+                            className='w-full h-72 object-cover object-center'
+                        />
                     </div>
                 ))}
             </div>

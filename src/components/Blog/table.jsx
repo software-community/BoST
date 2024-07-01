@@ -59,9 +59,9 @@ export default async function Table(props) {
               <TableRow key={rest.id}>
                 <TableCell className="font-medium">{rest.title}</TableCell>
                 <TableCell className="text-sm">
-                  {rest.content.length > 50
-                    ? `${rest.content.substring(0, 50)}...`
-                    : rest.content}
+                  {rest.brief.length > 50
+                    ? `${rest.brief.substring(0, 50)}...`
+                    : rest.brief}
                 </TableCell>
                 <TableCell>{rest.author}</TableCell>
                 <TableCell>{rest.club}</TableCell>

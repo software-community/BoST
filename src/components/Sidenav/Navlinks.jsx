@@ -10,6 +10,7 @@ import {
   IconArticle,
   IconBrandGithub,
   IconList,
+  IconCalendarEvent
 } from "@tabler/icons-react";
 
 // Define the static links for the navigation
@@ -19,6 +20,7 @@ const staticLinks = [
   { name: "Blogs", href: "/dashboard/blogs", Icon: IconArticle },
   { name: "Team", href: "/dashboard/team", Icon: IconFriends },
   { name: "Gallery", href: "/dashboard/gallery", Icon: IconPhotoEdit },
+  { name: "Events", href: "/dashboard/events", Icon: IconCalendarEvent },
   { name: "Home", href: "/", Icon: IconHome },
 ];
 
