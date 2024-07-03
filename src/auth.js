@@ -1,8 +1,10 @@
 import NextAuth, { AuthError } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import connectMongoDB from "./lib/db";
-import Admin from "./models/admin";
+// import connectMongoDB from "./lib/db";
+// import Admin from "./models/admin";
 import { NextResponse } from "next/server";
+
+const allowedEmails=["meadityaraj0001@gmail.com","2021ceb1007@iitrpr.ac.in","softcom@iitrpr.ac.in"]
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -19,9 +21,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account.provider == "google") {
         try {
           const { email, name, image, id } = user;
-          await connectMongoDB();
-          const alreadyUserexists = await Admin.findOne({ email });
-          if (!alreadyUserexists) return false;
+          const found=allowedEmails.find((email)=>email===email)
+
+          if(!found)return false;
+          // await connectMongoDB();
+          // const alreadyUserexists = await Admin.findOne({ email });
+          // if (!alreadyUserexists) return false;
           // await Admin.create({email,name,image})
 
           return NextResponse.json({ message: "welcome back" });
