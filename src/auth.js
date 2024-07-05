@@ -4,7 +4,12 @@ import GoogleProvider from "next-auth/providers/google";
 // import Admin from "./models/admin";
 import { NextResponse } from "next/server";
 
-const allowedEmails=["meadityaraj0001@gmail.com","2021ceb1007@iitrpr.ac.in","softcom@iitrpr.ac.in"]
+const allowedEmails=[
+  "meadityaraj0001@gmail.com",
+  "2021ceb1007@iitrpr.ac.in",
+  "2023meb1360@iitrpr.ac.in",
+  "softcom@iitrpr.ac.in"
+];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -24,10 +29,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const found=allowedEmails.find((email)=>email===email)
 
           if(!found)return false;
-          // await connectMongoDB();
-          // const alreadyUserexists = await Admin.findOne({ email });
-          // if (!alreadyUserexists) return false;
-          // await Admin.create({email,name,image})
 
           return NextResponse.json({ message: "welcome back" });
         } catch (error) {
