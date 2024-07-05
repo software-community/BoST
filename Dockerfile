@@ -8,11 +8,10 @@ WORKDIR /app
 # EXPOSE 3000
 
 # Install dependencies 
-# Wanted to continue using npm but idk why that doesnt work as intended so have to try yarn
 COPY package.json .
 # COPY package-lock.json .
-# RUN npm install
-RUN yarn install 
+RUN npm install
+# RUN yarn install 
 
 # Copy the code files and build the nextjs app
 COPY . .
