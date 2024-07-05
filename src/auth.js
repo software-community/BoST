@@ -3,12 +3,15 @@ import GoogleProvider from "next-auth/providers/google";
 // import connectMongoDB from "./lib/db";
 // import Admin from "./models/admin";
 import { NextResponse } from "next/server";
+import { clubCodes } from "./lib/utils";
 
 const allowedEmails=[
   "meadityaraj0001@gmail.com",
   "2021ceb1007@iitrpr.ac.in",
   "2023meb1360@iitrpr.ac.in",
-  "softcom@iitrpr.ac.in"
+  "gs.tech@iitrpr.ac.in",
+  // and clubCodes keys + @iitrpr.ac.in
+  ...Object.keys(clubCodes).map((key)=>key+"@iitrpr.ac.in")
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
