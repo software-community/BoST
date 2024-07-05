@@ -5,6 +5,7 @@ import Event from "@/models/events";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { clubCodes } from "@/lib/utils";
 
 // Define the schema for event validation
 const EventSchema = z.object({
@@ -18,7 +19,7 @@ const EventSchema = z.object({
 // Server action to add an event
 export async function addEvent(prevState, formData) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   const validatedFields = EventSchema.safeParse({
     date: parseInt(formData.get("date")),
@@ -74,7 +75,7 @@ export async function addEvent(prevState, formData) {
 export async function updateEvent(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   // Extract the event index and updated fields from form data
 
@@ -127,7 +128,7 @@ export async function updateEvent(prevState, formData) {
 
 export async function deleteEventByDate(date) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   try {
     await connectMongoDB();

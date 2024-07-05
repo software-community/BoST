@@ -14,10 +14,11 @@ import Link from "next/link";
 import { getAllImages } from "@/app/actions/GalleryData";
 import { DeleteGalleryImageBtn, UpdateGalleryImageBtn } from "./buttons";
 import { auth } from "@/auth";
+import { clubCodes } from "@/lib/utils";
 
 export default async function Table({ colData }) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   let UserData = await getAllImages(club);
 
   let header = colData;

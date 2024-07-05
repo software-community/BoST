@@ -12,10 +12,11 @@ import { IconSearch, IconPlus } from "@tabler/icons-react"; // importing Icons f
 import { getAllAchievements } from "@/app/actions/AchievementData";
 import { auth } from "@/auth";
 import { DeleteAchievementBtn, UpdateAchievementBtn } from "./buttons";
+import { clubCodes } from "@/lib/utils";
 
 export default async function Table(props) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   let Achievements = await getAllAchievements(club);
 
   let header = props.colData;

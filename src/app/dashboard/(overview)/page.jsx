@@ -2,10 +2,11 @@ import React from 'react'
 import { auth } from '@/auth'
 import { redirect } from 'next/navigation'
 import { DashboardHome } from '@/components/ui/DashboardHome'
+import { clubCodes } from "@/lib/utils";
 
 const page = async() => {
   const session=await auth()
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   const isSuperAdmin = process.env.SUPER_ADMIN === club;
 
   if(!session){

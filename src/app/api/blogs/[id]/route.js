@@ -13,7 +13,6 @@ export async function PUT(request,{params}){
     if (newTitle !== undefined) updatedData.title = newTitle;
     if (newContent !== undefined) updatedData.content = newContent;
     if (newAuthor !== undefined) updatedData.author = newAuthor;
-    if (newClub !== undefined) updatedData.club = newClub;
     await Blog.findByIdAndUpdate(id, updatedData);
     return NextResponse.json({message:"blog updated"},{status:200})
 }

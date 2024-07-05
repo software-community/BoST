@@ -14,10 +14,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { clubCodes } from "@/lib/utils";
 
 export default async function Table({ colData }) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   let UserData = await getAllTeamMembers(club);
 
   let header = colData;

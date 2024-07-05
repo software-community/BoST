@@ -3,44 +3,48 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 const NavDropDownData = [
   {
-    text: "Softcom",
-    link: "/softcom",
-  },
-  {
     text: "Aeromodelling",
     link: "/aeromodelling",
   },
   {
     text: "Automotive",
-    link: "/automotiveclub  ",
+    link: "/automotive",
   },
   {
     text: "CIM",
-    link: "/cimclub",
+    link: "/cim",
+  },
+  {
+    text: "Coding Club",
+    link: "/codingclub",
+  },
+  {
+    text: "Esportz",
+    link: "/esportz",
+  },
+  {
+    text: "FinCOM",
+    link: "/fincom",
+  },
+  {
+    text: "Iota Cluster",
+    link: "/iotacluster",
   },
   {
     text: "Monochrome",
-    link: "/monochromeclub",
+    link: "/monochrome",
   },
   {
     text: "Robotics",
     link: "/robotics",
   },
   {
-    text: "Coding",
-    link: "/codingclub",
-  },
-  {
-    text: "FINCOM",
-    link: "/fincom",
+    text: "SoftCom",
+    link: "/softcom",
   },
   {
     text: "Zenith",
-    link: "/zenithclub",
-  },
-  {
-    text: "meadityaraj0001",
-    link: "/meadityaraj0001",
+    link: "/zenith",
   },
 ];
 

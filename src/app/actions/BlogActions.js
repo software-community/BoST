@@ -5,6 +5,7 @@ import Blog from "@/models/blog";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { clubCodes } from "@/lib/utils";
 
 const FormSchema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -16,7 +17,7 @@ const FormSchema = z.object({
 
 export async function createBlog(prevState, formData) {
   const session = await auth();
-  const _club = session?.user.email.split("@")[0];
+  const _club = clubCodes[session?.user.email.split("@")[0]];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),
@@ -57,7 +58,7 @@ export async function createBlog(prevState, formData) {
 // here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
 export async function updateBlog(_id, prevState, formData) {
   const session = await auth();
-  const _club = session?.user.email.split("@")[0];
+  const _club = clubCodes[session?.user.email.split("@")[0]];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     title: formData.get("title"),

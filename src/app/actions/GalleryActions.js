@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { v4 as uuidv4 } from "uuid"; // To generate unique IDs
+import { clubCodes } from "@/lib/utils";
 
 const ImageSchema = z.object({
   image: z.string().min(1, "Image is required."),
@@ -14,7 +15,7 @@ const ImageSchema = z.object({
 // Server action to add an image
 export async function addImage(prevState, formData) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   const validatedFields = ImageSchema.safeParse({
     image: formData.get("image"),
@@ -64,7 +65,7 @@ export async function addImage(prevState, formData) {
 export async function updateGalleryImageURL(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
  
 
   // Extract the image name (UUID) and new URL from form data
@@ -119,7 +120,7 @@ export async function updateGalleryImageURL(prevState, formData) {
 
 export async function deleteImageByName(imageName) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   // Connect to the database
   try {

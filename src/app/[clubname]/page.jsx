@@ -4,6 +4,7 @@ import OurTeam from "@/components/ClubPageComponents/OurTeam";
 import OurBlogs from "@/components/ClubPageComponents/OurBlogs";
 import Gallery from "@/components/ClubPageComponents/Gallery";
 import OurSchedule from "@/components/ClubPageComponents/OurSchedule";
+import { clubCodes } from "@/lib/utils";
 
 const page = ({ params }) => {
   const club = params.clubname;

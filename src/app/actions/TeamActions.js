@@ -5,6 +5,7 @@ import TeamMember from "@/models/teamMember";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { clubCodes } from "@/lib/utils";
 
 const FormSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -16,7 +17,7 @@ const FormSchema = z.object({
 
 export async function createTeamMember(prevState, formData) {
   const session = await auth();
-  const _club = session?.user.email.split("@")[0];
+  const _club = clubCodes[session?.user.email.split("@")[0]];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     name: formData.get("name"),
@@ -57,7 +58,7 @@ export async function createTeamMember(prevState, formData) {
 // Here this _id is passed through binding and not directly as it is a sensitive information that may be used mischievously
 export async function updateTeamMember(_id, prevState, formData) {
   const session = await auth();
-  const _club = session?.user.email.split("@")[0];
+  const _club = clubCodes[session?.user.email.split("@")[0]];
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
     name: formData.get("name"),
