@@ -3,9 +3,10 @@ import { handleLogout } from "@/app/actions/authentication";
 import Navlinks from "./Navlinks";
 import { auth } from "@/auth";
 import { IconLogout } from "@tabler/icons-react";
+import { clubCodes } from "@/lib/utils";
 const Sidenav = async () => {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   const isSuperAdmin = process.env.SUPER_ADMIN === club;
   return (
     <div className="flex grow flex-row justify-between overflow-hidden space-x-0 md:flex-col md:space-x-0 md:space-y-2">

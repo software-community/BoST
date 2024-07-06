@@ -12,10 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { clubCodes } from "@/lib/utils";
 
 export default async function Table(props) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   let UserData = await getAllBlogs(club);
   let header = props.colData;
 

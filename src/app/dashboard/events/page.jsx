@@ -1,6 +1,7 @@
 import { MonthCalendar } from "@/components/Events/Calendar";
 import { auth } from "@/auth";
 import { getEventsForClub } from "@/app/actions/EventData";
+import { clubCodes } from "@/lib/utils";
 
 const Page = async () => {
   const monthNames = [
@@ -21,7 +22,7 @@ const Page = async () => {
   const year = new Date().getFullYear();
   const monthName = monthNames[month];
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
   const events = await getEventsForClub(club);
   // console.log(events)
 

@@ -6,6 +6,7 @@ import Achievement from "@/models/achievement";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
+import { clubCodes } from "@/lib/utils";
 
 const AchievementSchema = z.object({
   title: z.string().min(1, "Title is required."),
@@ -15,7 +16,7 @@ const AchievementSchema = z.object({
 // Server action to add an achievement
 export async function addAchievement(prevState, formData) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   const validatedFields = AchievementSchema.safeParse({
     title: formData.get("title"),
@@ -63,7 +64,7 @@ export async function addAchievement(prevState, formData) {
 export async function updateAchievement(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   // Extract the achievement ID (assuming it's passed in formData)
   const achievementId = formData.get("id");
@@ -133,7 +134,7 @@ export async function updateAchievement(prevState, formData) {
 
 export async function deleteAchievementById(id) {
   const session = await auth();
-  const club = session?.user.email.split("@")[0];
+  const club = clubCodes[session?.user.email.split("@")[0]];
 
   // Connect to the database
   try {
