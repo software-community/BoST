@@ -29,7 +29,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account.provider == "google") {
         try {
           const { email, name, image, id } = user;
-          const found=allowedEmails.find((email)=>email===email)
+          const found=allowedEmails.find((allowedemail)=>allowedemail===email)
+          console.log("found mail",found)
 
           if(!found)return false;
 
