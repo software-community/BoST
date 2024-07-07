@@ -5,7 +5,6 @@ import "react-quill/dist/quill.snow.css";
 import parse from "html-react-parser";
 export default function Editor({value,setValue}) {
   // const [value, setValue] = useState("");
-  console.log(value)
   // Customize the toolbar options
   const modules = {
     toolbar: [
@@ -32,7 +31,7 @@ export default function Editor({value,setValue}) {
 
   return (
     <div className="flex flex-col bg-white">
-      <div className="w-full p-4">
+      <div className="w-full p-4 ">
         <ReactQuill
           theme="snow"
           value={value}
