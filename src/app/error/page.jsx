@@ -11,7 +11,7 @@ const errorMap = {
       <code className="text-xs bg-slate-100 p-1 rounded-sm">Configuration</code>
     </p>
   ),
-  AccessDenied: "Access Denied. Try sigining in from different account Or",
+  AccessDenied: "Access Denied :( ",
 };
 
 export default function AuthErrorPage() {
@@ -19,16 +19,16 @@ export default function AuthErrorPage() {
   const error = search.get("error");
 
   return (
-    <div className="flex flex-col h-[90vh] gap-4 text-xl items-center justify-center w-full ">
-      <div className=" hover:cursor-pointer font-normal text-gray-700 dark:text-gray-400">
-        <Link className="underline" href="/api/auth/signin">
+    <div className="flex flex-col h-[90vh] gap-2 px-2 text-xl items-center justify-center w-full ">
+      <div className=" hover:cursor-pointer font-normal w-full text-center text-gray-700 dark:text-gray-400">
+        <Link className=" w-full text-2xl " href="/api/auth/signin">
           {" "}
           {errorMap[error] || "Please contact us if this error persists."}
         </Link>
       </div>
 
       <div className=" hover:cursor-pointer font-normal text-gray-700 dark:text-gray-400">
-        <Link href="/" className="underline">
+        <Link href="/" className="underline text-sm">
           Go Back to Home
         </Link>
       </div>
