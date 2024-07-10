@@ -7,37 +7,45 @@ import Link from "next/link";
 import { handleLogin } from "@/app/actions/authentication";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(useGSAP);
 
 export default function Navbar({ session }) {
   const pathname = usePathname();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const container = useRef();
 
   useEffect(() => {
     setIsSheetOpen(false);
   }, [pathname]);
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (event.key === "L" || event.key === "l") {
-  //       handleLogin();
-  //     }
-  //   };
-
-  //   window.addEventListener("keydown", handleKeyDown);
-
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
+  useGSAP(
+    () => {
+      gsap.from([".hamburger",".Logo"], { y:-50,
+        opacity:0,
+        duration:1
+      });
+      gsap.from([".Globe",".LandingHeroTitle",".LandingHeroSubtitle"], { opacity:0,
+        delay:1,
+        duration:1
+      });
+    },
+    {  }
+  );
 
   if (pathname.startsWith("/dashboard")) return null;
 
   return (
-    <header className="flex select-none  h-[10vh] bg-secondary w-full justify-between shrink-0 items-center px-4 md:px-6">
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+    <header
+      // ref={container}
+      className="flex  select-none  h-[10vh] bg-secondary w-full justify-between shrink-0 items-center px-4 md:px-6"
+    >
+      <Sheet  open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
-            className="lg:hidden  overflow-hidden p-0"
+            className="lg:hidden hamburger  overflow-hidden p-0"
             size="icon"
             variant="outline"
           >
@@ -75,10 +83,10 @@ export default function Navbar({ session }) {
           </div>
         </SheetContent>
       </Sheet>
-      <Link className="mr-6 hidden lg:flex" href="/">
+      <Link className="mr-6 Logo hidden lg:flex" href="/">
         <img src="/Logo.png" className=" h-[60px]"></img>
       </Link>
-      <nav className="ml-auto hidden lg:flex gap-6">
+      <nav className="ml-auto hidden hamburger  lg:flex gap-6">
         {session ? (
           <>
             <NavDropdown />
@@ -108,7 +116,7 @@ export default function Navbar({ session }) {
           </>
         )}
       </nav>
-      <Link href="/" className="lg:hidden">
+      <Link href="/" className="lg:hidden Logo">
         <img src="/Logo.png" className=" h-[60px]"></img>
       </Link>
     </header>
@@ -132,25 +140,6 @@ function MenuIcon(props) {
       <line x1="4" x2="20" y1="12" y2="12" />
       <line x1="4" x2="20" y1="6" y2="6" />
       <line x1="4" x2="20" y1="18" y2="18" />
-    </svg>
-  );
-}
-
-function MountainIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
     </svg>
   );
 }
