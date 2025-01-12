@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <OurSchedule/>
+      {/* <OurSchedule/> */}
       {/* <Achievements /> */} 
       {/* Achievements might be useful later on someday */}
       <OurTeam />

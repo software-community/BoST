@@ -6,6 +6,7 @@ import { getAllTeamMembers } from "@/app/actions/TeamData";
 
 export default async function OurTeam({club}) {
     const team=await getAllTeamMembers(club)
+    if(team.length===0)return null;
     return (
         
         <div className=" w-full mx-auto py-12 pb-24  rounded-lg  flex flex-col  ">

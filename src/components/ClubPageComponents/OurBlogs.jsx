@@ -6,6 +6,7 @@ import { BlogCard } from "../ui/BlogCard";
 
 export default async function OurBlogs({club}) {
   const Blogs = await getAllBlogs(club);
+  if(Blogs.length===0)return null;
   return (
     <div className=" w-full mx-auto py-12 pb-24  rounded-lg  flex flex-col  ">
       <h2 className="text-4xl sm:text-5xl font-semibold text-center mb-6 text-black">

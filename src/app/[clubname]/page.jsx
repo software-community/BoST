@@ -10,8 +10,7 @@ import { getClubDetails } from "../actions/ClubData";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const club = (await params).clubname;
-  const id = clubCodes[club];
-  const clubName = (await getClubDetails(id)).name;
+  const clubName = (await getClubDetails(club)).name;
   // console.log(await parent);
   return {
     title: `${clubName} | ${(await parent).title.absolute}`,
@@ -23,7 +22,7 @@ const page = ({ params }) => {
   return (
     <>
       <Hero club={club} />
-      <OurSchedule club={club} />
+      {/* <OurSchedule club={club} /> */}
       <OurTeam club={club} />
       <OurProjects club={club} />
       <Gallery club={club} />
