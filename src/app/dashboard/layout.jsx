@@ -1,9 +1,9 @@
 import Sidenav from "@/components/Sidenav/Sidenav";
-import { getClubDetails } from "../actions/ClubData";
+import { getClubDetails } from "@/app/actions/ClubData";
 import { auth } from "@/auth";
 import { clubCodes } from "@/lib/utils";
 
-export async function generateMetadata({ params, searchParams }, parent) {
+export async function generateMetadata(x, parent) {
   const session=await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
   const clubName = (await getClubDetails(club)).name;
