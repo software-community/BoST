@@ -29,8 +29,12 @@ export async function getAllProjects(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
-    const projects = await Project.find({club}); // Fetch all projects
-
+    var projects;
+    if(club == process.env.SUPER_ADMIN){
+      projects = await Project.find(); // Fetch all projects
+    }else{
+      projects = await Project.find({club}); // Fetch all projects
+    }
     return projects; // Return the fetched projects
   } catch (error) {
     console.error("Error fetching projects:", error);

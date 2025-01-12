@@ -1,4 +1,17 @@
 import Sidenav from "@/components/Sidenav/Sidenav";
+import { getClubDetails } from "../actions/ClubData";
+import { auth } from "@/auth";
+import { clubCodes } from "@/lib/utils";
+
+export async function generateMetadata({ params, searchParams }, parent) {
+  const session=await auth();
+  const club = clubCodes[session?.user.email.split("@")[0]];
+  const clubName = (await getClubDetails(club)).name;
+  // console.log(await parent);
+  return {
+    title: `Dashboard | ${clubName} | ${(await parent).title.absolute}`,
+  }
+}
 
 export default function Layout({ children }) {
   return (

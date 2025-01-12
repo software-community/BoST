@@ -13,12 +13,12 @@ export default function Home() {
     <>
       <Hero />
       <OurSchedule/>
-      <Achievements />
-      <Gallery />
+      {/* <Achievements /> */} 
+      {/* Achievements might be useful later on someday */}
       <OurTeam />
       <OurProjects />
+      <Gallery />
       <OurBlogs/>
-      {/* <GalleryCarousel /> */}
     </>
   );
 }

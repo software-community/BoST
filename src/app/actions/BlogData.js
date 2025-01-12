@@ -29,7 +29,12 @@ export async function getAllBlogs(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
-    const blogs = await Blog.find({club}); // Fetch all blogs
+    var blogs;
+    if(club == process.env.SUPER_ADMIN){
+      blogs = await Blog.find(); // Fetch all blogs
+    }else {
+      blogs = await Blog.find({club}); // Fetch all blogs
+    }
 
     return blogs; // Return the fetched blogs
   } catch (error) {

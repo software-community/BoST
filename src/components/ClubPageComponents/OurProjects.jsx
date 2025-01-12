@@ -11,7 +11,7 @@ const OurProjects = async ({club}) => {
         Our Projects
       </h2>
 
-      <div className="gap-16 md:gap-10 flex flex-row flex-wrap justify-center items-center w-full">
+      <div className="gap-16 md:gap-10 flex flex-row flex-wrap justify-center items-stretch w-full">
         {projects.map((project, index) => (
           <ProjectCard
             key={index}

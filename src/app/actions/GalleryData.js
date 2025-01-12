@@ -8,10 +8,20 @@ export async function getAllImages(club) {
   try {
     await connectMongoDB(); // Connect to the database
    
-    const gallery = await Gallery.findOne({ club }); // Find the gallery for the specified club
+    var gallery
+    if(club==process.env.SUPER_ADMIN){
+      gallery = await Gallery.find(); // Find the gallery for the specified club
+    }else{
+      gallery = await Gallery.find({ club }); // Find the gallery for the specified club
+    }
     if (!gallery) return [];
 
-    const images = gallery.images; // Get the array of images from the gallery
+    var images = [];
+    for(var g of gallery){
+      for(var img of g.images){
+        images.push(img);
+      }
+    }
 
     return images; // Return the fetched images
   } catch (error) {

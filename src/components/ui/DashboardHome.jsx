@@ -14,7 +14,8 @@ import {
     IconBrandGithub,
     IconList,
     IconLogout,
-    IconCalendarEvent
+    IconCalendarEvent,
+    IconInfoSquareRounded
 } from "@tabler/icons-react";
 
 export const DashboardHome = ({ isSuperAdmin }) => {
@@ -70,6 +71,14 @@ const AboutBlock = ({ isSuperAdmin }) => (
     <span className="absolute top-2 left-4 text-sm px-2 py-1 rounded-md bg-zinc-700 text-gray-400">
       dashboardConfig.js
     </span>
+    <Link href="/dashboard/club">
+      <p className="cursor-pointer">
+        /Introduction{" "}
+        <span className="text-zinc-400">
+          <IconInfoSquareRounded className="inline" />: Update Club Introduction
+        </span>
+      </p>
+    </Link>
     <Link href="/dashboard/projects">
       <p className="cursor-pointer">
         /Projects{" "}

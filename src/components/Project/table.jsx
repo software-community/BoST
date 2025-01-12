@@ -16,12 +16,6 @@ import {
 } from "@/components/ui/table";
 import { clubCodes } from "@/lib/utils";
 
-const statusMap = {
-  completed: "Completed",
-  in_progress: "In Progress",
-  not_started: "Not Started",
-};
-
 export default async function Table(props) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
