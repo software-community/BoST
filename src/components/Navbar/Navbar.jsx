@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import logoImage from '@/../public/Logo.png';
 gsap.registerPlugin(useGSAP);
 
 export default function Navbar({ session }) {
@@ -84,7 +85,7 @@ export default function Navbar({ session }) {
         </SheetContent>
       </Sheet>
       <Link className="mr-6 Logo hidden lg:flex" href="/">
-        <img src="/Logo.png" className=" h-[60px]"></img>
+        <Image src={logoImage} height={60} width={60} alt="BoST" />
       </Link>
       <nav className="ml-auto hidden hamburger  lg:flex gap-6">
         {session ? (
