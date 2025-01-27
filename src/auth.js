@@ -22,11 +22,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   pages: {
-    error: "/error",
+    error: "/bost/error",
   },
+  basePath: '/bost/api/auth',
   callbacks: {
     signIn: async ({ user, account }) => {
       if (account.provider == "google") {
+	console.log(user, account);
         try {
           const { email, name, image, id } = user;
           const found=allowedEmails.find((allowedemail)=>allowedemail===email)

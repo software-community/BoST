@@ -4,11 +4,11 @@ import { signIn, signOut } from "@/auth";
 
 export async function handleLogin(formData) {
   // const action = formData.get("action");
-  await signIn("google", { redirectTo: "/dashboard" });
+  await signIn("google", { redirectTo: "/bost/dashboard" });
 }
 
 export async function handleLogout(){
-  await signOut({ redirectTo: "/" });
+  await signOut({ redirectTo: "/bost" });
 }
 
 

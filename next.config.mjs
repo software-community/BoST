@@ -5,6 +5,7 @@ const nextConfig = {
   },
   // basePath: process.env.NODE_ENV == "production" ? "/bost" : "/",
   basePath: '/bost',
+  trailingSlash: false,
 };
 
 export default nextConfig;
