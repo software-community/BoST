@@ -118,7 +118,7 @@ export default function Navbar({ session }) {
         )}
       </nav>
       <Link href="/" className="lg:hidden Logo">
-        <img src="/Logo.png" className=" h-[60px]"></img>
+        <Image src={logoImage} height={60} width={60} alt="BoST" />
       </Link>
     </header>
   );
