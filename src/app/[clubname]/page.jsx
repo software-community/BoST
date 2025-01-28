@@ -7,10 +7,13 @@ import Gallery from "@/components/ClubPageComponents/Gallery";
 import OurSchedule from "@/components/ClubPageComponents/OurSchedule";
 import { clubCodes } from "@/lib/utils";
 import { getClubDetails } from "../actions/ClubData";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const club = (await params).clubname;
-  const clubName = (await getClubDetails(club)).name;
+  const clubDetails = await getClubDetails(club)
+  if(!clubDetails) redirect("/");
+  const clubName = clubDetails.name;
   // console.log(await parent);
   return {
     title: `${clubName} | ${(await parent).title.absolute}`,

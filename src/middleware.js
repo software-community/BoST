@@ -6,7 +6,7 @@ export async function middleware(request) {
   const session = await auth();
   const isAuthenticated = session?.user;
   if (nextUrl.pathname.startsWith("/dashboard") && !isAuthenticated) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/bost/", request.url));
   }
 }
 

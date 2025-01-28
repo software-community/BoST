@@ -2,7 +2,10 @@
 import Link from "next/link";
 import { updateTeamMember } from "@/app/actions/TeamActions";
 import { useFormState } from "react-dom";
-import { UploadButton } from "@uploadthing/react";
+import { generateUploadButton } from "@uploadthing/react";
+const UploadButton = generateUploadButton({
+  url: "/bost/api/uploadthing"
+})
 import { useState } from "react";
 
 export default function Form({ memberDetails }) {

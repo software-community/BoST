@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { createProject } from "@/app/actions/ProjectActions";
-import { UploadButton } from "@uploadthing/react";
+import { generateUploadButton } from "@uploadthing/react";
+const UploadButton = generateUploadButton({
+  url: "/bost/api/uploadthing"
+})
 
 const developmentStatus = [
   { id: 1, name: "Not Started" },

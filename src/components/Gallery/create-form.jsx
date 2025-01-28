@@ -2,7 +2,10 @@
 import Link from "next/link";
 import { addImage } from "@/app/actions/GalleryActions"; // Assume this is your server action
 import { useFormState } from "react-dom";
-import { UploadButton } from "@uploadthing/react";
+import { generateUploadButton } from "@uploadthing/react";
+const UploadButton = generateUploadButton({
+  url: "/bost/api/uploadthing"
+})
 import { useState } from "react";
 
 export default function AddImageForm() {

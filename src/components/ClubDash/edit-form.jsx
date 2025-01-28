@@ -2,7 +2,10 @@
 import Link from "next/link";
 import { updateClubData } from "@/app/actions/ClubActions";
 import { useFormState } from "react-dom";
-import { UploadButton } from "@uploadthing/react";
+import { generateUploadButton } from "@uploadthing/react";
+const UploadButton = generateUploadButton({
+  url: "/bost/api/uploadthing"
+})
 import { useEffect, useState } from "react";
 
 export default function Form({ clubData }) {
@@ -96,6 +99,7 @@ export default function Form({ clubData }) {
             <UploadButton
               endpoint="imageUploader"
               className="ut-uploading:pointer-events-none"
+              callbackUrl
               appearance={{
                 container: "w-1/4",
 button:"bg-primary"              }}
