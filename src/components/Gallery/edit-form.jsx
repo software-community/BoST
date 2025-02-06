@@ -2,10 +2,7 @@
 import Link from "next/link";
 import { updateGalleryImageURL } from "@/app/actions/GalleryActions";
 import { useFormState } from "react-dom";
-import { generateUploadButton } from "@uploadthing/react";
-const UploadButton = generateUploadButton({
-  url: "/bost/api/uploadthing"
-})
+import UploadButton from "@/components/UploadButton";
 import { useState } from "react";
 
 export default function EditImageForm({ url,name }) {

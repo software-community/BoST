@@ -2,10 +2,7 @@
 import Link from "next/link";
 import { updateClubData } from "@/app/actions/ClubActions";
 import { useFormState } from "react-dom";
-import { generateUploadButton } from "@uploadthing/react";
-const UploadButton = generateUploadButton({
-  url: "/bost/api/uploadthing"
-})
+import UploadButton from "@/components/UploadButton";
 import { useEffect, useState } from "react";
 
 export default function Form({ clubData }) {

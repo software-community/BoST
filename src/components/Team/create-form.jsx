@@ -2,10 +2,7 @@
 import Link from "next/link";
 import { createTeamMember } from "@/app/actions/TeamActions";
 import { useFormState } from "react-dom";
-import { generateUploadButton } from "@uploadthing/react";
-const UploadButton = generateUploadButton({
-  url: "/bost/api/uploadthing"
-})
+import UploadButton from "@/components/UploadButton";
 import { useState } from "react";
 import { Button } from "../ui/button";
 

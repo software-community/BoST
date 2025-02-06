@@ -4,10 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import DynamicField from "@/components/ui/dynamic-input-field";
 import { useFormState } from "react-dom";
-import { generateUploadButton } from "@uploadthing/react";
-const UploadButton = generateUploadButton({
-  url: "/bost/api/uploadthing"
-})
+import UploadButton from "@/components/UploadButton";
 import { updateProject } from "@/app/actions/ProjectActions";
 
 const developmentStatus = [
