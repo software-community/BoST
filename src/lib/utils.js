@@ -20,5 +20,6 @@ export const clubCodes = {
   "meadityaraj0001": "meadityaraj0001",
   "2023meb1360": "2023meb1360",
   "2021ceb1007": "2021ceb1007",
-  "gs.tech": "gs.tech"
+  "gs.tech": "gs.tech",
+  "2024epb1277": "2024epb1277"
 }

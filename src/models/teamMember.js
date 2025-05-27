@@ -5,6 +5,8 @@ const teamMemberSchema = new Schema({
   position: String,
   image: String,
   email: String,
+  linkedin: String,
+  github: String,
   club: String,
 });
 

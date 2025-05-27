@@ -13,6 +13,8 @@ const FormSchema = z.object({
   image: z.string().min(1, "Image URL is required."),
   email: z.string().email("Invalid email format."),
   club: z.string().min(1, "Club is required."),
+  github: z.string().url("Invalid GitHub URL").optional().or(z.literal("")),
+  linkedin: z.string().url("Invalid LinkedIn URL").optional().or(z.literal("")),
 });
 
 export async function createTeamMember(prevState, formData) {
@@ -25,6 +27,8 @@ export async function createTeamMember(prevState, formData) {
     image: formData.get("image"),
     email: formData.get("email"),
     club: _club,
+    github: formData.get("github") || "",
+    linkedin: formData.get("linkedin") || "",
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -36,12 +40,20 @@ export async function createTeamMember(prevState, formData) {
   }
 
   // Extract validated data
-  const { name, position, image, email, club } = validatedFields.data;
+  const { name, position, image, email, club, github, linkedin } = validatedFields.data;
 
   // Insert data into the database
   try {
     await connectMongoDB();
-    await TeamMember.create({ name, position, image, email, club });
+    await TeamMember.create({ 
+      name, 
+      position, 
+      image, 
+      email, 
+      club,
+      github: github.trim(),
+      linkedin: linkedin.trim()
+    });
   } catch (error) {
     // If a database error occurs, return a more specific error.
     console.log(error)
@@ -66,6 +78,8 @@ export async function updateTeamMember(_id, prevState, formData) {
     image: formData.get("image"),
     email: formData.get("email"),
     club: _club,
+    github: formData.get("github") || "",
+    linkedin: formData.get("linkedin") || "",
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
@@ -77,7 +91,7 @@ export async function updateTeamMember(_id, prevState, formData) {
   }
 
   // Extract validated data
-  const { name, position, image, email } = validatedFields.data;
+  const { name, position, image, email, github, linkedin } = validatedFields.data;
   
 
   // Insert data into the database
@@ -88,6 +102,8 @@ export async function updateTeamMember(_id, prevState, formData) {
       position,
       image,
       email,
+      github: github.trim(),
+      linkedin: linkedin.trim()
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.

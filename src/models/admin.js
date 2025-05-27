@@ -4,6 +4,8 @@ const adminSchema=new Schema(
     {
         email:String,
         googleId:String,
+        linkedin: String,
+        github: String,
         name:String,
         image:String,
     }

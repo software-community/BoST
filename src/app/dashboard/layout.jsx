@@ -4,9 +4,14 @@ import { auth } from "@/auth";
 import { clubCodes } from "@/lib/utils";
 
 export async function generateMetadata(x, parent) {
-  const session=await auth();
-  const club = clubCodes[session?.user.email.split("@")[0]];
-  const clubName = (await getClubDetails(club)).name;
+  const session = await auth();
+  // console.log("Session:", session);
+  const club = clubCodes[session?.user?.email?.split("@")[0]];
+  // console.log("Club code:", club);
+  const clubDetails = await getClubDetails(club);
+  // console.log("Club details:", clubDetails);
+  const clubName = clubDetails ? clubDetails.name : "Unknown Club";
+  
   // console.log(await parent);
   return {
     title: `Dashboard | ${clubName} | ${(await parent).title.absolute}`,
