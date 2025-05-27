@@ -1,5 +1,7 @@
-import { deleteProject } from "@/app/actions/ProjectActions";
+import { deleteProject, updateProjectApprovalStatus } from "@/app/actions/ProjectActions";
 import Link from "next/link";
+import { Switch } from "@/components/ui/switch";
+
 export function UpdateProjectBtn({ id }) {
   return (
     <Link href={`/dashboard/projects/${id}/edit`} className="mr-1">
@@ -50,5 +52,19 @@ export function DeleteProjectBtn({ id }) {
         </svg>
       </button>
     </form>
+  );
+}
+
+export function ApprovalToggle({ id, approved }) {
+  const updateApproval = async (checked) => {
+    await updateProjectApprovalStatus(id, checked);
+  };
+
+  return (
+    <Switch
+      defaultChecked={approved}
+      onCheckedChange={updateApproval}
+      className="data-[state=checked]:bg-green-500"
+    />
   );
 }

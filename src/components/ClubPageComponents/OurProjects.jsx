@@ -4,7 +4,8 @@ import { getAllProjects } from "@/app/actions/ProjectData";
 
 
 const OurProjects = async ({club}) => {
-  const projects=await getAllProjects(club)
+  const projects=await getAllProjects(club);
+
   if(projects.length===0)return null;
   return (
     <div className="w-full mx-auto py-12 pb-24   bg-black  flex flex-col  ">

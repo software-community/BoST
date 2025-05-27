@@ -1,7 +1,7 @@
 import React from 'react'
 import Table from '@/components/Project/table';
 
-let columnData = ["Image Preview","Title", "Description", "Status", "Club", "Edit/Delete"];
+let columnData = ["Image Preview", "Title", "Description", "Status", "Club", "Approval", "Edit/Delete"];
 
 const page = () => {
   return (
