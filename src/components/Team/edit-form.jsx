@@ -136,6 +136,55 @@ button:"bg-primary"              }}
               ))}
           </div>
         </div>
+
+        {/* Team Member GitHub */}
+        <div className="mb-4">
+          <label htmlFor="github" className="mb-2 block text-sm font-medium">
+            GitHub Profile
+          </label>
+          <input
+            id="github"
+            name="github"
+            defaultValue={memberDetails?.github}
+            type="url"
+            aria-describedby="github-error"
+            placeholder="Enter GitHub profile URL"
+            className="peer px-2 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
+          />
+          <div id="github-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.github &&
+              errors.github.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+
+        {/* Team Member LinkedIn */}
+        <div className="mb-4">
+          <label htmlFor="linkedin" className="mb-2 block text-sm font-medium">
+            LinkedIn Profile
+          </label>
+          <input
+            id="linkedin"
+            name="linkedin"
+            defaultValue={memberDetails?.linkedin}
+            type="url"
+            aria-describedby="linkedin-error"
+            placeholder="Enter LinkedIn profile URL"
+            className="peer px-2 block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
+          />
+          <div id="linkedin-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.linkedin &&
+              errors.linkedin.map((error) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+
       <div className="mt-6 flex justify-end gap-2">
         <Link
           href="/dashboard/team"

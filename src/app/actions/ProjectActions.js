@@ -150,3 +150,33 @@ export async function deleteProject(id) {
   // Revalidate the cache for the projects page and redirect the user
   revalidatePath("/dashboard/projects");
 }
+
+export async function updateProjectApprovalStatus(projectId, approved) {
+  console.log("Attempting to update project approval status...");
+  console.log("Received values:", { projectId, approved });
+  try {
+    await connectMongoDB();
+    console.log("Database connected.");
+    const result = await Project.findByIdAndUpdate(projectId, { approved });
+    console.log("findByIdAndUpdate result:", result);
+
+    if (!result) {
+      console.error("Project not found with ID:", projectId);
+      return {
+        error: "Project not found",
+        status: 404,
+      };
+    }
+
+  } catch (error) {
+    console.error("Error updating project approval status:", error);
+    return {
+      error: "An error occurred while updating the project approval status",
+      status: 500,
+    };
+  }
+
+  revalidatePath("/dashboard/projects");
+  console.log("Revalidated path and finished update.");
+  return { message: "Project approval status updated successfully" };
+}

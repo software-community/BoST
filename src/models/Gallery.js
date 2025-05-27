@@ -6,6 +6,10 @@ const gallerySchema = new Schema(
       {
         name: String,
         url: String,
+        approved: {
+          type: Boolean,
+          default: false
+        }
       },
     ],
     club: String,

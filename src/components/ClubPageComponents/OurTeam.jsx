@@ -17,7 +17,15 @@ export default async function OurTeam({club}) {
          
             <div className="gap-6 flex flex-row flex-wrap justify-center items-center w-full ">
                 {team.map((member, index) => (
-                    <TeamMember key = {index} name = {member.name} role = {member.position} image = {member.image} />
+                    <TeamMember 
+                        key={index} 
+                        name={member.name} 
+                        role={member.position} 
+                        image={member.image} 
+                        email={member.email} 
+                        github={member.github}
+                        linkedin={member.linkedin}
+                    />
                 ))}
             </div>
         </div>

@@ -162,3 +162,52 @@ export async function deleteImageByName(imageName) {
 
   return { message: "Image deleted successfully" };
 }
+
+export async function updateImageApprovalStatus(club, imageName, approved) {
+  console.log("Attempting to update image approval status..."); // Log entry
+  console.log("Received values:", { club, imageName, approved }); // Log received values
+  try {
+    await connectMongoDB();
+    console.log("Database connected."); // Log database connection
+    const gallery = await Gallery.findOne({ club });
+    console.log("Found gallery:", gallery ? "Yes" : "No"); // Log if gallery found
+
+    if (!gallery) {
+      console.error("Gallery not found for the club:", club); // Log error if gallery not found
+      return {
+        error: "Gallery not found for the club",
+        status: 404,
+      };
+    }
+
+    // Find the image with the specified name (UUID)
+    const imageIndex = gallery.images.findIndex((img) => img.name === imageName);
+    console.log("Image index found:", imageIndex); // Log image index
+
+    if (imageIndex === -1) {
+      console.error("Image not found with name:", imageName); // Log error if image not found
+      return {
+        error: "Image not found",
+        status: 404,
+      };
+    }
+
+    // Update the image approval status
+    console.log(`Updating image '${imageName}' approval from ${gallery.images[imageIndex].approved} to ${approved}`); // Log the update
+    gallery.images[imageIndex].approved = approved;
+
+    // Save the updated gallery
+    await gallery.save();
+    console.log("Gallery saved successfully."); // Log successful save
+  } catch (error) {
+    console.error("Error updating image approval status:", error); // Log any errors
+    return {
+      error: "An error occurred while updating the image approval status",
+      status: 500,
+    };
+  }
+
+  revalidatePath("/dashboard/gallery");
+  console.log("Revalidated path and finished update."); // Log end of function
+  return { message: "Image approval status updated successfully" };
+}

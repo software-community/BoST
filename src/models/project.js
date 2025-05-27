@@ -10,6 +10,10 @@ const projectSchema = new Schema(
     image: String,
     status: String,
     club: String,
+    approved: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

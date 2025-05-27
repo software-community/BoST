@@ -3,7 +3,9 @@ import ProjectCard from "../ui/ProjectCard";
 import { getAllProjects } from "@/app/actions/ProjectData";
 
 const OurProjects = async () => {
-    const projects=await getAllProjects(process.env.SUPER_ADMIN)
+    const projects=await getAllProjects(process.env.SUPER_ADMIN);
+    const approvedProjects = projects.filter(project => project.approved);
+
   return (
     <div className="w-full mx-auto py-12 pb-24   bg-black  flex flex-col  ">
       <h2 className="text-4xl font-semibold text-center mb-12 text-white">
@@ -11,7 +13,7 @@ const OurProjects = async () => {
       </h2>
 
       <div className="gap-16 md:gap-10 flex flex-row flex-wrap justify-center items-stretch w-full">
-        {projects.map((project, index) => (
+        {approvedProjects.map((project, index) => (
           <ProjectCard
             key={index}
             title={project.title}

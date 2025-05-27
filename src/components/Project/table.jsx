@@ -6,6 +6,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { getAllProjects } from "@/app/actions/ProjectData";
 import { auth } from "@/auth";
 import { UpdateProjectBtn, DeleteProjectBtn } from "./buttons";
+import ClientApprovalToggle from "./client-approval-toggle";
 import {
   Table as ShadCnTable,
   TableBody,
@@ -19,6 +20,7 @@ import { clubCodes } from "@/lib/utils";
 export default async function Table(props) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
+  const isSuperAdmin = process.env.SUPER_ADMIN === club;
   let UserData = await getAllProjects(club);
   let header = props.colData;
 
@@ -75,6 +77,9 @@ export default async function Table(props) {
           <TableHeader>
             <TableRow>
               {header.map((col, idx) => {
+                if (col === "Approval" && !isSuperAdmin) {
+                  return null;
+                }
                 return (
                   <TableHead key={idx} className="w-[100px] text-primary font-bold">
                     {col}
@@ -94,7 +99,7 @@ export default async function Table(props) {
                     height={44}
                     alt={`${rest.title}'s profile picture`}
                   />
-                  </TableCell>
+                </TableCell>
                 <TableCell className="font-medium">{rest.title}</TableCell>
                 <TableCell className="text-sm">
                   {rest.description.length > 50
@@ -103,10 +108,15 @@ export default async function Table(props) {
                 </TableCell>
                 <TableCell>{renderStatus(rest.status)}</TableCell>
                 <TableCell className="">{rest.club}</TableCell>
+                {isSuperAdmin && (
+                  <TableCell className="text-sm">
+                    <ClientApprovalToggle id={rest._id} approved={rest.approved} />
+                  </TableCell>
+                )}
                 <TableCell className="">
-                  <UpdateProjectBtn id={rest.id} />
+                  <UpdateProjectBtn id={rest._id} />
                   <span className="font-bold mr-1 ">/</span>
-                  <DeleteProjectBtn id={rest.id} />
+                  <DeleteProjectBtn id={rest._id} />
                 </TableCell>
               </TableRow>
             ))}

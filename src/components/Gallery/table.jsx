@@ -12,16 +12,20 @@ import Image from "next/image";
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 import { getAllImages } from "@/app/actions/GalleryData";
-import { DeleteGalleryImageBtn, UpdateGalleryImageBtn } from "./buttons";
+import { DeleteGalleryImageBtn, UpdateGalleryImageBtn, ApprovalToggle } from "./buttons";
 import { auth } from "@/auth";
 import { clubCodes } from "@/lib/utils";
 
 export default async function Table({ colData }) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
+  const isSuperAdmin = process.env.SUPER_ADMIN === club;
   let UserData = await getAllImages(club);
 
   let header = colData;
+  if (isSuperAdmin) {
+    header = [...header.slice(0, -1), "Status", header[header.length - 1]];
+  }
 
   return (
     <div>
@@ -59,7 +63,7 @@ export default async function Table({ colData }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {UserData.map(({ name, url }, index) => (
+            {UserData.map(({ name, url, approved, club }, index) => (
               <TableRow key={index}>
                 <TableCell className="font-medium">
                   <Image
@@ -72,6 +76,11 @@ export default async function Table({ colData }) {
                 </TableCell>
                 <TableCell className="text-sm">{name}</TableCell>
                 <TableCell className="text-sm">{club}</TableCell>
+                {isSuperAdmin && (
+                  <TableCell className="text-sm">
+                    <ApprovalToggle name={name} club={club} approved={approved} />
+                  </TableCell>
+                )}
                 <TableCell>
                   <UpdateGalleryImageBtn name={name} club={club} />
                   <span className="font-bold mr-1">/</span>
