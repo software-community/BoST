@@ -1,5 +1,9 @@
-import { deleteImageByName } from "@/app/actions/GalleryActions";
+"use client";
+
+import { deleteImageByName, updateImageApprovalStatus } from "@/app/actions/GalleryActions";
 import Link from "next/link";
+import { Switch } from "@/components/ui/switch";
+
 export function UpdateGalleryImageBtn({ name, club }) {
   return (
     <Link
@@ -53,5 +57,19 @@ export function DeleteGalleryImageBtn({ name }) {
         </svg>
       </button>
     </form>
+  );
+}
+
+export function ApprovalToggle({ name, club, approved }) {
+  const updateApproval = async (checked) => {
+    await updateImageApprovalStatus(club, name, checked);
+  };
+
+  return (
+    <Switch
+      defaultChecked={approved}
+      onCheckedChange={updateApproval}
+      className="data-[state=checked]:bg-green-500"
+    />
   );
 }

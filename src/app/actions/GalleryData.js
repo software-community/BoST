@@ -2,24 +2,24 @@ import connectMongoDB from "@/lib/db";
 import Gallery from "@/models/Gallery";
 import { unstable_noStore as noStore } from "next/cache";
 
-export async function getAllImages(club) {
+export async function getAllImages(userClub) {
   noStore(); // Ensure no caching is done
 
   try {
     await connectMongoDB(); // Connect to the database
    
-    var gallery
-    if(club==process.env.SUPER_ADMIN){
-      gallery = await Gallery.find(); // Find the gallery for the specified club
+    var galleries;
+    if(userClub==process.env.SUPER_ADMIN){
+      galleries = await Gallery.find(); // Find the gallery for the specified club
     }else{
-      gallery = await Gallery.find({ club }); // Find the gallery for the specified club
+      galleries = await Gallery.find({ club: userClub }); // Find the gallery for the specified club
     }
-    if (!gallery) return [];
+    if (!galleries || galleries.length === 0) return [];
 
     var images = [];
-    for(var g of gallery){
+    for(var g of galleries){
       for(var img of g.images){
-        images.push(img);
+        images.push({...img.toObject(), club: g.club});
       }
     }
 
