@@ -20,7 +20,7 @@ const ProjectCard = ({
 }) => {
   
   return (
-    <div className="text-black bg-gray-200 w-72 lg:w-[350px] py-12   shadow-white px-4 lg:px-6 rounded-lg flex flex-col flex-none justify-start items-center transform transition-all hover:scale-105">
+    <div className="text-black bg-gray-200 w-72 lg:w-[350px] h-[480px] py-12   shadow-white px-4 lg:px-6 rounded-lg flex flex-col flex-none justify-start items-center transform transition-all hover:scale-105">
       <div className="w-full h-auto px-4  flex justify-between gap-2 text-primary items-center mb-4  ">
         <span className="bg-gray-300 rounded-md p-2 text-[12px]">
           Status: {statusMap[status]}
@@ -35,14 +35,14 @@ const ProjectCard = ({
           </Link>
         </div>
       </div>
-      <div className="relative mx-4 w-[90%]  overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white ">
-        <img className=" w-full" src={image} alt={title}></img>
+      <div className="relative flex items-center justify-centre mx-4 w-[90%] h-[200px] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white ">
+        <img className=" min-w-full object-cover object-center" src={image} alt={title}></img>
       </div>
       <h3 className="text-lg lg:text-2xl font-semibold text-center mt-4 mb-4">
         {title}
       </h3>
       <p className="text-sm lg:text-lg text-gray-500 text-center">
-        {description}
+        {description.trim().length < 25 ? description : description.trim().substring(0, 100) + '...'}
       </p>
       {/* <div className="w-full h-auto  flex justify-between gap-2 text-primary items-center  ml-4 mt-4 ">
         <span className="bg-gray-300 rounded-md p-2 text-[12px]">

@@ -1,7 +1,10 @@
 import React from "react";
 import ProjectCard from "../ui/ProjectCard";
 import { getAllProjects } from "@/app/actions/ProjectData";
+import Link from "next/link";
 
+const slugify = (str) =>
+str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
 
 const OurProjects = async ({club}) => {
   const projects=await getAllProjects(club);
@@ -14,9 +17,15 @@ const OurProjects = async ({club}) => {
       </h2>
 
       <div className="gap-16 md:gap-10 flex flex-row flex-wrap justify-center items-stretch w-full">
-        {projects.map((project, index) => (
+      {projects.map((project, index) => {
+        const projectName = slugify(project.title);
+        return (
+           <Link
+              key={project.id}
+              href={`/${club}/${projectName}?id=${project.id}`}
+            >
           <ProjectCard
-            key={index}
+            // key={index}
             title={project.title}
             github={project.github}
             website={project.website}
@@ -24,7 +33,9 @@ const OurProjects = async ({club}) => {
             description={project.description}
             image={project.image}
           />
-        ))}
+          </Link>
+        );
+      })}
       </div>
     </div>
   );
