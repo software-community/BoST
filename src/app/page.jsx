@@ -6,6 +6,7 @@ import OurProjects from "@/components/Home/OurProjects";
 // import GalleryCarousel from "@/components/Home/Carousel";
 import Hero from "@/components/Home/Hero";
 import OurBlogs from "@/components/Home/OurBlogs";
+import OurEvents from "@/components/Home/OurEvents";
 
 
 export default function Home() {
@@ -18,7 +19,9 @@ export default function Home() {
       <OurTeam />
       <OurProjects />
       <Gallery />
+      <OurEvents/>
       <OurBlogs/>
+
     </>
   );
 }

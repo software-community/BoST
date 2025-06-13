@@ -5,6 +5,7 @@ import OurTeam from "@/components/ClubPageComponents/OurTeam";
 import OurBlogs from "@/components/ClubPageComponents/OurBlogs";
 import Gallery from "@/components/ClubPageComponents/Gallery";
 import OurSchedule from "@/components/ClubPageComponents/OurSchedule";
+import OurEvents from "@/components/ClubPageComponents/OurEvents"
 import { clubCodes } from "@/lib/utils";
 import { getClubDetails } from "../actions/ClubData";
 import { redirect } from "next/navigation";
@@ -30,6 +31,7 @@ const page = ({ params }) => {
       <OurProjects club={club} />
       <Gallery club={club} />
       <OurBlogs club={club} />
+      <OurEvents club={club} />
     </>
   );
 };
