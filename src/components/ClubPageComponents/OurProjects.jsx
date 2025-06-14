@@ -12,7 +12,7 @@ const OurProjects = async ({club}) => {
   if(projects.length===0)return null;
   return (
     <div className="w-full mx-auto py-12 pb-24   bg-black  flex flex-col  ">
-      <h2 className="text-4xl font-semibold text-center mb-12 text-white">
+      <h2 className="text-5xl font-semibold text-center mb-12 text-white">
         Our Projects
       </h2>
 
