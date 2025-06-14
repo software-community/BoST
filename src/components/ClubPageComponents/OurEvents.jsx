@@ -11,10 +11,13 @@ const OurEvents = async ({ club }) => {
 const events = eventInitial.map(event => event.toObject?.() || event);
 
 for (const event of events) {
-  const clubDetailsDoc = await getClubDetails(event.club);
-  const clubDetails = clubDetailsDoc?.toObject?.() || {};
-  event.clubLogo = clubDetails.logo;
+    const clubDetailsDoc = await getClubDetails(event.club);
+    const clubDetails = clubDetailsDoc?.toObject?.() || {};
+    event.clubLogo = clubDetails.logo;
+
 }
+
+
 
 
 
@@ -26,7 +29,7 @@ for (const event of events) {
         <h2 className="text-4xl font-semibold text-center mb-12 text-white">
           Our Events
         </h2>
-        <div classname="max-w-4xl mx-auto">
+        <div classname="w-full mx-auto">
           <EventCarousel events={events} />
         </div>
       </div>
