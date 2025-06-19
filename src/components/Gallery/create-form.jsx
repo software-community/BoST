@@ -54,8 +54,7 @@ export default function AddImageForm() {
                 alert(`ERROR! ${error.message}`);
               }}
             />
-            
-            
+
           </div>
           <p className="text-gray-500 text-sm mt-8">A smaller resolution image around 200kbs is preferred as it is a part of gallery.</p>
           <p className="text-gray-500 text-sm mb-8 mt-4"> ProTip: Try to keep total images a multiple of 3 or 2. </p>
@@ -68,17 +67,35 @@ export default function AddImageForm() {
               ))}
           </div>
         </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/gallery"
-          className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <button type="submit" className="bg-primary text-white p-2 rounded-lg">
-          Add Image
-        </button>
+        <div className="mt-6 flex justify-end gap-4">
+          <Link
+            href="/dashboard/gallery"
+            className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
+          >
+            Cancel
+          </Link>
+          <button type="submit" className="bg-primary text-white p-2 rounded-lg">
+            Add Image
+          </button>
+        </div>
       </div>
+
+      {/*Preview Section BELOW the form */}
+      <div className="mt-8 flex justify-center min-h-[300px]">
+        {imageURL ? (
+          <div className="w-full sm:w-1/2 lg:w-1/3">
+            <img
+              src={imageURL}
+              alt="Uploaded preview"
+              className="w-full h-72 object-cover object-center rounded-md border"
+            />
+          </div>
+        ) : (
+          // Reserve space to prevent layout shift
+          <div className="w-full sm:w-1/2 lg:w-1/3 h-72 bg-gray-100 rounded-md border flex items-center justify-center text-gray-400">
+            Image preview will appear here
+          </div>
+        )}
       </div>
 
     </form>

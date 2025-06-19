@@ -36,7 +36,7 @@ const Form = () => {
 
   return (
     <form onSubmit={onSubmit}>
-       <div className="text-xl font-bold text-primary mb-4">
+      <div className="text-xl font-bold text-primary mb-4">
         <h2>Create a Project</h2>
       </div>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -132,7 +132,7 @@ const Form = () => {
               className="ut-uploading:pointer-events-none"
               appearance={{
                 container: "w-1/4",
-button:"bg-primary"
+                button: "bg-primary"
               }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
@@ -142,6 +142,16 @@ button:"bg-primary"
                 alert(`ERROR! ${error.message}`);
               }}
             />
+            {/*Preview Section BELOW the form */}
+            {projectImageURL && (
+              <div className="w-32 h-32 mt-4 md:mt-0 border rounded-md overflow-hidden">
+                <img
+                  src={projectImageURL}
+                  alt="Preview"
+                  className="w-full h-full object-cover object-center"
+                />
+              </div>
+            )}
           </div>
           <p className="text-gray-500 text-sm mt-8">A good resolution image with similar orientation as others is prefferred</p>
           <p className="text-gray-500 text-sm mb-8 mt-4"> ProTip: Try to keep total images a multiple of 3 or 2. </p>
@@ -164,7 +174,7 @@ button:"bg-primary"
             type="text"
             className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
             placeholder="Enter GitHub link (optional)"
-            // aria-describedby="github-error"
+          // aria-describedby="github-error"
           />
           {/* <div id="github-error" aria-live="polite" aria-atomic="true">
             {state.errors?.github &&
@@ -186,7 +196,7 @@ button:"bg-primary"
             type="text"
             className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
             placeholder="Enter website link (optional)"
-            // aria-describedby="website-error"
+          // aria-describedby="website-error"
           />
           {/* <div id="website-error" aria-live="polite" aria-atomic="true">
             {state.errors?.website &&

@@ -5,7 +5,7 @@ import { useFormState } from "react-dom";
 import UploadButton from "@/components/UploadButton";
 import { useState } from "react";
 
-export default function EditImageForm({ url,name }) {
+export default function EditImageForm({ url, name }) {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(updateGalleryImageURL, initialState);
   const [imageURL, setImageURL] = useState(url || "");
@@ -40,12 +40,14 @@ export default function EditImageForm({ url,name }) {
               className="peer px-4 block w-full md:w-1/2 h-8 rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
               readOnly
             />
+
             <UploadButton
               endpoint="imageUploader"
               className="ut-uploading:pointer-events-none"
               appearance={{
                 container: "w-1/4",
-button:"bg-primary"              }}
+                button: "bg-primary"
+              }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
                 setImageURL(res[0].url);
@@ -64,17 +66,35 @@ button:"bg-primary"              }}
               ))}
           </div>
         </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/dashboard/gallery"
-          className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <button type="submit" className="bg-primary text-white px-4 p-2 rounded-lg">
-          Edit
-        </button>
+        <div className="mt-6 flex justify-end gap-4">
+          <Link
+            href="/dashboard/gallery"
+            className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
+          >
+            Cancel
+          </Link>
+          <button type="submit" className="bg-primary text-white px-4 p-2 rounded-lg">
+            Edit
+          </button>
+        </div>
       </div>
+
+      {/*Preview Section BELOW the form */}
+      <div className="mt-8 flex justify-center min-h-[300px]">
+        {imageURL ? (
+          <div className="w-full sm:w-1/2 lg:w-1/3">
+            <img
+              src={imageURL}
+              alt="Uploaded preview"
+              className="w-full h-72 object-cover object-center rounded-md border"
+            />
+          </div>
+        ) : (
+          // Reserve space to prevent layout shift
+          <div className="w-full sm:w-1/2 lg:w-1/3 h-72 bg-gray-100 rounded-md border flex items-center justify-center text-gray-400">
+            Image preview will appear here
+          </div>
+        )}
       </div>
 
     </form>
