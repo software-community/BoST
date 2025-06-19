@@ -11,41 +11,6 @@ import {
 
 import globeImg from '@/../public/home/Globe.svg'
 
-// const ClubLogo = ({ logo, clubName, className = "" }) => {
-
-//   const [imageError, setImageError] = useState(false);
-//   const [imageLoaded, setImageLoaded] = useState(false);
-
-//   const handleImageError = () => {
-//     setImageError(true);
-//   };
-
-//   const handleImageLoad = () => {
-//     setImageLoaded(true);
-//   };
-
-//   // If no logo provided or image failed to load, show Users icon
-//   if (!logo || imageError) {
-//     return <Users className={`text-indigo-600 ${className}`} />;
-//   }
-
-//   return (
-//     <div className="relative">
-//       <img
-//         src={logo}
-//         alt={`${clubName} logo`}
-//         className={`object-cover rounded-full ${className} ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-//         onError={handleImageError}
-//         onLoad={handleImageLoad}
-//         style={{ transition: 'opacity 0.3s ease' }}
-//       />
-//       {/* Fallback icon while loading */}
-//       {!imageLoaded && !imageError && (
-//         <Users className={`absolute inset-0 text-indigo-600 ${className}`} />
-//       )}
-//     </div>
-//   );
-// };
 const customStyles = `
   .line-clamp-2 {
     display: -webkit-box;
@@ -140,7 +105,6 @@ const ClubLogo = ({ logo, clubName, className = "" }) => {
   if(logo === 'admin')
   {
     logo = globeImg.src
-    console.log("HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
   }
   else
   {
@@ -185,15 +149,15 @@ const EventCard = ({
         </div>
       </div>
 
-      {/* Main Content - Responsive Layout */}
+      {/* Main Content - All cards have same layout (image on right) */}
       <div
         className={`flex ${
           isMobile
             ? "flex-col h-auto"
-            : `h-[450px] ${isLeft ? "" : "flex-row-reverse"}`
+            : "h-[450px]"
         }`}
       >
-        {/* Event Details */}
+        {/* Event Details - Always on the left */}
         <div
           className={`${
             isMobile ? "w-full" : "flex-1"
@@ -251,7 +215,7 @@ const EventCard = ({
           </div>
         </div>
 
-        {/* Event Image */}
+        {/* Event Image - Always on the right */}
         <div
           className={`${
             isMobile ? "w-full h-48" : "w-1/2"
@@ -504,7 +468,7 @@ const EventCarousel = ({ events }) => {
             <div className="flex-shrink-0 w-full lg:w-auto lg:max-w-2xl">
               <EventCard
                 event={rightEvent}
-                isLeft={false}
+                isLeft={true}
                 isMobile={false}
                 animationClass={getAnimationClass("right")}
               />
