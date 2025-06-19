@@ -12,6 +12,7 @@ const allowedEmails=[
   "gs.tech@iitrpr.ac.in",
   "2024epb1277@iitrpr.ac.in",
   "2024csb1120@iitrpr.ac.in",
+  "2024chb1084@iitrpr.ac.in",
   // and clubCodes keys + @iitrpr.ac.in
   ...Object.keys(clubCodes).map((key)=>key+"@iitrpr.ac.in")
 ];
