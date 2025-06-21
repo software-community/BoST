@@ -1,3 +1,4 @@
+"use server"
 import Event from "@/models/events";
 import connectMongoDB from "@/lib/db";
 import { unstable_noStore as noStore } from "next/cache";
@@ -23,7 +24,7 @@ export async function getEventsForClub(club) {
 
     else{
 
-      eventRecord = await Event.find({ club });
+      eventRecord = await Event.find({ club }).sort({order:1});
     }
 
     if (!eventRecord) {
@@ -77,4 +78,47 @@ export async function getEventsForClubAndDate(club, id) {
       message: "Database Error: Failed to retrieve events.",
     };
   }
+}
+
+export async function moveEventUp(eventId, club) {
+  // "use server"
+  try {
+    await connectMongoDB();
+    const events = await Event.find({ club }).sort({ order: 1 });
+    const currentIndex = events.findIndex(e => e._id.toString() === eventId);
+    
+    if (currentIndex > 0) {
+      // Swap order values
+      const temp = events[currentIndex].order;
+      events[currentIndex].order = events[currentIndex - 1].order;
+      events[currentIndex - 1].order = temp;
+      
+      await events[currentIndex].save();
+      await events[currentIndex - 1].save();
+    }
+  } catch (error) {
+    return { message: "Failed to move event up" };
+  }
+  // revalidatePath("/dashboard/events");
+}
+
+export async function moveEventDown(eventId, club) {
+  try {
+    await connectMongoDB();
+    const events = await Event.find({ club }).sort({ order: 1 });
+    const currentIndex = events.findIndex(e => e._id.toString() === eventId);
+    
+    if (currentIndex < events.length - 1) {
+      // Swap order values
+      const temp = events[currentIndex].order;
+      events[currentIndex].order = events[currentIndex + 1].order;
+      events[currentIndex + 1].order = temp;
+      
+      await events[currentIndex].save();
+      await events[currentIndex + 1].save();
+    }
+  } catch (error) {
+    return { message: "Failed to move event down" };
+  }
+  // revalidatePath("/dashboard/events");
 }

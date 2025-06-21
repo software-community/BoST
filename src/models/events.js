@@ -9,7 +9,8 @@ const eventSchema = new Schema({
   time: String,
   desc: String,
   club: String,
-  ap:{type:Boolean, required:true}
+  ap:{type:Boolean, required:true},
+  order: {type: Number, default: 0}
 });
 
 

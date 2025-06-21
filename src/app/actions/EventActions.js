@@ -43,16 +43,9 @@ export async function addEvent(prevState, formData) {
   const ap = false;
 
   // Extract validated data
-  const { date, event, venue, time, desc, image } = validatedFields.data;
-  const eventObject = {
-    date,
-    event,
-    venue,
-    time,
-    desc,
-    image,
-    club:_club,
-  };
+  const eventsCount = await Event.countDocuments({ club: _club });
+  const newOrder = eventsCount + 1;
+ 
 
 
 
@@ -67,7 +60,8 @@ export async function addEvent(prevState, formData) {
       desc,
       image,
       club:_club,
-      ap
+      ap,
+      order:newOrder
     })
     
   } catch (error) {

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getEventsForClub } from "@/app/actions/EventData";
 import { auth } from "@/auth";
 import { UpdateEventsBtn, DeleteEventsBtn } from "./buttons";
-import { ApprovalToggle} from "./approvalBTN.jsx";
+import { ApprovalToggle } from "./approvalBTN.jsx";
 import {
   Table as ShadCnTable,
   TableBody,
@@ -16,6 +16,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { clubCodes } from "@/lib/utils";
+
+import { ArrowButtons } from "./orderButtons";
+
 
 export default async function Table({ colData }) {
   const session = await auth();
@@ -27,6 +30,10 @@ export default async function Table({ colData }) {
   let header = colData;
   if (isSuperAdmin) {
     header = [...header.slice(0, -1), "Status", header[header.length - 1]];
+  }
+
+  if (!isSuperAdmin) {
+    header = [...header, "Order"];
   }
 
   return (
@@ -46,7 +53,7 @@ export default async function Table({ colData }) {
             className="bg-primary flex items-center justify-center rounded-md px-4 text-white"
           >
             <span className="hidden md:inline text-secondary">Create </span>
-            <IconPlus  className="md:ml-2" size={20} />
+            <IconPlus className="md:ml-2" size={20} />
           </Link>
         </div>
       </form>
@@ -65,7 +72,7 @@ export default async function Table({ colData }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {UserData.map(({ _id, event, image, desc, venue, date, time, club, ap }) => (
+            {UserData.map(({ _id, event, image, desc, venue, date, time, club, ap }, index) => (
               <TableRow key={_id}>
                 <TableCell className="font-medium">
                   <Image
@@ -87,12 +94,23 @@ export default async function Table({ colData }) {
                     <ApprovalToggle id={_id} club={club} approved={ap} />
                   </TableCell>
                 )}
-                
+
                 <TableCell>
                   <UpdateEventsBtn id={_id} />
                   <span className="font-bold mr-1">/</span>
                   <DeleteEventsBtn id={_id} />
                 </TableCell>
+
+                {!isSuperAdmin && (<TableCell>
+                  <ArrowButtons
+                    eventId={_id}
+                    club={club}
+                    isFirst={index === 0}
+                    isLast={index === UserData.length - 1}
+                  />
+                </TableCell>)}
+
+
               </TableRow>
             ))}
           </TableBody>
