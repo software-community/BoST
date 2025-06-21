@@ -1,12 +1,20 @@
 import mongoose, { Schema } from "mongoose";
 
+const teamMemberSchema = new Schema({
+  name: String,
+  email: String,
+  image: String,
+  github: String,
+  linkedin: String,
+});
+
 const projectSchema = new Schema(
   {
     title: String,
     description: String,
-    members: String,
-    github:String,
-    website:String,
+    members: [teamMemberSchema],
+    github: String,
+    website: String,
     image: String,
     status: String,
     club: String,

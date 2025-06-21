@@ -10,7 +10,7 @@ export default function Form() {
   const initialState = { message: null, errors: {} };
   const [state, dispatch] = useFormState(addEvent, initialState);
   const [avatarURL, setavatarURL] = useState("");
- 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -102,7 +102,8 @@ export default function Form() {
               className="ut-uploading:pointer-events-none"
               appearance={{
                 container: "w-1/4",
-button:"bg-primary"              }}
+                button: "bg-primary"
+              }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
                 setavatarURL(res[0].url);
@@ -111,6 +112,11 @@ button:"bg-primary"              }}
                 alert(`ERROR! ${error.message}`);
               }}
             />
+            {avatarURL && (
+              <div className="w-32 h-32 mt-4 md:mt-0 border rounded-md overflow-hidden">
+                <img src={avatarURL} alt="Preview" className="w-full h-full object-cover" />
+              </div>
+            )}
           </div>
           {/* <div id="image-error" aria-live="polite" aria-atomic="true">
             {state.errors?.image &&
@@ -122,7 +128,7 @@ button:"bg-primary"              }}
           </div> */}
         </div>
 
-        
+
         {/* Event Date */}
         <div className="mb-4">
           <label htmlFor="date" className="mb-2 block text-sm font-medium">
@@ -146,8 +152,8 @@ button:"bg-primary"              }}
           </div> */}
         </div>
 
-            {/* Event Time */}
-            <div className="mb-4">
+        {/* Event Time */}
+        <div className="mb-4">
           <label htmlFor="time" className="mb-2 block text-sm font-medium">
             Event Time
           </label>
@@ -169,8 +175,8 @@ button:"bg-primary"              }}
           </div> */}
         </div>
 
-            {/* Event Venue*/}
-            <div className="mb-4">
+        {/* Event Venue*/}
+        <div className="mb-4">
           <label htmlFor="venue" className="mb-2 block text-sm font-medium">
             Event Venue
           </label>
@@ -193,16 +199,16 @@ button:"bg-primary"              }}
         </div>
 
 
-   
-      <div className="mt-6 flex justify-end gap-2">
-        <Link
-          href="/dashboard/events"
-          className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
-        <Button type="submit" className=" text-white p-4 rounded-lg">Create</Button>
-      </div>
+
+        <div className="mt-6 flex justify-end gap-2">
+          <Link
+            href="/dashboard/events"
+            className="flex h-10 items-center rounded-lg bg-secondary px-4 text-sm font-medium text-primary transition-colors hover:bg-gray-200"
+          >
+            Cancel
+          </Link>
+          <Button type="submit" className=" text-white p-4 rounded-lg">Create</Button>
+        </div>
       </div>
 
     </form>

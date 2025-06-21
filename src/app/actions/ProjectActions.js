@@ -7,10 +7,26 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { clubCodes } from "@/lib/utils";
 
+const MemberSchema = z.object({
+  name: z.string().min(1, "Name is required."),
+  email: z.string().email("Invalid email."),
+  image: z.string().min(1),
+  github: z.string().url("Invalid GitHub URL.").or(z.literal("")).optional(),
+  linkedin: z
+    .string()
+    .url("Invalid LinkedIn URL.")
+    .or(z.literal(""))
+    .optional(),
+});
+
 const FormSchema = z.object({
   title: z.string().min(1, "Title is required."),
   description: z.string().min(1, "Description is required."),
-  members: z.string().min(1, "members are required."),
+  members: z
+    .string()
+    .min(1, "Members are required.")
+    .transform((value) => JSON.parse(value)) // transform string input to JSON
+    .pipe(z.array(MemberSchema)), // validate each member
   image: z.string().min(1, "Image is required."),
   status: z.string().min(1, "Status is required."),
   club: z.string().min(1, "Club is required."),
@@ -18,7 +34,7 @@ const FormSchema = z.object({
   website: z.string(),
 });
 
-export async function createProject(prevState, formData) {
+export async function createProject(formData) {
   const session = await auth();
   const _club = clubCodes[session?.user.email.split("@")[0]];
 
@@ -71,10 +87,12 @@ export async function createProject(prevState, formData) {
 }
 
 // here this _id is passed through binding and not directly as it is a sensitive information that may be used mischeviously
-export async function updateProject(_id, prevState, formData) {
+export async function updateProject(_id, formData) {
   const session = await auth();
   const _club = clubCodes[session?.user.email.split("@")[0]];
-  
+
+  // console.log("🧾 Raw formData (members):", formData.get("members"));
+
 
   // Validate form using Zod
   const validatedFields = FormSchema.safeParse({
@@ -90,6 +108,7 @@ export async function updateProject(_id, prevState, formData) {
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
+      // console.log("❌ Zod validation errors:", validatedFields.error.flatten().fieldErrors);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
       message: "Missing or invalid fields. Failed to update project.",
@@ -100,6 +119,8 @@ export async function updateProject(_id, prevState, formData) {
   // const { title, description, members, images, relatedLinks, status, club } = validatedFields.data;
   const { title, description, status, members, image, github, website } =
     validatedFields.data;
+    // console.log("🛠️ Parsed members inside updateProject:", members);
+
 
   // Insert data into the database
   try {
@@ -123,7 +144,8 @@ export async function updateProject(_id, prevState, formData) {
 
   // Revalidate the cache for the projects page and redirect the user.
   revalidatePath("/dashboard/projects");
-  redirect("/dashboard/projects");
+  return { success: true };
+  // console.log("Project created successfully");
 }
 
 export async function deleteProject(id) {
@@ -167,7 +189,6 @@ export async function updateProjectApprovalStatus(projectId, approved) {
         status: 404,
       };
     }
-
   } catch (error) {
     console.error("Error updating project approval status:", error);
     return {

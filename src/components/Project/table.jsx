@@ -114,9 +114,9 @@ export default async function Table(props) {
                   </TableCell>
                 )}
                 <TableCell className="">
-                  <UpdateProjectBtn id={rest._id} />
+                  <UpdateProjectBtn id={rest.id} />
                   <span className="font-bold mr-1 ">/</span>
-                  <DeleteProjectBtn id={rest._id} />
+                  <DeleteProjectBtn id={rest.id} />
                 </TableCell>
               </TableRow>
             ))}
