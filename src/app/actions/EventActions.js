@@ -46,7 +46,7 @@ export async function addEvent(prevState, formData) {
   const eventsCount = await Event.countDocuments({ club: _club });
   const newOrder = eventsCount + 1;
  
-
+  const {event,desc,image,date,time,venue} =validatedFields.data
 
 
   // Insert data into the database
