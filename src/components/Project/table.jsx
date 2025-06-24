@@ -110,7 +110,7 @@ export default async function Table(props) {
                 <TableCell className="">{rest.club}</TableCell>
                 {isSuperAdmin && (
                   <TableCell className="text-sm">
-                    <ClientApprovalToggle id={rest._id} approved={rest.approved} />
+                    <ClientApprovalToggle id={rest.id} approved={rest.approved} />
                   </TableCell>
                 )}
                 <TableCell className="">
