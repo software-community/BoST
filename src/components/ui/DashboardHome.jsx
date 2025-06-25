@@ -6,16 +6,16 @@ import { FiArrowRight, FiMail, FiMapPin } from "react-icons/fi";
 import { SiGithub, SiTiktok, SiTwitter, SiYoutube } from "react-icons/si";
 import Link from "next/link";
 import {
-    IconHome,
-    IconDashboard,
-    IconFriends,
-    IconPhotoEdit,
-    IconArticle,
-    IconBrandGithub,
-    IconList,
-    IconLogout,
-    IconCalendarEvent,
-    IconInfoSquareRounded
+  IconHome,
+  IconDashboard,
+  IconFriends,
+  IconPhotoEdit,
+  IconArticle,
+  IconBrandGithub,
+  IconList,
+  IconLogout,
+  IconCalendarEvent,
+  IconInfoSquareRounded
 } from "@tabler/icons-react";
 
 export const DashboardHome = ({ isSuperAdmin }) => {
@@ -87,56 +87,64 @@ const AboutBlock = ({ isSuperAdmin }) => (
         </span>
       </p>
     </Link>
-    <Link href="/dashboard/blogs">
+    {!isSuperAdmin && <Link href="/dashboard/courses">
       <p className="cursor-pointer">
-        /Blogs{" "}
+        /Courses{" "}
         <span className="text-zinc-400">
-          <IconArticle className="inline" />: Create, Update, delete your blogs
+          <IconBrandGithub className="inline" />: Create, Update, delete your courses
         </span>
       </p>
-    </Link>
-    <Link href="/dashboard/team">
-      <p className="cursor-pointer">
-        /Team{" "}
-        <span className="text-zinc-400">
-          <IconFriends className="inline" />: Create, Update, delete your team members
-        </span>
-      </p>
-    </Link>
-    <Link href="/dashboard/gallery">
-      <p className="cursor-pointer">
-        /Gallery{" "}
-        <span className="text-zinc-400">
-          <IconPhotoEdit className="inline" />: Create, Update, delete your gallery images
-        </span>
-      </p>
-    </Link>
-    <Link href="/dashboard/events">
-      <p className="cursor-pointer">
-        /Events{" "}
-        <span className="text-zinc-400">
-          <IconCalendarEvent className="inline" />: Create, Update, delete your Events
-        </span>
-      </p>
-    </Link>
-    {isSuperAdmin && (
-      <Link href="/dashboard/achievements">
+    </Link>}  
+      <Link href="/dashboard/blogs">
         <p className="cursor-pointer">
-          /Achievements{" "}
+          /Blogs{" "}
           <span className="text-zinc-400">
-            <IconList className="inline" />: Create, Update, delete BOST Achievements
+            <IconArticle className="inline" />: Create, Update, delete your blogs
           </span>
         </p>
       </Link>
-    )}
-    <Link href="/">
-      <p className="cursor-pointer">
-        /Home{" "}
-        <span className="text-zinc-400">
-          <IconHome className="inline" />: Go back to landing page
-        </span>
-      </p>
-    </Link>
+      <Link href="/dashboard/team">
+        <p className="cursor-pointer">
+          /Team{" "}
+          <span className="text-zinc-400">
+            <IconFriends className="inline" />: Create, Update, delete your team members
+          </span>
+        </p>
+      </Link>
+      <Link href="/dashboard/gallery">
+        <p className="cursor-pointer">
+          /Gallery{" "}
+          <span className="text-zinc-400">
+            <IconPhotoEdit className="inline" />: Create, Update, delete your gallery images
+          </span>
+        </p>
+      </Link>
+      <Link href="/dashboard/events">
+        <p className="cursor-pointer">
+          /Events{" "}
+          <span className="text-zinc-400">
+            <IconCalendarEvent className="inline" />: Create, Update, delete your Events
+          </span>
+        </p>
+      </Link>
+      {isSuperAdmin && (
+        <Link href="/dashboard/achievements">
+          <p className="cursor-pointer">
+            /Achievements{" "}
+            <span className="text-zinc-400">
+              <IconList className="inline" />: Create, Update, delete BOST Achievements
+            </span>
+          </p>
+        </Link>
+      )}
+      <Link href="/">
+        <p className="cursor-pointer">
+          /Home{" "}
+          <span className="text-zinc-400">
+            <IconHome className="inline" />: Go back to landing page
+          </span>
+        </p>
+      </Link>
       <p >
         /Logout{" "}
         <span className="text-zinc-400">

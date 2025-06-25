@@ -13,23 +13,44 @@ const CourseSchema = z.object({
   courseDesc: z.string().min(1, "Course Description is required."),
   instructorName: z.string().min(1, "Instructor Name is required."),
   instructorImage: z.string().min(1, "Instructor Image is required"),
-  startDate: z.string.min(1, "Course Start Date Required"),
-  endDate: z.string.min(1, "Course End Date Required"),
+  startDate: z.string().min(1, "Course Start Date Required"),
+  endDate: z.string().optional(),
+});
+
+const videoSchema = z.object({
+  url: z
+    .string()
+    .min(1, "Video URL is required")
+    .refine((val) => val.startsWith("http") || val.startsWith("/"), {
+      message: "Invalid video URL",
+    }),
+  title: z.string().optional(),
+});
+
+const pdfSchema = z.object({
+  url: z
+    .string()
+    .refine((val) => val.startsWith("http") || val.startsWith("/"), {
+      message: "Invalid PDF URL",
+    }),
+  name: z.string().optional(),
 });
 
 const ModuleSchema = z.object({
-  moduleName: z.string().min(1, "Module Name is required"),
-  moduleDesc: z.string().min(1, "Module Description is required"),
-  moduleVideo: z.string().min(1, "Video for Module is required"),
-  modulePdf: z.string().min(1, "Pdf for the moduel is required"),
+  moduleName: z.string().min(3, "Module name must be at least 3 characters."),
+  moduleDesc: z.string().min(10, "Description must be at least 10 characters."),
+  moduleVideos: z.array(videoSchema).optional(),
+  modulePdfs: z.array(pdfSchema).optional(),
 });
+
+
 
 export async function addCourse(prevState, formData) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
 
   const validateFields = CourseSchema.safeParse({
-    couseName: formData.get("courseName"),
+    courseName: formData.get("courseName"),
     courseDesc: formData.get("courseDesc"),
     instructorImage: formData.get("instructorImage"),
     instructorName: formData.get("instructorName"),
@@ -37,12 +58,12 @@ export async function addCourse(prevState, formData) {
     endDate: formData.get("endDate"),
   });
 
-  if (!validateFields) {
-    console.log("Courses Field not validated");
-    console.log(validateFields.error.message);
+   // If form validation fails, return errors early. Otherwise, continue.
+  if (!validateFields.success) {
+      // console.log("❌ Zod validation errors:", validateFields.error.flatten().fieldErrors);
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing or invalid fields. Failed to add Course.",
+      errors: validateFields.error.flatten().fieldErrors,
+      message: "Missing or invalid fields. Failed to update project.",
     };
   }
 
@@ -73,9 +94,10 @@ export async function addCourse(prevState, formData) {
       message: "Database Error: Failed to add Course.",
     };
   }
-
+  
   revalidatePath("/dashboard/courses");
   redirect("/dashboard/courses");
+  return { success: true };
 }
 
 
@@ -98,6 +120,7 @@ export async function deleteCourse(id) {
       message: "Database error: Failed to Delete Course",
     };
   }
+   revalidatePath("/dashboard/courses");
 }
 
 
@@ -107,25 +130,71 @@ export async function deleteCourse(id) {
 
 
 
-export async function editCourse(id,formData)
-{
-  const validatedFields = CourseSchema.safeParse({
-    couseName: formData.get("courseName"),
+// export async function editCourse(id, formData) {
+//   const validateFields = CourseSchema.safeParse({
+//     courseName: formData.get("courseName"),
+//     courseDesc: formData.get("courseDesc"),
+//     instructorImage: formData.get("instructorImage"),
+//     instructorName: formData.get("instructorName"),
+//     startDate: formData.get("startDate"),
+//     endDate: formData.get("endDate"),
+//   });
+
+//   if (!validateFields.success) {
+//     console.log("Error in Validating Fields for Editing Course");
+//     console.log(validateFields.error.message);
+//     return {
+//       errors: validateFields.error.flatten().fieldErrors,
+//       message: "Missing or invalid fields. Failed to Edit Course.",
+//     };
+//   }
+
+//   const {
+//     courseName,
+//     courseDesc,
+//     instructorName,
+//     instructorImage,
+//     startDate,
+//     endDate,
+//   } = validateFields.data;
+
+//   try {
+//     await connectMongoDB();
+//     await Course.findByIdAndUpdate(id, {
+//       courseName,
+//       courseDesc,
+//       instructorName,
+//       instructorImage,
+//       startDate,
+//       endDate,
+//     });
+//   } catch (error) {
+//     console.log("Error Editing Course In Database", error);
+//     return {
+//       message: "Database Error: Failed to Edit Course",
+//     };
+//   }
+
+//   revalidatePath("/dashboard/courses");
+//   redirect("/dashboard/courses");
+// }
+
+export async function editCourse(id, formData) {
+  const validateFields = CourseSchema.safeParse({
+    courseName: formData.get("courseName"),
     courseDesc: formData.get("courseDesc"),
     instructorImage: formData.get("instructorImage"),
     instructorName: formData.get("instructorName"),
     startDate: formData.get("startDate"),
     endDate: formData.get("endDate"),
-  })
+  });
 
-  if(!validateFields)
-  {
-    console.log("Error in Validating Fields for Editing Course");
-    console.log(validateFields.error.message)
-    return{
-      errors: validatedFields.error.flatten().fieldErrors,
+  if (!validateFields.success) {
+    console.log("Validation errors:", validateFields.error.flatten().fieldErrors);
+    return {
+      errors: validateFields.error.flatten().fieldErrors,
       message: "Missing or invalid fields. Failed to Edit Course.",
-    }
+    };
   }
 
   const {
@@ -137,77 +206,66 @@ export async function editCourse(id,formData)
     endDate,
   } = validateFields.data;
 
-  try
-  {
+  try {
     await connectMongoDB();
-    await Course.findByIdAndUpdate(id,{
+
+    const result = await Course.findByIdAndUpdate(id, {
       courseName,
       courseDesc,
       instructorName,
       instructorImage,
       startDate,
-      endDate
-    })
+      endDate,
+    });
 
-  }
-  catch(error)
-  {
-    console.log("Error Editing Course In Database")
-    return{
-      message:"Database Error: Failed to Edit Course"
-    }
-  }
+    console.log("Mongo update result:", result);
 
-  revalidatePath("/dashboard/courses");
-  redirect("/dashboard/courses");
+    return { success: true };
+  } catch (error) {
+    console.log("Error Editing Course In Database", error);
+    return {
+      message: "Database Error: Failed to Edit Course",
+    };
+  }
 }
 
 
-
-
-
-
-
-
-
-export async function addModuleToCourse(courseId, formData) {
+export async function addModuleToCourse(courseid, formData) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
-
+  
   const validateFields = ModuleSchema.safeParse({
     moduleName: formData.get("moduleName"),
     moduleDesc: formData.get("moduleDesc"),
-    moduleVideo: formData.get("moduleVideo"),
-    modulePdf: formData.get("modulePdf"),
+    moduleVideos: JSON.parse(formData.get("moduleVideos") || "[]"),
+    modulePdfs: JSON.parse(formData.get("modulePdfs") || "[]"),
   });
-
-  if (!validateFields) {
-    console.log("Error in the fields given");
-    console.log(validateFields.error.message);
+  
+  if (!validateFields.success) {
+    console.log("Validation Error", validateFields.error.message);
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors: validateFields.error.flatten().fieldErrors,
       message: "Missing or invalid fields. Failed to add Module.",
     };
   }
-
-  const { moduleName, moduleDesc, moduleVideo, modulePdf } =
-    validateFields.data;
-
+  
+  const { moduleName, moduleDesc, moduleVideos, modulePdfs } =
+  validateFields.data;
   try {
     await connectMongoDB();
 
-    await Course.findByIdAndUpdate(courseId, {
+    await Course.findByIdAndUpdate(courseid, {
       $push: {
         modules: {
           moduleName,
           moduleDesc,
-          moduleVideo,
-          modulePdf,
+          moduleVideos,
+          modulePdfs,
         },
       },
     });
   } catch (error) {
-    console.log(error.message);
+    console.log("Add Module Error:", error.message);
     return {
       message: "Database Error : Failed to add Module",
     };
@@ -217,90 +275,71 @@ export async function addModuleToCourse(courseId, formData) {
   redirect("/dashboard/courses");
 }
 
-
-
-
-
-export async function editModuleFromCourse(courseId,ModuleId,formData)
-{
+export async function editModuleFromCourse(courseid, moduleid, formData) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
 
   const validateFields = ModuleSchema.safeParse({
     moduleName: formData.get("moduleName"),
     moduleDesc: formData.get("moduleDesc"),
-    moduleVideo: formData.get("moduleVideo"),
-    modulePdf: formData.get("modulePdf"),
+    moduleVideos: JSON.parse(formData.get("moduleVideos") || "[]"),
+    modulePdfs: JSON.parse(formData.get("modulePdfs") || "[]"),
   });
 
-  if (!validateFields) {
-    console.log("Error in the fields given");
-    console.log(validateFields.error.message);
+  if (!validateFields.success) {
+    console.log("Validation Error", validateFields.error.message);
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: "Missing or invalid fields. Failed to add Module.",
+      errors: validateFields.error.flatten().fieldErrors,
+      message: "Missing or invalid fields. Failed to edit Module.",
     };
   }
 
-  const { moduleName, moduleDesc, moduleVideo, modulePdf } =
+  const { moduleName, moduleDesc, moduleVideos, modulePdfs } =
     validateFields.data;
 
-    try{
-      await connectMongoDB();
-        
-        const result = await Course.findOneAndUpdate(
-            { 
-                _id: courseId, 
-                "modules._id": moduleId 
-            },
-            {
-                $set: {
-                    "modules.$.moduleName": moduleName,
-                    "modules.$.moduleDesc": moduleDesc,
-                    "modules.$.moduleVideo": moduleVideo,
-                    "modules.$.modulePdf": modulePdf
-                }
-            },
-            { new: true }
-        );
-        
-        if (!result) {
-            return { message: "Course or module not found" };
-        }
-      
-    }
-    catch(error)
-    {
-      console.log("Error Editing Module")
-      message:"Database Error : Failed to Edit Module"
-    }
-
-    revalidatePath('/dashboard/courses');
-    redirect('/dashboard/courses')
-}
-
-
-
-
-
-export async function deleteModule(courseId, moduleId)
-{
-  try{
+  try {
     await connectMongoDB();
 
-    const result = Course.findByIdAndUpdate(
-      courseId,{
-        $pull:{
-          module : {_id:moduleId}
-        }
-      }
-    )
+    const result = await Course.findOneAndUpdate(
+      { _id: courseid, "modules._id": moduleid },
+      {
+        $set: {
+          "modules.$.moduleName": moduleName,
+          "modules.$.moduleDesc": moduleDesc,
+          "modules.$.moduleVideos": moduleVideos,
+          "modules.$.modulePdfs": modulePdfs,
+        },
+      },
+      { new: true }
+    );
 
-  }
-  catch(error)
-  {
-    return{
-      message:"Database Error: Failed to Delete Module"
+    if (!result) {
+      return { message: "Course or module not found" };
     }
+  } catch (error) {
+    console.log("Edit Module Error:", error.message);
+    return {
+      message: "Database Error : Failed to Edit Module",
+    };
+  }
+
+  revalidatePath("/dashboard/courses");
+  redirect("/dashboard/courses");
+}
+
+export async function deleteModule(courseid, moduleId) {
+  try {
+    await connectMongoDB();
+
+    await Course.findByIdAndUpdate(courseid, {
+      $pull: {
+        modules: { _id: moduleId },
+      },
+    });
+  } catch (error) {
+    console.log("Delete Module Error:", error.message);
+    return {
+      message: "Database Error: Failed to Delete Module",
+    };
   }
 }

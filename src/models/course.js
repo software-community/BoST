@@ -1,10 +1,22 @@
 import mongoose, { Schema } from "mongoose";
 
+
+const videoSchema = new Schema({
+  url: { type: String, required: true },  
+  title: { type: String, default: "" },    
+});
+
+
+const pdfSchema = new Schema({
+  url: { type: String, required: true },   
+  name: { type: String, default: "" },  
+});
+
 const moduleSchema = new Schema({
-  moduleName: String,
-  moduleDesc: String,
-  moduleVideo: String,
-  modulePdf: String,
+  moduleName: { type: String, required: true },
+  moduleDesc: { type: String, required: true },
+  moduleVideos: { type: [videoSchema], default: [] },
+  modulePdfs: { type: [pdfSchema], default: [] },
 });
 
 const courseSchema = new Schema({
@@ -13,8 +25,8 @@ const courseSchema = new Schema({
   instructorImage: String,
   instructorName: String,
   modules: [moduleSchema],
-  startDate : String,
-  endDate : String,
+  startDate: String,
+  endDate: String,
   club: String,
 });
 
