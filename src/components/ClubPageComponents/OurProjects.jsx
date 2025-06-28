@@ -22,7 +22,7 @@ const OurProjects = async ({club}) => {
         return (
            <Link
               key={project.id}
-              href={`/${club}/${projectName}?id=${project.id}`}
+              href={`/${club}/projects/${projectName}?id=${project.id}`}
             >
           <ProjectCard
             // key={index}

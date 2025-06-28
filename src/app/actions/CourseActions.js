@@ -46,6 +46,9 @@ const ModuleSchema = z.object({
 
 
 export async function addCourse(prevState, formData) {
+
+  console.log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+  console.log(formData)
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
 

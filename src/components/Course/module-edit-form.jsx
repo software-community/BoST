@@ -23,16 +23,16 @@ const Form = ({ courseid, moduleDetails }) => {
     return newErrors;
   };
 
-  const handleInputChange = (setter, idx, field, value) => {
-    setter(prev => {
+  const handleInputChange = (arrSetter, idx, field, value) => {
+    arrSetter((prev) => {
       const updated = [...prev];
       updated[idx][field] = value;
       return updated;
     });
   };
 
-  const handleDelete = (setter, idx) => {
-    setter(prev => prev.filter((_, i) => i !== idx));
+  const handleDelete = (arrSetter, idx) => {
+    arrSetter((prev) => prev.filter((_, i) => i !== idx));
   };
 
   const onSubmit = async (e) => {
@@ -45,10 +45,14 @@ const Form = ({ courseid, moduleDetails }) => {
     };
 
     const validationErrors = validate(values);
+    
     if (videoInputs.length > 0 && videoInputs.every((v) => v.url.trim() === "")) {
-      validationErrors.moduleVideos = "You added a video field but didn’t enter a URL.";
+      validationErrors.moduleVideos = "You added a video field but didn't enter a URL.";
     }
 
+    if (pdfInputs.length > 0 && pdfInputs.every((p) => p.url.trim() === "")) {
+      validationErrors.modulePdfs = "You added a PDF input but didn't upload a PDF.";
+    }
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -60,8 +64,11 @@ const Form = ({ courseid, moduleDetails }) => {
 
     try {
       const result = await editModuleFromCourse(courseid, moduleDetails.id, formData);
-      if (result?.errors) setErrors(result.errors);
-      else router.push(`/dashboard/courses`);
+      if (result?.errors) {
+        setErrors(result.errors);
+      } else {
+        router.push(`/dashboard/courses`);
+      }
     } catch (err) {
       console.error("Update error:", err);
     }
@@ -77,11 +84,14 @@ const Form = ({ courseid, moduleDetails }) => {
           <label className="block text-sm font-medium mb-1">Module Name</label>
           <input
             name="moduleName"
+            type="text"
             defaultValue={moduleDetails.moduleName}
-            className="w-full border rounded-md p-2 text-sm"
+            className="w-full rounded-md border border-gray-300 p-2 text-sm"
             placeholder="e.g., Introduction to React"
           />
-          {errors.moduleName && <p className="text-sm text-red-500">{errors.moduleName}</p>}
+          {errors.moduleName && (
+            <p className="text-sm text-red-500 mt-1">{errors.moduleName}</p>
+          )}
         </div>
 
         {/* Module Description */}
@@ -89,21 +99,23 @@ const Form = ({ courseid, moduleDetails }) => {
           <label className="block text-sm font-medium mb-1">Module Description</label>
           <textarea
             name="moduleDesc"
-            defaultValue={moduleDetails.moduleDesc}
             rows={3}
-            className="w-full border rounded-md p-2 text-sm"
-            placeholder="e.g., Learn about state, props, lifecycle..."
+            defaultValue={moduleDetails.moduleDesc}
+            className="w-full rounded-md border border-gray-300 p-2 text-sm"
+            placeholder="e.g., Learn components, props, state..."
           />
-          {errors.moduleDesc && <p className="text-sm text-red-500">{errors.moduleDesc}</p>}
+          {errors.moduleDesc && (
+            <p className="text-sm text-red-500 mt-1">{errors.moduleDesc}</p>
+          )}
         </div>
 
-        {/* YouTube Videos */}
+        {/* YouTube Video Inputs Only */}
         <div className="space-y-2">
           <Button
             type="button"
             variant="outline"
             className="text-sm"
-            onClick={() => setVideoInputs(prev => [...prev, { url: "", title: "" }])}
+            onClick={() => setVideoInputs((prev) => [...prev, { url: "", title: "" }])}
           >
             + Add YouTube Video
           </Button>
@@ -111,37 +123,41 @@ const Form = ({ courseid, moduleDetails }) => {
           {videoInputs.map((video, idx) => (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 border rounded-md bg-white relative"
+              className="flex flex-col sm:flex-row sm:items-center gap-3 border rounded-md bg-white p-3 relative"
             >
               <div className="flex-1">
                 <input
                   type="text"
                   placeholder="YouTube Video URL"
+                  className="w-full mb-2 border p-2 rounded-md text-sm"
                   value={video.url}
-                  onChange={(e) => handleInputChange(setVideoInputs, idx, "url", e.target.value)}
-                  className="w-full border p-2 rounded-md text-sm mb-2"
+                  onChange={(e) =>
+                    handleInputChange(setVideoInputs, idx, "url", e.target.value)
+                  }
                 />
                 <input
                   type="text"
-                  placeholder="Video Title(Optional)"
-                  value={video.title}
-                  onChange={(e) => handleInputChange(setVideoInputs, idx, "title", e.target.value)}
+                  placeholder="Video Title (Optional)"
                   className="w-full border p-2 rounded-md text-sm"
+                  value={video.title}
+                  onChange={(e) =>
+                    handleInputChange(setVideoInputs, idx, "title", e.target.value)
+                  }
                 />
               </div>
 
-              <div className="w-[160px] h-[90px]">
-                {video.url && (
+              <div className="w-[160px] h-[90px] sm:h-[100px] sm:w-[170px]">
+                {video.url.includes("youtube.com/watch?v=") || video.url.includes("youtu.be/") ? (
                   <iframe
                     src={
                       video.url.includes("watch?v=")
                         ? video.url.replace("watch?v=", "embed/")
                         : `https://www.youtube.com/embed/${video.url.split("/").pop()}`
                     }
-                    className="w-full h-full rounded-md"
+                    className="rounded-md w-full h-full"
                     allowFullScreen
                   />
-                )}
+                ) : null}
               </div>
 
               <button
@@ -155,33 +171,37 @@ const Form = ({ courseid, moduleDetails }) => {
           ))}
         </div>
 
-        {/* PDFs */}
+        {/* PDF Section */}
         <div className="space-y-2">
+          {/* Add PDF Button */}
           <Button
             type="button"
             variant="outline"
             className="text-sm"
-            onClick={() => setPdfInputs(prev => [...prev, { name: "", url: "" }])}
+            onClick={() => setPdfInputs((prev) => [...prev, { name: "", url: "" }])}
           >
             + Add PDF
           </Button>
 
+          {/* PDF Input List */}
           {pdfInputs.map((pdf, idx) => (
             <div
               key={idx}
-              className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 border rounded-md bg-white relative"
+              className="flex flex-col sm:flex-row sm:items-center gap-3 border rounded-md bg-white p-3 relative"
             >
               <div className="flex-1">
                 <input
                   type="text"
                   placeholder="PDF Name (Optional)"
-                  value={pdf.name}
-                  onChange={(e) => handleInputChange(setPdfInputs, idx, "name", e.target.value)}
                   className="w-full border p-2 rounded-md text-sm"
+                  value={pdf.name}
+                  onChange={(e) =>
+                    handleInputChange(setPdfInputs, idx, "name", e.target.value)
+                  }
                 />
               </div>
 
-              {pdf.url && (
+              {pdf.url ? (
                 <a
                   href={pdf.url}
                   target="_blank"
@@ -190,6 +210,25 @@ const Form = ({ courseid, moduleDetails }) => {
                 >
                   📄 View
                 </a>
+              ) : (
+                <UploadButton
+                  endpoint="pdfUploader"
+                  accept=".pdf"
+                  onClientUploadComplete={(res) => {
+                    if (res && res.length > 0) {
+                      const file = res[0]; // Take only the first file
+                      setPdfInputs((prev) => {
+                        const updated = [...prev];
+                        updated[idx].url = file.url;
+                        if (!updated[idx].name) {
+                          updated[idx].name = file.originalFilename || "";
+                        }
+                        return updated;
+                      });
+                    }
+                  }}
+                  onUploadError={(err) => alert(`Upload error: ${err.message}`)}
+                />
               )}
 
               <button
@@ -201,32 +240,6 @@ const Form = ({ courseid, moduleDetails }) => {
               </button>
             </div>
           ))}
-
-          {pdfInputs.some((p) => !p.url) && (
-            <UploadButton
-              endpoint="pdfUploader"
-              onClientUploadComplete={(res) => {
-                const uploaded = res.map(file => ({
-                  url: file.url,
-                  name: file.originalFilename || "",
-                }));
-
-                setPdfInputs((prev) => {
-                  const updated = [...prev];
-                  for (const file of uploaded) {
-                    const emptyIndex = updated.findIndex(p => !p.url);
-                    if (emptyIndex !== -1) {
-                      updated[emptyIndex] = { ...updated[emptyIndex], url: file.url };
-                    } else {
-                      updated.push(file);
-                    }
-                  }
-                  return updated;
-                });
-              }}
-              onUploadError={(err) => alert(`Upload error: ${err.message}`)}
-            />
-          )}
         </div>
 
         {/* Error for Videos / PDFs */}

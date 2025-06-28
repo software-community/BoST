@@ -37,44 +37,44 @@ const Form = ({ courseid }) => {
   };
 
   const onSubmit = async (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
+    e.preventDefault();
+    const formData = new FormData(e.target);
 
-  const values = {
-    moduleName: formData.get("moduleName"),
-    moduleDesc: formData.get("moduleDesc"),
-  };
+    const values = {
+      moduleName: formData.get("moduleName"),
+      moduleDesc: formData.get("moduleDesc"),
+    };
 
-  const validationErrors = validate(values);
+    const validationErrors = validate(values);
 
-  
-  if (videoInputs.length > 0 && videoInputs.every((v) => v.url.trim() === "")) {
-    validationErrors.moduleVideos = "You added a video field but didn’t enter a URL.";
-  }
-
-  if (pdfInputs.length > 0 && pdfInputs.every((p) => p.url.trim() === "")) {
-    validationErrors.modulePdfs = "You added a PDF input but didn’t upload a PDF.";
-  }
-
-  if (Object.keys(validationErrors).length > 0) {
-    setErrors(validationErrors);
-    return;
-  }
-
-  formData.append("moduleVideos", JSON.stringify(videoInputs));
-  formData.append("modulePdfs", JSON.stringify(pdfInputs));
-
-  try {
-    const result = await addModuleToCourse(courseid, formData);
-    if (result?.errors) {
-      setErrors(result.errors);
-    } else {
-      router.push(`/dashboard/courses/`);
+    
+    if (videoInputs.length > 0 && videoInputs.every((v) => v.url.trim() === "")) {
+      validationErrors.moduleVideos = "You added a video field but didn't enter a URL.";
     }
-  } catch (err) {
-    console.error("Submit error:", err);
-  }
-};
+
+    if (pdfInputs.length > 0 && pdfInputs.every((p) => p.url.trim() === "")) {
+      validationErrors.modulePdfs = "You added a PDF input but didn't upload a PDF.";
+    }
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    formData.append("moduleVideos", JSON.stringify(videoInputs));
+    formData.append("modulePdfs", JSON.stringify(pdfInputs));
+
+    try {
+      const result = await addModuleToCourse(courseid, formData);
+      if (result?.errors) {
+        setErrors(result.errors);
+      } else {
+        router.push(`/dashboard/courses/`);
+      }
+    } catch (err) {
+      console.error("Submit error:", err);
+    }
+  };
 
   return (
     <form onSubmit={onSubmit} className="mt-6">
@@ -201,7 +201,7 @@ const Form = ({ courseid }) => {
                 />
               </div>
 
-              {pdf.url && (
+              {pdf.url ? (
                 <a
                   href={pdf.url}
                   target="_blank"
@@ -210,6 +210,25 @@ const Form = ({ courseid }) => {
                 >
                   📄 View
                 </a>
+              ) : (
+                <UploadButton
+                  endpoint="pdfUploader"
+                  accept=".pdf"
+                  onClientUploadComplete={(res) => {
+                    if (res && res.length > 0) {
+                      const file = res[0]; // Take only the first file
+                      setPdfInputs((prev) => {
+                        const updated = [...prev];
+                        updated[idx].url = file.url;
+                        if (!updated[idx].name) {
+                          updated[idx].name = file.originalFilename || "";
+                        }
+                        return updated;
+                      });
+                    }
+                  }}
+                  onUploadError={(err) => alert(`Upload error: ${err.message}`)}
+                />
               )}
 
               <button
@@ -221,36 +240,6 @@ const Form = ({ courseid }) => {
               </button>
             </div>
           ))}
-
-          {/* Upload Button (always shown if any PDF input exists and at least one has no URL) */}
-          {pdfInputs.some((pdf) => !pdf.url) && (
-            <UploadButton
-              endpoint="pdfUploader"
-              onClientUploadComplete={(res) => {
-                const uploaded = res.map((file) => ({
-                  url: file.url,
-                  name: file.originalFilename || "",
-                }));
-
-                setPdfInputs((prev) => {
-                  const updated = [...prev];
-                  for (const file of uploaded) {
-                    const emptyIndex = updated.findIndex((p) => !p.url);
-                    if (emptyIndex !== -1) {
-                      updated[emptyIndex].url = file.url;
-                      if (!updated[emptyIndex].name) {
-                        updated[emptyIndex].name = file.name;
-                      }
-                    } else {
-                      updated.push(file);
-                    }
-                  }
-                  return updated;
-                });
-              }}
-              onUploadError={(err) => alert(`Upload error: ${err.message}`)}
-            />
-          )}
         </div>
 
         {/* Error for Videos / PDFs */}
@@ -260,7 +249,6 @@ const Form = ({ courseid }) => {
         {errors.modulePdfs && (
           <p className="text-sm text-red-500">{errors.modulePdfs}</p>
         )}
-
 
         {/* Final Actions */}
         <div className="flex justify-end gap-4 pt-6">

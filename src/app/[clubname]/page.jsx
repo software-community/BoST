@@ -5,6 +5,7 @@ import OurTeam from "@/components/ClubPageComponents/OurTeam";
 import OurBlogs from "@/components/ClubPageComponents/OurBlogs";
 import Gallery from "@/components/ClubPageComponents/Gallery";
 import OurSchedule from "@/components/ClubPageComponents/OurSchedule";
+import OurCourses from '@/components/ClubPageComponents/OurCourses'
 import OurEvents from "@/components/ClubPageComponents/OurEvents"
 import { clubCodes } from "@/lib/utils";
 import { getClubDetails } from "../actions/ClubData";
@@ -32,6 +33,7 @@ const page = ({ params }) => {
       <Gallery club={club} />
       <OurBlogs club={club} />
       <OurEvents club={club} />
+      <OurCourses club={club} />
     </>
   );
 };

@@ -1,9 +1,10 @@
 "use client";
-import { useState /* original */, useId } from "react"; // ✅ added useId to fix input ID conflict
+import { useState, useId } from "react";
 
 /* 
 <UploadButton
   endpoint="imageUploader"
+  accept="image/*" // for images
   className="ut-uploading:pointer-events-none"
   appearance={{
     container: "w-1/4",
@@ -17,20 +18,30 @@ import { useState /* original */, useId } from "react"; // ✅ added useId to fi
     alert(`ERROR! ${error.message}`);
   }}
 /> 
+
+<UploadButton
+  endpoint="pdfUploader"
+  accept=".pdf" // for PDFs only
+  onClientUploadComplete={(res) => {
+    // handle PDF upload
+  }}
+  onUploadError={(error) => {
+    alert(`ERROR! ${error.message}`);
+  }}
+/> 
 */
 
 export default function UploadButton(props) {
   const [uploading, setUploading] = useState(false);
-  // const inputId = "userFile"; //original hardcoded ID
-  const inputId = useId(); //  useId prevents ID conflicts in multiple UploadButtons
+  const inputId = useId(); // useId prevents ID conflicts in multiple UploadButtons
 
   return (
     <div className="flex items-center justify-center">
       <label
         className={
+         
           "cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         }
-        // htmlFor="userFile" // original line
         htmlFor={inputId} // dynamically generated ID (safe for multiple uploads)
       >
         {uploading ? "Uploading..." : "Choose a file"}
@@ -39,11 +50,40 @@ export default function UploadButton(props) {
       <input
         type="file"
         name="userFile"
-        // id="userFile" // old ID (conflicted when reused)
-        id={inputId} //  new unique ID per component instance
+        id={inputId} // new unique ID per component instance
         className="hidden"
+        accept={props.accept} // Add accept prop for file filtering
         onChange={(e) => {
           const file = e.target.files[0];
+          
+          // Validate file type if accept prop is provided
+          if (props.accept && file) {
+            const acceptedTypes = props.accept.split(',').map(type => type.trim());
+            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+            const fileMimeType = file.type.toLowerCase();
+            
+            const isValidType = acceptedTypes.some(acceptType => {
+              if (acceptType.startsWith('.')) {
+                // Extension-based validation (e.g., .pdf, .jpg)
+                return fileExtension === acceptType.toLowerCase();
+              } else if (acceptType.includes('/')) {
+                // MIME type validation (e.g., application/pdf, image/*)
+                if (acceptType.endsWith('/*')) {
+                  return fileMimeType.startsWith(acceptType.replace('*', ''));
+                } else {
+                  return fileMimeType === acceptType;
+                }
+              }
+              return false;
+            });
+            
+            if (!isValidType) {
+              const errorMsg = `Invalid file type. Please select a file matching: ${props.accept}`;
+              props.onUploadError?.(new Error(errorMsg));
+              return;
+            }
+          }
+          
           const formData = new FormData();
           setUploading(true);
           console.log("Uploading...");
@@ -60,7 +100,7 @@ export default function UploadButton(props) {
               setUploading(false);
             })
             .catch((error) => {
-              props.onUploadError(error); 
+              props.onUploadError?.(error); 
               setUploading(false);
             });
         }}
