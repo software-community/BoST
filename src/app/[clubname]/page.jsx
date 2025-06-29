@@ -31,9 +31,9 @@ const page = ({ params }) => {
       <OurTeam club={club} />
       <OurProjects club={club} />
       <Gallery club={club} />
-      <OurBlogs club={club} />
       <OurEvents club={club} />
       <OurCourses club={club} />
+      <OurBlogs club={club} />
     </>
   );
 };

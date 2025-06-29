@@ -27,6 +27,10 @@ const OurEvents = async () => {
 
   console.log(finalEvents)
 
+  if (finalEvents.length === 0) {
+    return null;
+  }
+
   return (
     <div>
       <div className="w-full mx-auto py-12 pb-24   bg-black  flex flex-col  ">

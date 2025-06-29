@@ -32,7 +32,7 @@ export default function ExpandableText({ text, limit = 100, className = "" }) {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-2xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-xl"
+            className="bg-white rounded-2xl p-6 max-w-lg w-full max-h-[80%] overflow-y-auto shadow-xl"
           >
             <h3 className="text-lg font-semibold mb-4 text-gray-900">
               Full Description

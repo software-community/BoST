@@ -128,7 +128,7 @@ const Form = ({ courseid }) => {
               <div className="flex-1">
                 <input
                   type="text"
-                  placeholder="YouTube Video URL (WARNING!) [Pls go to youtube video then on share option and then copy link not copy  webiste url]"
+                  placeholder="YouTube Video URL (Please use the Share option on YouTube and copy the link, not the website URL)"
                   className="w-full mb-2 border p-2 rounded-md text-sm"
                   value={video.url}
                   onChange={(e) =>

@@ -17,6 +17,10 @@ for (const event of events) {
 
 }
 
+if (events.length === 0) {
+  return null;
+}
+
 
 
 

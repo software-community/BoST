@@ -19,15 +19,8 @@ const OurProjects = async () => {
         {approvedProjects.map((project, index) => {
           const projectSlug = slugify(project.title);
           return (
-            <Link
-              key={index}
-              href={{
-                pathname: `/projects-page/${projectSlug}`,
-                query: { id: project.id },
-              }}
-              passHref
-            >
-              <div className="cursor-pointer">
+            <div key={index}>
+              <div className="">
                 <ProjectCard
                   title={project.title}
                   github={project.github}
@@ -36,9 +29,14 @@ const OurProjects = async () => {
                   status={project.status}
                   description={project.description}
                   image={project.image}
+                  imageLink={{
+                    href: `/projects-page/${projectSlug}?id=${project.id}`,
+                    target: "_blank",
+                    rel: "noopener noreferrer"
+                  }}
                 />
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>

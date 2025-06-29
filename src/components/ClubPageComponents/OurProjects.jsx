@@ -20,20 +20,21 @@ const OurProjects = async ({club}) => {
       {projects.map((project, index) => {
         const projectName = slugify(project.title);
         return (
-           <Link
-              key={project.id}
-              href={`/${club}/projects/${projectName}?id=${project.id}`}
-            >
-          <ProjectCard
-            // key={index}
-            title={project.title}
-            github={project.github}
-            website={project.website}
-            status={project.status}
-            description={project.description}
-            image={project.image}
-          />
-          </Link>
+          <div key={project.id}>
+            <ProjectCard
+              title={project.title}
+              github={project.github}
+              website={project.website}
+              status={project.status}
+              description={project.description}
+              image={project.image}
+              imageLink={{
+                href: `/${club}/projects/${projectName}?id=${project.id}`,
+                target: "_blank",
+                rel: "noopener noreferrer"
+              }}
+            />
+          </div>
         );
       })}
       </div>

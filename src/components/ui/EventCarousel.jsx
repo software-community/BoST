@@ -234,7 +234,7 @@ const EventCard = ({
   );
 };
 
-const EventCarousel = ({ events }) => {
+const   EventCarousel = ({ events }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -309,11 +309,7 @@ const EventCarousel = ({ events }) => {
   };
 
   if (!events || events.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg">
-        <p className="text-gray-500">No events to display</p>
-      </div>
-    );
+    return null;
   }
 
   if (events.length === 1) {

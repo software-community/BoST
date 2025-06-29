@@ -101,7 +101,7 @@ const CoursePage = async ({ params, searchParams }) => {
                   className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 hover:border-gray-300 overflow-hidden flex flex-col h-[520px]"
                 >
                   {/* Module Header - Simple colored background */}
-                  <div className="bg-slate-700 p-4 text-white flex-shrink-0">
+                  <div className="bg-zinc-800 p-4 text-white flex-shrink-0">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -184,7 +184,7 @@ const CoursePage = async ({ params, searchParams }) => {
                           <FileText size={16} className="text-blue-500" />
                           Learning Resources
                         </h4>
-                        <div className="flex-1 overflow-y-auto min-h-0">
+                        <div className="flex-1 overflow min-h-0">
                           {module.modulePdfs && module.modulePdfs.length > 0 ? (
                             <div className="pr-2">
                               <PdfButtonGrid pdfs={module.modulePdfs} />

@@ -17,6 +17,7 @@ const ProjectCard = ({
   github,
   status,
   members,
+  imageLink,
 }) => {
   
   return (
@@ -27,16 +28,22 @@ const ProjectCard = ({
         </span>
         <div className="flex ">
           {" "}
-          <Link className="hover:scale-75 transition-all" href={github}>
+          <Link className="hover:scale-75 transition-all" href={github} target="_blank" rel="noopener noreferrer">
             <IconBrandGithub size={32} />
           </Link>
-          <Link className="hover:scale-75 transition-all" href={website}>
+          <Link className="hover:scale-75 transition-all" href={website} target="_blank" rel="noopener noreferrer">
             <IconWorld size={32} />
           </Link>
         </div>
       </div>
       <div className="relative flex items-center justify-centre mx-4 w-[90%] h-[200px] overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white ">
-        <img className=" min-w-full object-cover object-center" src={image} alt={title}></img>
+        {imageLink ? (
+          <Link href={imageLink.href} target={imageLink.target} rel={imageLink.rel}>
+            <img className=" min-w-full object-cover object-center" src={image} alt={title} />
+          </Link>
+        ) : (
+          <img className=" min-w-full object-cover object-center" src={image} alt={title} />
+        )}
       </div>
       <h3 className="text-lg lg:text-2xl font-semibold text-center mt-4 mb-4">
         {title}
