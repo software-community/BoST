@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/table";
 import { clubCodes } from "@/lib/utils";
 
+import { ArrowButtons } from "./orderButtons";
+
 export default async function Table(props) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
@@ -118,6 +120,15 @@ export default async function Table(props) {
                   <span className="font-bold mr-1 ">/</span>
                   <DeleteProjectBtn id={rest.id} />
                 </TableCell>
+
+                {!isSuperAdmin && (<TableCell>
+                  <ArrowButtons
+                    projectId={rest.id}
+                    club={club}
+                    isFirst={index === 0}
+                    isLast={index === UserData.length - 1}
+                  />
+                </TableCell>)}
               </TableRow>
             ))}
           </TableBody>

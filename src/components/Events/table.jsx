@@ -33,7 +33,7 @@ export default async function Table({ colData }) {
   }
 
   if (!isSuperAdmin) {
-    header = [...header, "Order"];
+    header = [...header, "Reorder"];
   }
 
   return (

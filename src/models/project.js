@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const teamMemberSchema = new Schema({
   name: String,
   email: String,
@@ -22,6 +23,7 @@ const projectSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    order: {type: Number, default: 0}
   },
   {
     timestamps: true,

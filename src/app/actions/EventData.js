@@ -2,6 +2,7 @@
 import Event from "@/models/events";
 import connectMongoDB from "@/lib/db";
 import { unstable_noStore as noStore } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function getEventsForClub(club) {
   noStore(); // Ensure no caching is done
@@ -99,7 +100,7 @@ export async function moveEventUp(eventId, club) {
   } catch (error) {
     return { message: "Failed to move event up" };
   }
-  // revalidatePath("/dashboard/events");
+  revalidatePath("/dashboard/events");
 }
 
 export async function moveEventDown(eventId, club) {
@@ -120,5 +121,5 @@ export async function moveEventDown(eventId, club) {
   } catch (error) {
     return { message: "Failed to move event down" };
   }
-  // revalidatePath("/dashboard/events");
+  revalidatePath("/dashboard/events");
 }
