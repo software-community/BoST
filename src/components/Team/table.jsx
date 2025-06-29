@@ -16,9 +16,12 @@ import {
 } from "@/components/ui/table";
 import { clubCodes } from "@/lib/utils";
 
+import { ArrowButtons } from "./orderButtons";
+
 export default async function Table({ colData }) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
+  const isSuperAdmin = club===process.env.SUPER_ADMIN
   let UserData = await getAllTeamMembers(club);
 
   let header = colData;
@@ -59,7 +62,7 @@ export default async function Table({ colData }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {UserData.map(({ _id, position, image, email, club, name }) => (
+            {UserData.map(({ _id, position, image, email, club, name },index) => (
               <TableRow key={_id}>
                 <TableCell className="font-medium">
                   <Image
@@ -79,6 +82,15 @@ export default async function Table({ colData }) {
                   <span className="font-bold mr-1">/</span>
                   <DeleteMemberBtn id={_id} />
                 </TableCell>
+
+                {!isSuperAdmin && (<TableCell>
+                  <ArrowButtons
+                    memberId={_id}
+                    club={club}
+                    isFirst={index === 0}
+                    isLast={index === UserData.length - 1}
+                  />
+                </TableCell>)}
               </TableRow>
             ))}
           </TableBody>

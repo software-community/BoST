@@ -9,6 +9,7 @@ const page = async () => {
     "Club",
     "Position",
     "Edit / Delete",
+    "Reorder"
   ];
 
   return (

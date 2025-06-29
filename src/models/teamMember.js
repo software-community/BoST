@@ -1,5 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
+if (mongoose.models["TeamMember"]) {
+  delete mongoose.models["TeamMember"];
+}
+
 const teamMemberSchema = new Schema({
   name: String,
   position: String,
@@ -8,6 +12,7 @@ const teamMemberSchema = new Schema({
   linkedin: String,
   github: String,
   club: String,
+  order: {type: Number, default: 0}
 });
 
 const TeamMember =

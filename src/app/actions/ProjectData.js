@@ -34,7 +34,7 @@ export async function getAllProjects(club) {
     if (club == process.env.SUPER_ADMIN) {
       projects = await Project.find().lean(); // Fetch all projects
     } else {
-      projects = await Project.find({ club }).lean().sort({order:1});; // Fetch all projects
+      projects = await Project.find({ club }).lean().sort({order:1}); // Fetch all projects
     }
     return projects.map(cleanMongoDoc);; // Return the fetched projects
   } catch (error) {
@@ -74,7 +74,6 @@ export async function moveProjectDown(projectId, club) {
   try {
     await connectMongoDB();
     const projects = await Project.find({ club }).sort({ order: 1 });
-    console.log(projects)
     const currentIndex = projects.findIndex(e => e._id.toString() === projectId);
     
     if (currentIndex < projects.length - 1) {

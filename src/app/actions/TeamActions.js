@@ -39,6 +39,8 @@ export async function createTeamMember(prevState, formData) {
     };
   }
 
+  const membersCount = await TeamMember.countDocuments({ club: _club });
+  const newOrder = membersCount + 1;
   // Extract validated data
   const { name, position, image, email, club, github, linkedin } = validatedFields.data;
 
@@ -52,7 +54,8 @@ export async function createTeamMember(prevState, formData) {
       email, 
       club,
       github: github.trim(),
-      linkedin: linkedin.trim()
+      linkedin: linkedin.trim(),
+      order:newOrder
     });
   } catch (error) {
     // If a database error occurs, return a more specific error.
