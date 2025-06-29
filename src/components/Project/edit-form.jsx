@@ -7,6 +7,7 @@ import { useFormState } from "react-dom";
 import UploadButton from "@/components/UploadButton";
 import { updateProject } from "@/app/actions/ProjectActions";
 import { useRouter } from "next/navigation";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 
 const developmentStatus = [
   { id: 1, name: "Not Started" },
@@ -14,7 +15,7 @@ const developmentStatus = [
   { id: 3, name: "Completed" },
 ];
 
-export default function Form({ projectDetails }) {
+export default function Form({ projectDetails, teamMembers = [] }) {
   // const { register, handleSubmit, control } = useForm({
   //   defaultValues: {
   //     repoLinks: projectDetails.relatedLinks.map((item) => {
@@ -73,6 +74,8 @@ export default function Form({ projectDetails }) {
     linkedin: "",
   });
 
+  const [selectedMemberId, setSelectedMemberId] = useState("");
+
   const isValidEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -101,6 +104,27 @@ export default function Form({ projectDetails }) {
         alert("Please fill name, email, and upload image before confirming.");
       }
     }
+  };
+
+  const handleAddSelectedMember = () => {
+    if (!selectedMemberId) return;
+    const member = teamMembers.find((m) => m._id === selectedMemberId);
+    if (!member) return;
+    if (members.some((m) => m.email === member.email)) {
+      alert("Member already added.");
+      return;
+    }
+    setMembers((prev) => [
+      ...prev,
+      {
+        name: member.name,
+        email: member.email,
+        image: member.image,
+        github: member.github,
+        linkedin: member.linkedin,
+      },
+    ]);
+    setSelectedMemberId("");
   };
 
   const onSubmit = async (event) => {
@@ -318,6 +342,29 @@ export default function Form({ projectDetails }) {
                 ))}
             </div>
           </div> */}
+          {/* --- TEAM MEMBER DROPDOWN --- */}
+          {teamMembers.length > 0 && (
+            <div className="mb-4">
+              <label className="mb-2 block text-sm font-medium">Add Team Member</label>
+              <div className="flex gap-2 items-center">
+                <Select value={selectedMemberId} onValueChange={setSelectedMemberId}>
+                  <SelectTrigger className="w-64">
+                    <SelectValue placeholder="Select a team member" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {teamMembers.map((member) => (
+                      <SelectItem key={member._id} value={member._id}>
+                        {member.name} ({member.email})
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Button type="button" onClick={handleAddSelectedMember}>
+                  Add
+                </Button>
+              </div>
+            </div>
+          )}
           {/* --- MEMBER PREVIEW --- */}
           <div className="flex flex-wrap gap-4 mb-4">
             {members.map((m, idx) => (

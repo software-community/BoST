@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 
 // import { useFormState } from "react-dom"; 
 // const [state, dispatch] = useFormState(createProject, initialState); // replaced below
@@ -10,7 +11,7 @@ import { createProject } from "@/app/actions/ProjectActions";
 import UploadButton from "@/components/UploadButton";
 
 
-const Form = () => {
+const Form = ({ teamMembers = [] }) => {
   const [state, setState] = useState({ errors: {} }); //  replaced useFormState
   const router = useRouter(); // 
   // const initialState = { repoLinks: [""], teamMembers: [""] }; //  No longer used
@@ -25,9 +26,31 @@ const Form = () => {
     github: "",
     linkedin: "",
   });
+  const [selectedMemberId, setSelectedMemberId] = useState("");
 
   const isValidEmail = (email) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleAddSelectedMember = () => {
+    if (!selectedMemberId) return;
+    const member = teamMembers.find((m) => m._id === selectedMemberId);
+    if (!member) return;
+    if (members.some((m) => m.email === member.email)) {
+      alert("Member already added.");
+      return;
+    }
+    setMembers((prev) => [
+      ...prev,
+      {
+        name: member.name,
+        email: member.email,
+        image: member.image,
+        github: member.github,
+        linkedin: member.linkedin,
+      },
+    ]);
+    setSelectedMemberId("");
+  };
 
   const handleMemberAdd = () => {
     if (!showMemberForm) {
@@ -217,7 +240,29 @@ const Form = () => {
           ))}
         </div>
 
-
+        {/* --- TEAM MEMBER DROPDOWN --- */}
+        {teamMembers.length > 0 && (
+          <div className="mb-4">
+            <label className="mb-2 block text-sm font-medium">Add Team Member</label>
+            <div className="flex gap-2 items-center">
+              <Select value={selectedMemberId} onValueChange={setSelectedMemberId}>
+                <SelectTrigger className="w-64">
+                  <SelectValue placeholder="Select a team member" />
+                </SelectTrigger>
+                <SelectContent>
+                  {teamMembers.map((member) => (
+                    <SelectItem key={member._id} value={member._id}>
+                      {member.name} ({member.email})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Button type="button" onClick={handleAddSelectedMember}>
+                Add
+              </Button>
+            </div>
+          </div>
+        )}
 
         {/* --- MEMBER FORM --- */}
         {showMemberForm && (
