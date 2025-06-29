@@ -47,6 +47,22 @@ export default function Navlinks({ club, isSuperAdmin }) {
     <>
       {links.map((link) => {
         const LinkIcon = link.Icon;
+        // Disable Introduction link for SuperAdmin
+        const isIntroduction = link.name === "Introduction";
+        if (isSuperAdmin && isIntroduction) {
+          return (
+            <div
+              key={link.name}
+              className={clsx(
+                "flex h-[48px] grow items-center justify-center gap-2 md:rounded-md bg-secondary p-2 text-sm font-medium text-gray-400 cursor-not-allowed md:flex-none md:justify-start md:p-2 md:px-3 opacity-60"
+              )}
+              aria-disabled="true"
+            >
+              <LinkIcon className="w-6" />
+              <p className="hidden md:block">{link.name}</p>
+            </div>
+          );
+        }
         return (
           <Link
             key={link.name}
