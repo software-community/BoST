@@ -5,6 +5,9 @@ import Link from "next/link";
 import { Play, FileText, Calendar, User, Building, Clock, BookOpen } from "lucide-react";
 import { PdfButtonGrid } from "@/components/ui/pdfButton"; // Updated import
 import ExpandableText from "@/components/ui/ExpandableText";
+import dynamic from "next/dynamic";
+
+const ModuleVideoGrid = dynamic(() => import("@/components/ui/ModuleVideoGrid"), { ssr: false });
 
 const CoursePage = async ({ params, searchParams }) => {
   const { id } = searchParams;
@@ -145,30 +148,7 @@ const CoursePage = async ({ params, searchParams }) => {
                         </h4>
                         <div className="flex-1 overflow-y-auto min-h-0">
                           {module.moduleVideos && module.moduleVideos.length > 0 ? (
-                            <div className="space-y-2 pr-2">
-                              {module.moduleVideos.map((video, videoIndex) => (
-                                <Link
-                                  key={videoIndex}
-                                  href={video.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="group/video flex items-center gap-3 p-3 bg-white hover:bg-red-50 rounded-lg transition-all duration-200 border border-gray-200 hover:border-red-300"
-                                >
-                                  <div className="flex-shrink-0 w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center group-hover/video:bg-red-600 transition-all duration-200">
-                                    <Play size={12} className="text-white ml-0.5" />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <h5 className="font-medium text-gray-900 truncate text-sm">
-                                      {video.title || `Video ${videoIndex + 1}`}
-                                    </h5>
-                                    <div className="flex items-center gap-1 text-xs text-gray-500">
-                                      <Clock size={10} />
-                                      <span>Click to watch</span>
-                                    </div>
-                                  </div>
-                                </Link>
-                              ))}
-                            </div>
+                            <ModuleVideoGrid videos={module.moduleVideos} />
                           ) : (
                             <div className="text-center py-4 px-3 bg-white rounded-lg border border-gray-200">
                               <Play size={16} className="text-red-400 mx-auto mb-2" />
@@ -187,7 +167,7 @@ const CoursePage = async ({ params, searchParams }) => {
                         <div className="flex-1 overflow min-h-0">
                           {module.modulePdfs && module.modulePdfs.length > 0 ? (
                             <div className="pr-2">
-                              <PdfButtonGrid pdfs={module.modulePdfs} />
+                              <PdfButtonGrid pdfs={module.modulePdfs}/>
                             </div>
                           ) : (
                             <div className="text-center py-4 px-3 bg-white rounded-lg border border-gray-200">
