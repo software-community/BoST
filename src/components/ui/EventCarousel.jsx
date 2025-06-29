@@ -38,58 +38,66 @@ const customStyles = `
   .card-shadow:hover {
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 12px 24px rgba(0, 0, 0, 0.12);
   }
-  .slide-left {
-    animation: slideInRight 0.5s ease-in-out forwards;
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
   }
-  .slide-right {
-    animation: slideRight 0.5s ease-in-out forwards;
+  to {
+    transform: translateX(-100%) scale(0.9);
+    opacity: 0;
   }
-  .slide-in-right {
-    animation: slideLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
   }
-  .slide-in-left {
-    animation: slideInLeft 0.5s ease-in-out forwards;
+  to {
+    transform: translateX(100%) scale(0.9);
+    opacity: 0;
   }
-  @keyframes slideLeft {
-    from {
-      transform: translateX(0) scale(1);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(-100%) scale(0.8);
-      opacity: 0;
-    }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%) scale(0.9);
+    opacity: 0;
   }
-  @keyframes slideRight {
-    from {
-      transform: translateX(0) scale(1);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(100%) scale(0.8);
-      opacity: 0;
-    }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
   }
-  @keyframes slideInRight {
-    from {
-      transform: translateX(100%) scale(0.8);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0) scale(1);
-      opacity: 1;
-    }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%) scale(0.9);
+    opacity: 0;
   }
-  @keyframes slideInLeft {
-    from {
-      transform: translateX(-100%) scale(0.8);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0) scale(1);
-      opacity: 1;
-    }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
   }
+}
+
+.slide-out-left {
+  animation: slideOutLeft 0.5s ease-in-out forwards;
+}
+
+.slide-out-right {
+  animation: slideOutRight 0.5s ease-in-out forwards;
+}
+
+.slide-in-right {
+  animation: slideInFromRight 0.5s ease-in-out forwards;
+}
+
+.slide-in-left {
+  animation: slideInFromLeft 0.5s ease-in-out forwards;
+}
+
   
   /* Enhanced scrollbar styles for description */
   .description-scroll {
@@ -309,25 +317,14 @@ const EventCarousel = ({ events }) => {
   // Animation classes for transitions
   const getAnimationClass = (cardPosition, isNewCard = false) => {
     if (!isTransitioning) return "";
-
+  
     if (transitionDirection === "next") {
-      if (isNewCard) {
-        // New cards always slide in from the right when going forward
-        return "slide-in-right";
-      } else {
-        // Existing cards slide out to the left when going forward
-        return "slide-left";
-      }
+      return isNewCard ? "slide-in-right" : "slide-out-left";
     } else {
-      if (isNewCard) {
-        // New cards always slide in from the left when going backward
-        return "slide-in-left";
-      } else {
-        // Existing cards slide out to the right when going backward
-        return "slide-right";
-      }
+      return isNewCard ? "slide-in-left" : "slide-out-right";
     }
   };
+  
 
   if (!events || events.length === 0) {
     return null;
