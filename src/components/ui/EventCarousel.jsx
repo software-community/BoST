@@ -9,8 +9,6 @@ import {
   Users,
 } from "lucide-react";
 
-import globeImg from '@/../public/home/Globe.svg'
-
 const customStyles = `
   .line-clamp-2 {
     display: -webkit-box;
@@ -41,13 +39,13 @@ const customStyles = `
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 12px 24px rgba(0, 0, 0, 0.12);
   }
   .slide-left {
-    animation: slideLeft 0.5s ease-in-out forwards;
+    animation: slideInRight 0.5s ease-in-out forwards;
   }
   .slide-right {
     animation: slideRight 0.5s ease-in-out forwards;
   }
   .slide-in-right {
-    animation: slideInRight 0.5s ease-in-out forwards;
+    animation: slideLeft 0.5s ease-in-out forwards;
   }
   .slide-in-left {
     animation: slideInLeft 0.5s ease-in-out forwards;
@@ -92,6 +90,48 @@ const customStyles = `
       opacity: 1;
     }
   }
+  
+  /* Enhanced scrollbar styles for description */
+  .description-scroll {
+    scrollbehavior: smooth;
+  }
+  .description-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+  .description-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+  }
+  .description-scroll::-webkit-scrollbar-thumb {
+    background: rgba(99, 102, 241, 0.3);
+    border-radius: 3px;
+    transition: all 0.2s;
+  }
+  .description-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.5);
+  }
+  
+  /* Fixed card dimensions */
+  .fixed-card-width {
+    width: 100%;
+    max-width: 600px;
+    min-width: 520px;
+  }
+  
+  .fixed-card-height {
+    height: 550px;
+  }
+  
+  @media (max-width: 640px) {
+    .fixed-card-width {
+      min-width: 320px;
+      max-width: 380px;
+    }
+    .fixed-card-height {
+      height: auto;
+      min-height: 400px;
+    }
+  }
 `;
 
 const ClubLogo = ({ logo, clubName, className = "" }) => {
@@ -102,23 +142,15 @@ const ClubLogo = ({ logo, clubName, className = "" }) => {
     return <Users className={`text-indigo-600 ${className}`} />;
   }
 
-  if(logo === 'admin')
-  {
-    logo = globeImg.src
-  }
-  else
-  {
-    logo = logo
-  }
-
+  // Handle admin logo or regular logo
+  const logoSrc = logo === 'admin' ? '/api/placeholder/40/40' : logo;
 
   return (
     <img
-      src={logo}
+      src={logoSrc}
       alt={`${clubName} logo`}
       className={`rounded-full object-cover ${className}`}
       onError={() => setHasError(true)}
-      onLoad={() => console.log('Image loaded:', logo)}
     />
   );
 };
@@ -131,96 +163,75 @@ const EventCard = ({
 }) => {
   return (
     <div
-      className={`w-full ${
-        isMobile ? "max-w-sm" : "max-w-2xl"
-      } bg-white rounded-3xl card-shadow overflow-hidden ${animationClass}`}
+      className={`fixed-card-width ${
+        isMobile ? "" : "fixed-card-height"
+      } bg-white rounded-3xl card-shadow overflow-hidden ${animationClass} flex flex-col`}
     >
-      {/* Club Header */}
-      <div className="bg-gray-100 border-b border-gray-200 px-4 sm:px-6 py-3">
+      {/* Club Header - Fixed height */}
+      <div className="bg-gray-100 border-b border-gray-200 px-4 sm:px-6 py-3 flex-shrink-0">
         <div className="flex items-center">
           <ClubLogo
             logo={event.clubLogo}
             clubName={event.club}
-            className="w-8 h-8 sm:w-10 sm:h-10 mr-2" // Try larger sizes first
+            className="w-8 h-8 sm:w-10 sm:h-10 mr-2 flex-shrink-0"
           />
-          <h3 className="text-gray-700 font-bold text-sm sm:text-lg pl-1 uppercase tracking-wide">
+          <h3 className="text-gray-700 font-bold text-sm sm:text-lg pl-1 uppercase tracking-wide truncate">
             {event.club}
           </h3>
         </div>
       </div>
 
-      {/* Main Content - All cards have same layout (image on right) */}
-      <div
-        className={`flex ${
-          isMobile
-            ? "flex-col h-auto"
-            : "h-[450px]"
-        }`}
-      >
-        {/* Event Details - Always on the left */}
-        <div
-          className={`${
-            isMobile ? "w-full" : "flex-1"
-          } p-4 sm:p-6 flex flex-col`}
-        >
-          <div className="mb-3 sm:mb-4 flex-shrink-0">
-            <h1
-              className={`font-bold text-gray-900 mb-2 sm:mb-3 leading-tight ${
-                isMobile ? "text-xl" : "text-2xl"
-              }`}
-            >
+      {/* Main Content - Flexible layout */}
+      <div className={`flex ${isMobile ? "flex-col flex-1" : "flex-1"}`}>
+        {/* Event Details - Fixed proportions */}
+        <div className={`${isMobile ? "flex-1" : "w-1/2"} p-5 sm:p-7 flex flex-col`}>
+          {/* Title - Fixed height */}
+          <div className="mb-4 sm:mb-5 flex-shrink-0" style={{ minHeight: '70px' }}>
+            <h1 className={`font-bold text-gray-900 mb-2 sm:mb-3 leading-tight ${
+              isMobile ? "text-xl" : "text-2xl"
+            } line-clamp-2`}>
               {event.event}
             </h1>
           </div>
 
-          {/* Scrollable Description */}
-          <div
-            className={`flex-1 mb-3 sm:mb-4 overflow-hidden ${
-              isMobile ? "max-h-32" : ""
-            }`}
-          >
-            <div className="h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400 pr-2">
-              <p
-                className={`text-gray-700 leading-relaxed ${
-                  isMobile ? "text-sm" : "text-base"
-                }`}
-              >
+          {/* Scrollable Description - Fixed height with scroll */}
+          <div className={`flex-1 mb-4 sm:mb-5 ${isMobile ? "min-h-[100px] max-h-[120px]" : "min-h-[220px] max-h-[220px]"}`}>
+            <div className="h-full overflow-y-auto description-scroll pr-2">
+              <p className={`text-gray-700 leading-relaxed ${
+                isMobile ? "text-sm" : "text-base"
+              }`}>
                 {event.desc}
               </p>
             </div>
           </div>
 
-          {/* Event Info */}
-          <div className="space-y-2 sm:space-y-3 flex-shrink-0">
+          {/* Event Info - Fixed height */}
+          <div className="space-y-2 sm:space-y-3 flex-shrink-0" style={{ minHeight: '100px' }}>
             <div className="flex items-center text-gray-600">
-              <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-indigo-500" />
-              <span className="text-xs sm:text-sm font-medium">
+              <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-indigo-500 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium truncate">
                 {event.date}
               </span>
             </div>
 
             <div className="flex items-center text-gray-600">
-              <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-indigo-500" />
-              <span className="text-xs sm:text-sm font-medium">
+              <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-indigo-500 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium truncate">
                 {event.time}
               </span>
             </div>
 
             <div className="flex items-center text-gray-600">
-              <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-indigo-500" />
-              <span className="text-xs sm:text-sm font-medium">
+              <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-2 text-indigo-500 flex-shrink-0" />
+              <span className="text-xs sm:text-sm font-medium truncate">
                 {event.venue}
               </span>
             </div>
           </div>
         </div>
 
-        {/* Event Image - Always on the right */}
-        <div
-          className={`${
-            isMobile ? "w-full h-48" : "w-1/2"
-          } p-3 sm:p-4 flex-shrink-0`}
-        >
+        {/* Event Image - Fixed proportions */}
+        <div className={`${isMobile ? "w-full h-48 flex-shrink-0" : "w-1/2"} p-4 sm:p-5 flex-shrink-0`}>
           <div className="h-full bg-gray-100 rounded-2xl overflow-hidden">
             <img
               src={event.image || "/api/placeholder/300/300"}
@@ -234,7 +245,7 @@ const EventCard = ({
   );
 };
 
-const   EventCarousel = ({ events }) => {
+const EventCarousel = ({ events }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -296,15 +307,25 @@ const   EventCarousel = ({ events }) => {
   }, [events, isTransitioning, isHovered]);
 
   // Animation classes for transitions
-  const getAnimationClass = (position) => {
+  const getAnimationClass = (cardPosition, isNewCard = false) => {
     if (!isTransitioning) return "";
 
     if (transitionDirection === "next") {
-      // Moving forward: current slides out left, new slides in from right
-      return position === "left" ? "slide-left" : "slide-in-right";
+      if (isNewCard) {
+        // New cards always slide in from the right when going forward
+        return "slide-in-right";
+      } else {
+        // Existing cards slide out to the left when going forward
+        return "slide-left";
+      }
     } else {
-      // Moving backward: current slides out right, new slides in from left
-      return position === "left" ? "slide-right" : "slide-in-left";
+      if (isNewCard) {
+        // New cards always slide in from the left when going backward
+        return "slide-in-left";
+      } else {
+        // Existing cards slide out to the right when going backward
+        return "slide-right";
+      }
     }
   };
 
@@ -335,7 +356,7 @@ const   EventCarousel = ({ events }) => {
       >
         <style dangerouslySetInnerHTML={{ __html: customStyles }} />
 
-        {/* Mobile Navigation - Positioned absolutely outside content */}
+        {/* Mobile Navigation */}
         {events.length > 1 && (
           <>
             <button
@@ -365,7 +386,7 @@ const   EventCarousel = ({ events }) => {
             event={currentEvent}
             isLeft={true}
             isMobile={true}
-            animationClass={getAnimationClass("left")}
+            animationClass={getAnimationClass("mobile", true)}
           />
         </div>
 
@@ -409,15 +430,19 @@ const   EventCarousel = ({ events }) => {
     );
   }
 
-  // Desktop: Dual card layout
+  // Desktop: Dual card layout with consistent spacing
   const leftEvent = events[currentIndex];
   const rightEvent = events[(currentIndex + 1) % events.length];
+  
+  // Track which cards are new based on transition direction
+  const leftCardIsNew = isTransitioning && transitionDirection === "prev";
+  const rightCardIsNew = isTransitioning && transitionDirection === "next";
 
   return (
     <div className="relative w-full">
       <style dangerouslySetInnerHTML={{ __html: customStyles }} />
 
-      {/* Navigation arrows - Positioned absolutely outside content area */}
+      {/* Navigation arrows */}
       {events.length > 2 && (
         <>
           <button
@@ -442,31 +467,31 @@ const   EventCarousel = ({ events }) => {
         </>
       )}
 
-      {/* Main carousel container */}
+      {/* Main carousel container with consistent spacing */}
       <div className="max-w-7xl mx-auto">
         <div
           className="flex justify-center py-4 sm:py-8 px-16 sm:px-20"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="w-full flex flex-col lg:flex-row gap-6 sm:gap-12 justify-center items-center">
+          <div className="flex gap-8 justify-center items-start">
             {/* Left Card */}
-            <div className="flex-shrink-0 w-full lg:w-auto lg:max-w-2xl">
+            <div className="flex-shrink-0">
               <EventCard
                 event={leftEvent}
                 isLeft={true}
                 isMobile={false}
-                animationClass={getAnimationClass("left")}
+                animationClass={getAnimationClass("left", leftCardIsNew)}
               />
             </div>
 
             {/* Right Card */}
-            <div className="flex-shrink-0 w-full lg:w-auto lg:max-w-2xl">
+            <div className="flex-shrink-0">
               <EventCard
                 event={rightEvent}
                 isLeft={true}
                 isMobile={false}
-                animationClass={getAnimationClass("right")}
+                animationClass={getAnimationClass("right", rightCardIsNew)}
               />
             </div>
           </div>
@@ -513,4 +538,61 @@ const   EventCarousel = ({ events }) => {
   );
 };
 
-export default EventCarousel;
+// Demo component with sample data
+const EventCarouselDemo = () => {
+  const sampleEvents = [
+    {
+      club: "Tech Club",
+      clubLogo: "/api/placeholder/40/40",
+      event: "Annual Tech Summit 2024",
+      desc: "Join us for the biggest technology conference of the year! This event will feature cutting-edge presentations from industry leaders, hands-on workshops covering the latest technologies, networking opportunities with professionals from top tech companies, and exciting product launches. Whether you're a seasoned developer, a curious student, or an aspiring entrepreneur, this summit offers something valuable for everyone. Don't miss this chance to stay ahead of the curve in the rapidly evolving tech landscape.",
+      date: "March 15, 2024",
+      time: "9:00 AM - 6:00 PM",
+      venue: "Convention Center Hall A",
+      image: "/api/placeholder/400/300"
+    },
+    {
+      club: "Photography Club",
+      clubLogo: "/api/placeholder/40/40",
+      event: "Nature Photography Workshop",
+      desc: "Learn the art of capturing stunning nature photographs in this comprehensive workshop. Perfect for beginners and intermediate photographers looking to improve their skills.",
+      date: "March 20, 2024",
+      time: "2:00 PM - 5:00 PM",
+      venue: "City Park Pavilion",
+      image: "/api/placeholder/400/300"
+    },
+    {
+      club: "Music Society",
+      clubLogo: "/api/placeholder/40/40",
+      event: "Spring Concert Series",
+      desc: "Experience an evening of classical and contemporary music performed by talented student musicians. The concert will feature solo performances, ensemble pieces, and special guest appearances.",
+      date: "March 25, 2024",
+      time: "7:00 PM - 9:30 PM",
+      venue: "University Auditorium",
+      image: "/api/placeholder/400/300"
+    },
+    {
+      club: "Drama Club",
+      clubLogo: "/api/placeholder/40/40",
+      event: "Shakespeare Festival",
+      desc: "A week-long celebration of William Shakespeare's greatest works, featuring live performances, readings, and interactive workshops.",
+      date: "April 1-7, 2024",
+      time: "Various Times",
+      venue: "Drama Theater",
+      image: "/api/placeholder/400/300"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <h1 className="text-4xl font-bold text-center text-gray-900 mb-8">
+          Upcoming Events
+        </h1>
+        <EventCarousel events={sampleEvents} />
+      </div>
+    </div>
+  );
+};
+
+export default EventCarousel
