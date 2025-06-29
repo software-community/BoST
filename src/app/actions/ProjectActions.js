@@ -11,12 +11,9 @@ const MemberSchema = z.object({
   name: z.string().min(1, "Name is required."),
   email: z.string().email("Invalid email."),
   image: z.string().min(1),
-  github: z.string().url("Invalid GitHub URL.").or(z.literal("")).optional(),
+  github: z.string().optional(),
   linkedin: z
-    .string()
-    .url("Invalid LinkedIn URL.")
-    .or(z.literal(""))
-    .optional(),
+    .string().optional(),
 });
 
 const FormSchema = z.object({
