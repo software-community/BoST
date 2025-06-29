@@ -57,8 +57,6 @@ export async function createProject(formData) {
   const projectsCount = await Project.countDocuments({ club: _club });
   const newOrder = projectsCount + 1;
   // Extract validated data
-  console.log("NEW ORDERRRRRRRRRRRRRRRRRRRRRRRRRRRRRr")
-  console.log(newOrder)
   const { title, description, status, club, members, image, github, website } =
     validatedFields.data;
 

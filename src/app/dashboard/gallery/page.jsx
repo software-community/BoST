@@ -7,6 +7,7 @@ const page = async () => {
     "Image-Id",
     "Club",
     "Delete",
+    "Reorder"
   ];
 
   return (

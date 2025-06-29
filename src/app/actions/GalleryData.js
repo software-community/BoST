@@ -1,6 +1,9 @@
+
+"use server"
 import connectMongoDB from "@/lib/db";
 import Gallery from "@/models/Gallery";
 import { unstable_noStore as noStore } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 export async function getAllImages(userClub) {
   noStore(); // Ensure no caching is done
@@ -12,7 +15,12 @@ export async function getAllImages(userClub) {
     if(userClub==process.env.SUPER_ADMIN){
       galleries = await Gallery.find(); // Find the gallery for the specified club
     }else{
-      galleries = await Gallery.find({ club: userClub }); // Find the gallery for the specified club
+      galleries = await Gallery.find({ club: userClub });
+      galleries.forEach(gallery => {
+        if (gallery.images) {
+          gallery.images.sort((a, b) => a.order - b.order);
+        }
+      }); // Find the gallery for the specified club
     }
     if (!galleries || galleries.length === 0) return [];
 
@@ -66,4 +74,68 @@ export async function getImageByName(club, imageName) {
       status: 500,
     };
   }
+}
+
+
+
+
+
+export async function moveImageUp(imageName, club) {
+  // "use server"
+  try {
+    await connectMongoDB();
+    const gallery = await Gallery.findOne({ club });
+    
+    if (!gallery || !gallery.images || gallery.images.length === 0) {
+      return { message: "Gallery not found or no images" };
+    }
+
+    // Sort images by order
+    gallery.images.sort((a, b) => a.order - b.order);
+    
+    const currentIndex = gallery.images.findIndex(img => img.name === imageName);
+    
+    if (currentIndex > 0) {
+      // Swap order values
+      const temp = gallery.images[currentIndex].order;
+      gallery.images[currentIndex].order = gallery.images[currentIndex - 1].order;
+      gallery.images[currentIndex - 1].order = temp;
+      
+      // Save the updated gallery
+      await gallery.save();
+    }
+  } catch (error) {
+    return { message: "Failed to move image up" };
+  }
+  revalidatePath("/dashboard/gallery");
+}
+
+export async function moveImageDown(imageName, club) {
+  // "use server"
+  try {
+    await connectMongoDB();
+    const gallery = await Gallery.findOne({ club });
+    
+    if (!gallery || !gallery.images || gallery.images.length === 0) {
+      return { message: "Gallery not found or no images" };
+    }
+
+    // Sort images by order
+    gallery.images.sort((a, b) => a.order - b.order);
+    
+    const currentIndex = gallery.images.findIndex(img => img.name === imageName);
+    
+    if (currentIndex < gallery.images.length - 1) {
+      // Swap order values
+      const temp = gallery.images[currentIndex].order;
+      gallery.images[currentIndex].order = gallery.images[currentIndex + 1].order;
+      gallery.images[currentIndex + 1].order = temp;
+      
+      // Save the updated gallery
+      await gallery.save();
+    }
+  } catch (error) {
+    return { message: "Failed to move image down" };
+  }
+  revalidatePath("/dashboard/gallery");
 }

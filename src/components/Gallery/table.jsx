@@ -15,12 +15,16 @@ import { getAllImages } from "@/app/actions/GalleryData";
 import { DeleteGalleryImageBtn, UpdateGalleryImageBtn, ApprovalToggle } from "./buttons";
 import { auth } from "@/auth";
 import { clubCodes } from "@/lib/utils";
+import { ArrowButtons } from "./orderButtons";
 
 export default async function Table({ colData }) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
   const isSuperAdmin = process.env.SUPER_ADMIN === club;
   let UserData = await getAllImages(club);
+
+
+
 
   let header = colData;
   if (isSuperAdmin) {
@@ -63,7 +67,7 @@ export default async function Table({ colData }) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {UserData.map(({ name, url, approved, club }, index) => (
+            {UserData.map(({ name, url, approved, club}, index) => (
               <TableRow key={index}>
                 <TableCell className="font-medium">
                   <Image
@@ -86,6 +90,15 @@ export default async function Table({ colData }) {
                   <span className="font-bold mr-1">/</span>
                   <DeleteGalleryImageBtn name={name} />
                 </TableCell>
+
+                {!isSuperAdmin && (<TableCell>
+                  <ArrowButtons
+                    imageName={name}
+                    club={club}
+                    isFirst={index === 0}
+                    isLast={index === UserData.length - 1}
+                  />
+                </TableCell>)}
               </TableRow>
             ))}
           </TableBody>

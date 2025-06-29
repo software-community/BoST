@@ -34,12 +34,17 @@ export async function addImage(prevState, formData) {
   const imageObject = {
     name: uuidv4(), // Generate a random unique ID for the image
     url: image,
+    order:0
   };
 
   // Insert data into the database
   try {
     await connectMongoDB();
     const gallery = await Gallery.findOne({ club });
+
+
+    imageObject.order = gallery.images.length+1;
+
 
     if (gallery) {
       gallery.images.push(imageObject);

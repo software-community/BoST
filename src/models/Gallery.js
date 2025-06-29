@@ -1,5 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
+
 const gallerySchema = new Schema(
   {
     images: [
@@ -9,7 +10,8 @@ const gallerySchema = new Schema(
         approved: {
           type: Boolean,
           default: false
-        }
+        },
+        order : {type:Number, default:0}
       },
     ],
     club: String,
