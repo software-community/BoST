@@ -15,7 +15,8 @@ import {
   IconList,
   IconLogout,
   IconCalendarEvent,
-  IconInfoSquareRounded
+  IconInfoSquareRounded,
+  IconSchool
 } from "@tabler/icons-react";
 
 export const DashboardHome = ({ isSuperAdmin }) => {
@@ -91,7 +92,7 @@ const AboutBlock = ({ isSuperAdmin }) => (
       <p className="cursor-pointer">
         /Courses{" "}
         <span className="text-zinc-400">
-          <IconBrandGithub className="inline" />: Create, Update, delete your courses
+          <IconSchool className="inline" />: Create, Update, delete your courses
         </span>
       </p>
     </Link>}  

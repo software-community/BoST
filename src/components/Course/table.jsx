@@ -117,10 +117,8 @@ export default async function Table(props) {
                     </div>
                   </TableCell>
                   {/* Modules (fixed absolute floating) */}
-                  <TableCell className="px-4 relative z-50">
-                    <div className="absolute top-0 left-0 mt-2 w-max bg-white border border-gray-300 shadow-lg rounded-md p-2 z-50">
+                  <TableCell className="px-4">
                       <ModuleDropdown courseid={String(course._id)} modules={course.modules} />
-                    </div>
                   </TableCell>
                 </TableRow>
               ))}

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Play, FileText, Calendar, User, Building, Clock, BookOpen } from "lucide-react";
 import { PdfButtonGrid } from "@/components/ui/pdfButton"; // Updated import
+import ExpandableText from "@/components/ui/ExpandableText";
 
 const CoursePage = async ({ params, searchParams }) => {
   const { id } = searchParams;
@@ -17,9 +18,9 @@ const CoursePage = async ({ params, searchParams }) => {
   if (!course) return notFound();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="w-full min-h-[75vh] flex flex-col lg:flex-row justify-center items-center px-6 py-6 gap-6 bg-white shadow-sm">
+      <section className="w-full min-h-[75vh] flex flex-col lg:flex-row justify-center items-center px-6 py-6 gap-6 shadow-sm">
         <div className="w-full lg:w-1/2 h-auto lg:h-full flex flex-col justify-center items-start gap-5">
           <h1 className="w-full text-center font-bold text-5xl lg:text-7xl text-black">
             {course.courseName}
@@ -114,9 +115,7 @@ const CoursePage = async ({ params, searchParams }) => {
                     <h3 className="text-xl font-bold text-white mb-2 leading-tight">
                       {module.moduleName}
                     </h3>
-                    <p className="text-white/90 text-sm">
-                      {module.moduleDesc}
-                    </p>
+                    <ExpandableText text={module.moduleDesc} limit={100} />
                   </div>
 
                   <div className="p-4 bg-gray-50 flex-1 flex flex-col min-h-0">

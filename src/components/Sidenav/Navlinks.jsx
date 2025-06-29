@@ -11,7 +11,8 @@ import {
   IconBrandGithub,
   IconList,
   IconCalendarEvent,
-  IconInfoSquareRounded
+  IconInfoSquareRounded,
+  IconSchool,
 } from "@tabler/icons-react";
 
 // Define the static links for the navigation
@@ -19,7 +20,7 @@ const staticLinks = [
   { name: "Dashboard", href: "/dashboard", Icon: IconDashboard },
   { name: "Introduction", href: "/dashboard/club", Icon: IconInfoSquareRounded },
   { name: "Projects", href: "/dashboard/projects", Icon: IconBrandGithub },
-  { name: "Courses", href: "/dashboard/courses", Icon: IconBrandGithub },
+  { name: "Courses", href: "/dashboard/courses", Icon: IconSchool },
   { name: "Blogs", href: "/dashboard/blogs", Icon: IconArticle },
   { name: "Team", href: "/dashboard/team", Icon: IconFriends },
   { name: "Gallery", href: "/dashboard/gallery", Icon: IconPhotoEdit },

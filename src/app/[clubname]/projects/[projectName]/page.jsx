@@ -54,19 +54,34 @@ const ProjectPage = async ({ params, searchParams }) => {
           <h2 className="text-3xl font-semibold text-center text-black">
             Contributors
           </h2>
-          <div className="flex flex-wrap justify-center gap-6">
-            {project.members.map((member, index) => (
-              <TeamMember
-                key={index}
-                name={member.name}
-                role={"Team Member"}
-                image={member.image}
-                email={member.email}
-                github={member.github}
-                linkedin={member.linkedin}
-              />
-            ))}
-          </div>
+
+          {typeof project.members === "string" ? (
+            <div className="flex flex-col items-center gap-2">
+              {project.members.split(",").map((name, idx) => (
+                <div
+                  key={idx}
+                  className="px-4 py-2 bg-blue-100 text-blue-800 font-semibold rounded-xl shadow-sm"
+                >
+                  {name.trim()}
+                </div>
+              ))}
+            </div>
+
+          ) : (
+            <div className="flex flex-wrap justify-center gap-6">
+              {project.members?.map((member, index) => (
+                <TeamMember
+                  key={index}
+                  name={member.name}
+                  role={"Team Member"}
+                  image={member.image}
+                  email={member.email}
+                  github={member.github}
+                  linkedin={member.linkedin}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

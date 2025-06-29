@@ -32,7 +32,7 @@ const CourseCard = ({
   }
 
   return (
-    <div className="bg-white w-72 lg:w-[350px] rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
+    <div className="bg-white w-72 lg:w-[350px] rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 overflow-hidden border border-gray-100">
       
       {/* Course Title Header */}
       <div className="px-6 pt-6 pb-4">

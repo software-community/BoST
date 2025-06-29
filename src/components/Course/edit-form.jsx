@@ -109,7 +109,7 @@ export default function Form({ courseDetails }) {
 
         {/* Instructor Image */}
         <div className="mb-4">
-          <label htmlFor="instructorImage" className="mb-2 block text-sm font-medium">Instructor Image</label>
+          <label htmlFor="instructorImage" className="mb-2 block text-sm font-medium">Course Image [can be of Instructor]</label>
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <input
               id="instructorImage"

@@ -117,7 +117,7 @@ const Form = ({ courseid }) => {
             className="text-sm"
             onClick={() => setVideoInputs((prev) => [...prev, { url: "", title: "" }])}
           >
-            + Add YouTube Video
+            + Add YouTube Video  
           </Button>
 
           {videoInputs.map((video, idx) => (
@@ -128,7 +128,7 @@ const Form = ({ courseid }) => {
               <div className="flex-1">
                 <input
                   type="text"
-                  placeholder="YouTube Video URL"
+                  placeholder="YouTube Video URL (WARNING!) [Pls go to youtube video then on share option and then copy link not copy  webiste url]"
                   className="w-full mb-2 border p-2 rounded-md text-sm"
                   value={video.url}
                   onChange={(e) =>
