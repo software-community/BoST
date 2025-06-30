@@ -148,7 +148,7 @@ export default function Form() {
         {/* Team Member GitHub */}
         <div className="mb-4">
           <label htmlFor="github" className="mb-2 block text-sm font-medium">
-            GitHub Profile
+            GitHub Profile <div className = "text-gray-400 inline">(Link shoud start with https://)</div>
           </label>
           <input
             id="github"
@@ -171,7 +171,7 @@ export default function Form() {
         {/* Team Member LinkedIn */}
         <div className="mb-4">
           <label htmlFor="linkedin" className="mb-2 block text-sm font-medium">
-            LinkedIn Profile
+            LinkedIn Profile <div className = "text-gray-400 inline">(Link shoud start with https://)</div>
           </label>
           <input
             id="linkedin"

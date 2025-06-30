@@ -192,7 +192,7 @@ const Form = ({ courseid, moduleDetails }) => {
               <div className="flex-1">
                 <input
                   type="text"
-                  placeholder="PDF Name (Optional)"
+                  placeholder="PDF Name (File size limit : 10 mb)"
                   className="w-full border p-2 rounded-md text-sm"
                   value={pdf.name}
                   onChange={(e) =>

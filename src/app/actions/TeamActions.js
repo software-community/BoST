@@ -144,3 +144,24 @@ export async function deleteTeamMember(id) {
   // Revalidate the cache for the team members page and redirect the user
   revalidatePath("/dashboard/team");
 }
+
+
+
+export async function initializeTeamOrder(club) {
+  try {
+    await connectMongoDB();
+
+    const members = await TeamMember.find({ club }).sort({ createdAt: 1 }); // or any sorting you want
+
+    for (let index = 0; index < members.length; index++) {
+      const member = members[index];
+      member.order = index + 1; // or index if you want 0-based
+      await member.save();
+      console.log(`Updated project ${member._id} for club: ${club} with order ${member.order}`);
+    }
+
+    console.log("All members initialized with order values.");
+  } catch (error) {
+    console.error("Failed to initialize member order:", error);
+  }
+}

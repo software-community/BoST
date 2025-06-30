@@ -191,3 +191,24 @@ export async function updateEventApprovalStatus(_id, checked ){
   }
   revalidatePath("/dashboard/events");
 };
+
+
+
+export async function initializeEventOrder(club) {
+  try {
+    await connectMongoDB();
+
+    const events = await Event.find({ club }).sort({ createdAt: 1 }); // or any sorting you want
+
+    for (let index = 0; index < events.length; index++) {
+      const event = events[index];
+      event.order = index + 1; // or index if you want 0-based
+      await event.save();
+      console.log(`Updated project ${event._id} for club: ${club} with order ${event.order}`);
+    }
+
+    console.log("All events initialized with order values.");
+  } catch (error) {
+    console.error("Failed to initialize event order:", error);
+  }
+}
