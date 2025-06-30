@@ -216,3 +216,30 @@ export async function updateImageApprovalStatus(club, imageName, approved) {
   console.log("Revalidated path and finished update."); // Log end of function
   return { message: "Image approval status updated successfully" };
 }
+
+export async function initializeImageOrder() {
+  try {
+    await connectMongoDB();
+
+    const galleries = await Gallery.find({});
+
+    for (const gallery of galleries) {
+      let updated = false;
+
+      gallery.images.forEach((img, index) => {
+          img.order = index+1;
+          updated = true;
+        
+      });
+
+      if (updated) {
+        await gallery.save();
+        console.log(`Updated gallery for club: ${gallery.club}`);
+      }
+    }
+
+    console.log("All galleries initialized.");
+  } catch (error) {
+    console.error("Failed to initialize image order:", error);
+  }
+}

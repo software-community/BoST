@@ -201,3 +201,24 @@ export async function updateProjectApprovalStatus(projectId, approved) {
   console.log("Revalidated path and finished update.");
   return { message: "Project approval status updated successfully" };
 }
+
+
+export async function initializeProjectOrder(club) {
+  try {
+    await connectMongoDB();
+
+    const projects = await Project.find({ club }).sort({ createdAt: 1 }); // or any sorting you want
+
+    for (let index = 0; index < projects.length; index++) {
+      const project = projects[index];
+      project.order = index + 1; // or index if you want 0-based
+      await project.save();
+      console.log(`Updated project ${project._id} for club: ${club} with order ${project.order}`);
+    }
+
+    console.log("All projects initialized with order values.");
+  } catch (error) {
+    console.error("Failed to initialize project order:", error);
+  }
+}
+
