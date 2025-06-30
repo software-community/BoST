@@ -22,21 +22,45 @@ const ProjectPage = async ({ searchParams }) => {
   return (
     <div>
       <section className="w-full min-h-[75vh] flex flex-col lg:flex-row justify-center items-center px-6 py-6 gap-6">
-      <div className="w-full lg:w-1/2 h-auto lg:h-full flex flex-col justify-center items-start gap-5">
-        <h1 className="w-full text-center font-bold text-5xl lg:text-7xl LandingHeroTitle text-black">
-          {project.title}
-        </h1>
+        <div className="w-full lg:w-1/2 h-auto lg:h-full flex flex-col justify-center items-start gap-5">
+          <h1 className="w-full text-center font-bold text-5xl lg:text-7xl LandingHeroTitle text-black">
+            {project.title}
+          </h1>
 
-        <p className="roboto-light text-xl lg:text-2xl LandingHeroSubtitle text-center w-full">
-          {project.description}
-        </p>
+          <p className="roboto-light text-xl lg:text-2xl LandingHeroSubtitle text-center w-full">
+            {project.description}
+          </p>
 
-        <div className="w-full mt-4 flex flex-col items-center gap-3 LandingHeroSubtitle">
-          <div className="px-4 py-2 bg-blue-100 text-blue-800 font-semibold rounded-xl shadow-sm">
-            Status: {statusMap[project.status] || "Unknown"}
+          <div className="w-full mt-4 flex flex-col items-center gap-3 LandingHeroSubtitle">
+            <div className="px-4 py-2 bg-blue-100 text-blue-800 font-semibold rounded-xl shadow-sm">
+              Status: {statusMap[project.status] || "Unknown"}
+            </div>
+            <div className="flex flex-wrap gap-4 mt-2">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg shadow hover:bg-gray-700 transition"
+                >
+                  <IconBrandGithub size={20} />
+                  GitHub
+                </a>
+              )}
+              {project.website && (
+                <a
+                  href={project.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-500 transition"
+                >
+                  <IconWorld size={20} />
+                  Website
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
       <div className="w-full lg:w-1/2 h-1/2 lg:h-full flex justify-center LandingHeroImage items-center">
         <Image
