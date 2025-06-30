@@ -32,17 +32,28 @@ export async function getAllProjects(club) {
     await connectMongoDB(); // Connect to the database
     var projects;
     if (club == process.env.SUPER_ADMIN) {
-      projects = await Project.find().lean(); // Fetch all projects
+      projects = await Project.find().lean(); // Fetch all projects as plain objects
+      // For each project, update order and save if needed
+      for (let i = 0; i < projects.length; i++) {
+        if (projects[i].order !== i + 1) {
+          // Use findByIdAndUpdate to update order since we have plain objects
+          await Project.findByIdAndUpdate(projects[i]._id, { order: i + 1 });
+          projects[i].order = i + 1;
+        }
+      }
     } else {
-      projects = await Project.find({ club }).lean().sort({order:1}); // Fetch all projects
+      projects = await Project.find({ club }).sort({order:1}).lean(); // Fetch all projects as plain objects
+      for (let i = 0; i < projects.length; i++) {
+        if (projects[i].order !== i + 1) {
+          await Project.findByIdAndUpdate(projects[i]._id, { order: i + 1 });
+          projects[i].order = i + 1;
+        }
+      }
     }
-    return projects.map(cleanMongoDoc);; // Return the fetched projects
+    return Array.isArray(projects) ? projects.map(cleanMongoDoc) : []; // Always return an array
   } catch (error) {
     console.error("Error fetching projects:", error);
-    return {
-      error: "An error occurred while retrieving the projects",
-      status: 500,
-    };
+    return [];
   }
 }
 

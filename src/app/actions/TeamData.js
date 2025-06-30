@@ -1,4 +1,3 @@
-
 "use server"
 import connectMongoDB from "@/lib/db";
 import TeamMember from "@/models/teamMember";
@@ -31,8 +30,13 @@ export async function getAllTeamMembers(club) {
 
   try {
     await connectMongoDB(); // Connect to the database
-    const members = await TeamMember.find({ club }).sort({order:1})// Fetch all team members in the club
-
+    const members = await TeamMember.find({ club }).sort({order:1}); // Fetch all team members in the club
+    for (let i = 0; i < members.length; i++) {
+      if (members[i].order !== i + 1) {
+        members[i].order = i + 1;
+        await members[i].save();
+      }
+    }
     return members; // Return the fetched team members
   } catch (error) {
     console.error("Error fetching team members:", error);

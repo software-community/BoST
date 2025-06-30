@@ -72,6 +72,7 @@ const ProjectPage = async ({ params, searchParams }) => {
           />
         </div>
       </section>
+      
       <section className="mb-6">
         <div className="w-full flex flex-col items-center gap-6">
           <h2 className="text-3xl font-semibold text-center text-black">

@@ -1,4 +1,3 @@
-
 "use server"
 import connectMongoDB from "@/lib/db";
 import Gallery from "@/models/Gallery";
@@ -14,13 +13,38 @@ export async function getAllImages(userClub) {
     var galleries;
     if(userClub==process.env.SUPER_ADMIN){
       galleries = await Gallery.find(); // Find the gallery for the specified club
+      // For each gallery, update order and save if needed
+      for (const gallery of galleries) {
+        let updated = false;
+        if (gallery.images && gallery.images.length > 0) {
+          gallery.images.forEach((img, idx) => {
+            if (img.order !== idx + 1) {
+              img.order = idx + 1;
+              updated = true;
+            }
+          });
+          if (updated) {
+            await gallery.save();
+          }
+        }
+      }
     }else{
       galleries = await Gallery.find({ club: userClub });
-      galleries.forEach(gallery => {
-        if (gallery.images) {
+      for (const gallery of galleries) {
+        let updated = false;
+        if (gallery.images && gallery.images.length > 0) {
           gallery.images.sort((a, b) => a.order - b.order);
+          gallery.images.forEach((img, idx) => {
+            if (img.order !== idx + 1) {
+              img.order = idx + 1;
+              updated = true;
+            }
+          });
+          if (updated) {
+            await gallery.save();
+          }
         }
-      }); // Find the gallery for the specified club
+      }
     }
     if (!galleries || galleries.length === 0) return [];
 

@@ -12,26 +12,31 @@ export async function getEventsForClub(club) {
     if(club===process.env.SUPER_ADMIN)
     {
       const allEventRecord = await Event.find();
-
+      // For each event, update order and save if needed
+      for (let i = 0; i < allEventRecord.length; i++) {
+        if (allEventRecord[i].order !== i + 1) {
+          allEventRecord[i].order = i + 1;
+          await allEventRecord[i].save();
+        }
+      }
       eventRecord = allEventRecord.filter(event => {
         const datetimeStr = `${event.date}T${event.time}:00Z`;
         const eventDateTime = new Date(datetimeStr);
         return eventDateTime > new Date();
       });
-
-
     }
-
-
     else{
-
       eventRecord = await Event.find({ club }).sort({order:1});
+      for (let i = 0; i < eventRecord.length; i++) {
+        if (eventRecord[i].order !== i + 1) {
+          eventRecord[i].order = i + 1;
+          await eventRecord[i].save();
+        }
+      }
     }
-
     if (!eventRecord) {
       return [];
     }
-
     return eventRecord;
   } catch (error) {
     return {
