@@ -39,9 +39,8 @@ export async function getEventsForClub(club) {
     }
     return eventRecord;
   } catch (error) {
-    return {
-      message: "Database Error: Failed to retrieve events.",
-    };
+    console.error("Database Error: Failed to retrieve events.", error);
+    return [];
   }
 }
 
@@ -72,17 +71,16 @@ export async function getEventsForClubAndDate(club, id) {
     const eventRecord = await Event.find({ club });
 
     if (!eventRecord) {
-      return {};
+      return null;
     }
 
-    const foundEventObject = eventRecord.findOne((e) => e.id === id);
+    const foundEventObject = eventRecord.find((e) => e.id === id);
     console.log("founded", foundEventObject);
 
-    return foundEventObject;
+    return foundEventObject || null;
   } catch (error) {
-    return {
-      message: "Database Error: Failed to retrieve events.",
-    };
+    console.error("Database Error: Failed to retrieve events.", error);
+    return null;
   }
 }
 
@@ -103,7 +101,8 @@ export async function moveEventUp(eventId, club) {
       await events[currentIndex - 1].save();
     }
   } catch (error) {
-    return { message: "Failed to move event up" };
+    console.error("Database Error: Failed to move event up.", error);
+    return null;
   }
   revalidatePath("/dashboard/events");
 }
@@ -124,7 +123,8 @@ export async function moveEventDown(eventId, club) {
       await events[currentIndex + 1].save();
     }
   } catch (error) {
-    return { message: "Failed to move event down" };
+    console.error("Database Error: Failed to move event down.", error);
+    return null;
   }
   revalidatePath("/dashboard/events");
 }
