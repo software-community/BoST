@@ -100,8 +100,6 @@ const CourseCard = ({
         <Link 
           href={`/${club}/courses/${slugify(title)}?id=${_id}`}
           className="block w-full"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           <button className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3 px-6 rounded-xl font-semibold transition-colors duration-200">
             View Course

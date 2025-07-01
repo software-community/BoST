@@ -31,8 +31,6 @@ const OurProjects = async () => {
                   image={project.image}
                   imageLink={{
                     href: `/projects-page/${projectSlug}?id=${project.id}`,
-                    target: "_blank",
-                    rel: "noopener noreferrer"
                   }}
                 />
               </div>

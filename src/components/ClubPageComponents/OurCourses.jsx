@@ -9,9 +9,6 @@ str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
 const OurCourses = async ({club}) => {
   const courses=await getCourseDetailsForClub({club});
 
-//   console.log("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
-//   console.log(courses)
-
 
   if(courses.length===0)return null;
   return (

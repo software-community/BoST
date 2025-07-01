@@ -2,6 +2,7 @@ import { getAllProjects } from "@/app/actions/ProjectData";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import TeamMember from "@/components/ui/TeamMember";
+import { IconBrandGithub, IconWorld } from "@tabler/icons-react";
 
 const statusMap = {
   completed: "Completed",
