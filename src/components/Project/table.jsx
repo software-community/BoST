@@ -82,6 +82,9 @@ export default async function Table(props) {
                 if (col === "Approval" && !isSuperAdmin) {
                   return null;
                 }
+                if (col === "Reorder") {
+                  return null;
+                }
                 return (
                   <TableHead key={idx} className="w-[100px] text-primary font-bold">
                     {col}
@@ -121,14 +124,16 @@ export default async function Table(props) {
                   <DeleteProjectBtn id={rest.id} />
                 </TableCell>
 
-                {!isSuperAdmin && (<TableCell>
-                  <ArrowButtons
-                    projectId={rest.id}
-                    club={club}
-                    isFirst={index === 0}
-                    isLast={index === UserData.length - 1}
-                  />
-                </TableCell>)}
+                {
+                // !isSuperAdmin && (<TableCell>
+                //   <ArrowButtons
+                //     projectId={rest.id}
+                //     club={club}
+                //     isFirst={index === 0}
+                //     isLast={index === UserData.length - 1}
+                //   />
+                // </TableCell>)
+                }
               </TableRow>
             ))}
           </TableBody>
