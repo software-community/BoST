@@ -30,21 +30,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   basePath: '/bost/api/auth',
   callbacks: {
     signIn: async ({ user, account }) => {
-      if (account.provider == "google") {
-	console.log(user, account);
+      if (account?.provider === "google") {
         try {
-          const { email, name, image, id } = user;
-          const found=allowedEmails.find((allowedemail)=>allowedemail===email)
-          console.log("found mail",found)
+          const email = user?.email?.toLowerCase();
+          const found = allowedEmails.find((allowed) => allowed.toLowerCase() === email);
+          console.log("Google Sign-In check for:", email, "Allowed:", !!found);
 
-          if(!found)return false;
+          if (!found) {
+            return false;
+          }
 
-          return NextResponse.json({ message: "welcome back" });
+          return true;
         } catch (error) {
-          console.log(error)
-          throw new AuthError("Error while creating user");
+          console.log("SignIn Callback Error:", error);
+          return false;
         }
       }
+      return true;
     },
   },
 });
