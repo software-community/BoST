@@ -1,11 +1,8 @@
-import NextAuth, { AuthError } from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-// import connectMongoDB from "./lib/db";
-// import Admin from "./models/admin";
-import { NextResponse } from "next/server";
 import { clubCodes } from "./lib/utils";
 
-const allowedEmails=[
+const allowedEmails = [
   "meadityaraj0001@gmail.com",
   "2021ceb1007@iitrpr.ac.in",
   "2023meb1360@iitrpr.ac.in",
@@ -13,8 +10,8 @@ const allowedEmails=[
   "2024epb1277@iitrpr.ac.in",
   "2024csb1120@iitrpr.ac.in",
   "2024chb1084@iitrpr.ac.in",
-  // and clubCodes keys + @iitrpr.ac.in
-  ...Object.keys(clubCodes).map((key)=>key+"@iitrpr.ac.in")
+  "softcom@iitrpr.ac.in",
+  ...Object.keys(clubCodes).map((key) => key + "@iitrpr.ac.in"),
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -24,10 +21,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  pages: {
-    error: "/bost/error",
-  },
-  basePath: '/bost/api/auth',
   callbacks: {
     signIn: async ({ user, account }) => {
       if (account?.provider === "google") {
@@ -37,12 +30,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           console.log("Google Sign-In check for:", email, "Allowed:", !!found);
 
           if (!found) {
+            console.log("User email not in allowed list:", email);
             return false;
           }
 
           return true;
         } catch (error) {
-          console.log("SignIn Callback Error:", error);
+          console.error("SignIn Callback Error:", error);
           return false;
         }
       }
