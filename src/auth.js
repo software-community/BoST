@@ -15,13 +15,29 @@ const allowedEmails = [
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  basePath: "/bost/api/auth",
+  trustHost: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          prompt: "select_account",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
     }),
   ],
   callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      if (url && (url === "/bost" || url === "/bost/" || url === "/" || url.includes("signout") || url.includes("bost"))) {
+        if (url === "/" || url === "/bost" || url === "/bost/") return "/bost";
+        return url;
+      }
+      return "/bost/dashboard";
+    },
     signIn: async ({ user, account }) => {
       if (account?.provider === "google") {
         try {

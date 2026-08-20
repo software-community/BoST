@@ -13,9 +13,9 @@ export default function Hero() {
           className="LandingHeroTitle w-64 sm:w-80 md:w-[28rem] lg:w-[34rem] xl:w-[38rem] h-auto object-contain drop-shadow-2xl"
           priority
         />
-        <h1 className="w-full text-center font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl LandingHeroTitle tracking-tight whitespace-nowrap mt-8 sm:mt-10 md:mt-12">
-          <span className="text-white">Board of Science &amp; </span>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500">
+        <h1 className="w-full text-center font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl LandingHeroTitle tracking-tight whitespace-normal sm:whitespace-nowrap mt-8 sm:mt-10 md:mt-12">
+          <span className="text-white inline-block">Board of Science &amp;</span>{" "}
+          <span className="block sm:inline text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-400 to-blue-500">
             Technology
           </span>
         </h1>
