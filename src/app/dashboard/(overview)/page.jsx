@@ -5,17 +5,17 @@ import { DashboardHome } from '@/components/ui/DashboardHome'
 import { clubCodes } from "@/lib/utils";
 
 const page = async() => {
-  const session=await auth()
-  const club = clubCodes[session?.user.email.split("@")[0]];
+  const session = await auth();
+  if (!session?.user) {
+    redirect("/");
+  }
+  const emailPrefix = session.user.email?.split("@")[0] || "";
+  const club = clubCodes[emailPrefix] || emailPrefix;
   const isSuperAdmin = process.env.SUPER_ADMIN === club;
 
-  if(!session){
-    redirect("/")
-  }
   return (
-    // <div>Welcome to Dashboard {session?.user.name}</div>
     <DashboardHome isSuperAdmin={isSuperAdmin}/>
-  )
-}
+  );
+};
 
 export default page

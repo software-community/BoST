@@ -6,7 +6,8 @@ import { IconLogout } from "@tabler/icons-react";
 import { clubCodes } from "@/lib/utils";
 const Sidenav = async () => {
   const session = await auth();
-  const club = clubCodes[session?.user.email.split("@")[0]];
+  const emailPrefix = session?.user?.email?.split("@")[0] || "";
+  const club = clubCodes[emailPrefix] || emailPrefix;
   const isSuperAdmin = process.env.SUPER_ADMIN === club;
   return (
     <div className="flex grow flex-row justify-between overflow-hidden space-x-0 md:flex-col md:space-x-0 md:space-y-2">
