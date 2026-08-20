@@ -5,17 +5,17 @@ import { clubCodes } from "@/lib/utils";
 
 export async function generateMetadata(x, parent) {
   const session = await auth();
-  // console.log("Session:", session);
-  const club = clubCodes[session?.user?.email?.split("@")[0]];
-  // console.log("Club code:", club);
-  const clubDetails = await getClubDetails(club);
-  // console.log("Club details:", clubDetails);
-  const clubName = clubDetails ? clubDetails.name : "Unknown Club";
+  const emailPrefix = session?.user?.email?.split("@")[0] || "";
+  const club = clubCodes[emailPrefix] || emailPrefix;
+  let clubName = "BoST";
+  try {
+    const clubDetails = await getClubDetails(club);
+    if (clubDetails?.name) clubName = clubDetails.name;
+  } catch (e) {}
   
-  // console.log(await parent);
   return {
-    title: `Dashboard | ${clubName} | ${(await parent).title.absolute}`,
-  }
+    title: `Dashboard | ${clubName}`,
+  };
 }
 
 export default function Layout({ children }) {
