@@ -25,13 +25,13 @@ export default function Form({ clubData }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="text-xl font-bold text-primary mb-4">
-        <h2>Edit Club details</h2>
+      <div className="text-xl font-bold text-black mb-4">
+        <h2>Edit Club Details</h2>
       </div>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+      <div className="rounded-md bg-gray-50 p-4 md:p-6 text-black">
         {/* Club Name */}
         <div className="mb-4">
-          <label htmlFor="name" className="mb-2 block text-sm font-medium">
+          <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-900">
             Name
           </label>
           <input

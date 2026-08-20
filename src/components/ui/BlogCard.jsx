@@ -17,14 +17,14 @@ export function BlogCard({ title, club, author, brief, id }) {
   
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[350px] bg-[#0d1117] border-zinc-800 hover:border-primary/50 text-white shadow-xl shadow-cyan-950/20 transition-all duration-300 hover:scale-105">
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <p className=" break-words " >{brief}</p>
+        <CardTitle className="text-white text-xl font-bold">{title}</CardTitle>
+        <p className="break-words text-zinc-400 text-sm mt-2">{brief}</p>
       </CardHeader>
       <CardFooter className="flex justify-between">
         <Link href={`/blogs/${id}`}>
-          <Button className="bg-primary">
+          <Button className="bg-primary hover:bg-cyan-400 text-black font-semibold shadow-md shadow-cyan-900/30">
             Read{" "}
             <IconArrowUpRight
               size={20}

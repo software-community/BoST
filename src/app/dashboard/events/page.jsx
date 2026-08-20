@@ -14,7 +14,7 @@ const page = async () => {
 
   return (
     <div>
-      <h1 className="text-left  text-2xl font-bold text-primary">Event Details </h1>
+      <h1 className="text-left text-2xl font-bold text-black">Event Details</h1>
       <Table colData={ColumnData} page="team"></Table>
     </div>
   );

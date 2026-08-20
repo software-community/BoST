@@ -13,13 +13,11 @@ import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params, searchParams }, parent) {
   const club = (await params).clubname;
-  const clubDetails = await getClubDetails(club)
-  if(!clubDetails) redirect("/");
-  const clubName = clubDetails.name;
-  // console.log(await parent);
+  const clubDetails = await getClubDetails(club);
+  const clubName = clubDetails?.name || club?.toUpperCase() || "Club";
   return {
-    title: `${clubName} | ${(await parent).title.absolute}`,
-  }
+    title: `${clubName} | ${(await parent).title?.absolute || "BoST"}`,
+  };
 }
 
 const page = ({ params }) => {

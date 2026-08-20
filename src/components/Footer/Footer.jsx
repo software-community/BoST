@@ -8,7 +8,7 @@ const Footer = () => {
   const pathname=usePathname()
   if (pathname.startsWith("/dashboard")) return null;
   return (
-    <footer className='w-full h-auto flex text-sm flex-col justify-center py-4 items-center bg-secondary'>
+    <footer className='w-full h-auto flex text-sm flex-col justify-center py-6 items-center bg-black border-t border-zinc-900'>
       <p className="text-center text-zinc-400">
         <span>BoST, IIT Ropar | </span>
         Made with ❤️ by{" "}

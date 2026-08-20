@@ -41,13 +41,17 @@ export async function updateClubData(prevState, formData) {
   // Insert data into the database
   try {
     await connectMongoDB();
-    await ClubData.findOneAndUpdate({
-      club
-    }, {
-      name,
-      introduction,
-      logo,
-    });
+    await ClubData.findOneAndUpdate(
+      {
+        club,
+      },
+      {
+        name,
+        introduction,
+        logo,
+      },
+      { upsert: true }
+    );
     return {
       success: true,
     }

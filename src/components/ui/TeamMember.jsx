@@ -1,15 +1,15 @@
 export default function TeamMember({ name, role, image, email, github, linkedin }) {
     return (
-      <div className="text-black bg-gray-200 shadow-2xl w-72 h-auto py-12 rounded-lg flex flex-col flex-none justify-center items-center transform transition duration-300 hover:scale-110">
+      <div className="text-white bg-[#0d1117] border border-zinc-800 hover:border-primary/50 shadow-xl shadow-cyan-950/20 w-72 h-auto py-8 px-4 rounded-xl flex flex-col flex-none justify-center items-center transform transition duration-300 hover:scale-105">
         <img
-          className="h-40 mb-4 rounded-lg justify-center mx-auto items-center"
+          className="h-40 w-40 object-cover mb-4 rounded-lg justify-center mx-auto items-center border border-zinc-800"
           src={image}
           alt={name}
         />
-        <h3 className="text-lg font-semibold text-center">{name}</h3>
-        <p className="text-base text-gray-900 text-center">{role}</p>
+        <h3 className="text-lg font-semibold text-center text-white">{name}</h3>
+        <p className="text-sm font-medium text-primary text-center mt-0.5">{role}</p>
         {email && (
-          <p className="text-sm text-gray-700 text-center mt-1">{email}</p>
+          <p className="text-xs text-zinc-400 text-center mt-1">{email}</p>
         )}
     
         <div className="flex gap-3 mt-3">

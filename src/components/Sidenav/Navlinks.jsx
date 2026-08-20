@@ -54,7 +54,7 @@ export default function Navlinks({ club, isSuperAdmin }) {
             <div
               key={link.name}
               className={clsx(
-                "flex h-[48px] grow items-center justify-center gap-2 md:rounded-md bg-secondary p-2 text-sm font-medium text-gray-400 cursor-not-allowed md:flex-none md:justify-start md:p-2 md:px-3 opacity-60"
+                "flex h-[48px] grow items-center justify-center gap-2 md:rounded-md bg-white/10 p-2 text-sm font-medium text-white/40 cursor-not-allowed md:flex-none md:justify-start md:p-2 md:px-3 opacity-60"
               )}
               aria-disabled="true"
             >
@@ -68,9 +68,9 @@ export default function Navlinks({ club, isSuperAdmin }) {
             key={link.name}
             href={link.href}
             className={clsx(
-              "flex h-[48px] grow items-center justify-center gap-2 md:rounded-md bg-secondary p-2 text-sm font-medium hover:bg-tertiary hover:text-secondary transition-all md:flex-none md:justify-start md:p-2 md:px-3",
+              "flex h-[48px] grow items-center justify-center gap-2 md:rounded-md bg-white text-[#020659] p-2 text-sm font-semibold hover:bg-slate-200 transition-all md:flex-none md:justify-start md:p-2 md:px-3 shadow-sm",
               {
-                "bg-tertiary text-secondary": pathname === link.href,
+                "!bg-[#00B4D8] !text-black font-bold": pathname === link.href,
               }
             )}
           >

@@ -15,7 +15,7 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-secondary`}>
+      <body className={`${inter.className} bg-black text-white antialiased`}>
         <Navbar session={session} />
         {children}
         <Footer/>

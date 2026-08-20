@@ -21,7 +21,7 @@ import {
 
 export const DashboardHome = ({ isSuperAdmin }) => {
   return (
-    <div className="bg-secondary px-4 py-12 text-zinc-50">
+    <div className="bg-white px-4 py-8 text-black">
       <motion.div
         initial="initial"
         animate="animate"
@@ -59,7 +59,7 @@ const Block = ({ className, ...rest }) => {
         damping: 50,
       }}
       className={twMerge(
-        "col-span-4 rounded-lg border border-zinc-700 bg-zinc-800 p-6",
+        "col-span-4 rounded-xl border border-gray-200 bg-gray-50 p-6 text-black shadow-sm",
         className
       )}
       {...rest}
@@ -68,87 +68,87 @@ const Block = ({ className, ...rest }) => {
 };
 
 const AboutBlock = ({ isSuperAdmin }) => (
-  <Block className="col-span-12 relative flex flex-col gap-2 pt-16 text-sm xl:text-2xl leading-snug">
-    <span className="absolute top-2 left-4 text-sm px-2 py-1 rounded-md bg-zinc-700 text-gray-400">
+  <Block className="col-span-12 relative flex flex-col gap-3 pt-16 text-sm xl:text-xl leading-snug text-black">
+    <span className="absolute top-3 left-4 text-xs px-2.5 py-1 rounded-md bg-gray-200 text-gray-700 font-mono">
       dashboardConfig.js
     </span>
     <Link href="/dashboard/club">
-      <p className="cursor-pointer">
+      <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
         /Introduction{" "}
-        <span className="text-zinc-400">
+        <span className="text-gray-500 font-normal">
           <IconInfoSquareRounded className="inline" />: Update Club Introduction
         </span>
       </p>
     </Link>
     <Link href="/dashboard/projects">
-      <p className="cursor-pointer">
+      <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
         /Projects{" "}
-        <span className="text-zinc-400">
+        <span className="text-gray-500 font-normal">
           <IconBrandGithub className="inline" />: Create, Update, delete your projects
         </span>
       </p>
     </Link>
     {!isSuperAdmin && <Link href="/dashboard/courses">
-      <p className="cursor-pointer">
+      <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
         /Courses{" "}
-        <span className="text-zinc-400">
+        <span className="text-gray-500 font-normal">
           <IconSchool className="inline" />: Create, Update, delete your courses
         </span>
       </p>
     </Link>}  
       <Link href="/dashboard/blogs">
-        <p className="cursor-pointer">
+        <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
           /Blogs{" "}
-          <span className="text-zinc-400">
+          <span className="text-gray-500 font-normal">
             <IconArticle className="inline" />: Create, Update, delete your blogs
           </span>
         </p>
       </Link>
       <Link href="/dashboard/team">
-        <p className="cursor-pointer">
+        <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
           /Team{" "}
-          <span className="text-zinc-400">
+          <span className="text-gray-500 font-normal">
             <IconFriends className="inline" />: Create, Update, delete your team members
           </span>
         </p>
       </Link>
       <Link href="/dashboard/gallery">
-        <p className="cursor-pointer">
+        <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
           /Gallery{" "}
-          <span className="text-zinc-400">
+          <span className="text-gray-500 font-normal">
             <IconPhotoEdit className="inline" />: Create, Update, delete your gallery images
           </span>
         </p>
       </Link>
       <Link href="/dashboard/events">
-        <p className="cursor-pointer">
+        <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
           /Events{" "}
-          <span className="text-zinc-400">
+          <span className="text-gray-500 font-normal">
             <IconCalendarEvent className="inline" />: Create, Update, delete your Events
           </span>
         </p>
       </Link>
       {isSuperAdmin && (
         <Link href="/dashboard/achievements">
-          <p className="cursor-pointer">
+          <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
             /Achievements{" "}
-            <span className="text-zinc-400">
+            <span className="text-gray-500 font-normal">
               <IconList className="inline" />: Create, Update, delete BOST Achievements
             </span>
           </p>
         </Link>
       )}
       <Link href="/">
-        <p className="cursor-pointer">
+        <p className="cursor-pointer font-medium hover:text-blue-600 transition-colors text-black">
           /Home{" "}
-          <span className="text-zinc-400">
+          <span className="text-gray-500 font-normal">
             <IconHome className="inline" />: Go back to landing page
           </span>
         </p>
       </Link>
-      <p >
+      <p className="text-black font-medium">
         /Logout{" "}
-        <span className="text-zinc-400">
+        <span className="text-gray-500 font-normal">
           <IconLogout className="inline" />: Click to signout admin.
         </span>
       </p>

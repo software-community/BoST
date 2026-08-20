@@ -1,7 +1,12 @@
 import { getClubDetails } from "@/app/actions/ClubData";
 
 export default async function Hero({club}) {
-  const clubDetails = await getClubDetails(club);
+  const details = await getClubDetails(club);
+  const clubDetails = details && details.name ? details : {
+    name: club ? club.toUpperCase() : "Club",
+    introduction: "Welcome to the club page. Updates coming soon!",
+    logo: "/Logo.png"
+  };
 
   return (
     <section className="w-full min-h-[90vh]  flex flex-col lg:flex-row justify-center items-center px-6 py-6 gap-6">
@@ -10,7 +15,9 @@ export default async function Hero({club}) {
         <p className="roboto-light text-xl lg:text-3xl LandingHeroSubtitle text-center w-full">{clubDetails.introduction}</p>
       </div>
       <div className="w-full lg:w-1/2  h-1/2 lg:h-full flex justify-center LandingHeroImage items-center">
-        <img src={clubDetails.logo} className="object-cover Globe aspect-square rounded-full w-full max-w-[400px]" />{" "}
+        {clubDetails.logo && (
+          <img src={clubDetails.logo} alt={clubDetails.name} className="object-cover Globe aspect-square rounded-full w-full max-w-[400px]" />
+        )}
       </div>
     </section>
   );

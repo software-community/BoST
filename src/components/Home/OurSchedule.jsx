@@ -25,11 +25,11 @@ const OurSchedule = async () => {
     <div className="w-full min-h-[60vh] pb-12 flex items-center flex-col lg:flex-row justify-evenly">
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
         <div className="space-y-2 mb-12">
-          <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl p-4">
+          <h2 className="text-4xl font-bold tracking-tighter sm:text-5xl p-4 text-white">
             {monthName} {year} Schedule
           </h2>
-          <p className="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Click on a coloured cell to  see event details
+          <p className="max-w-[900px] text-zinc-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            Click on a coloured cell to see event details
           </p>
         </div>
       </div>

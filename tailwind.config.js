@@ -22,10 +22,12 @@ export default withUt({
     },
     extend: {
       colors: {
-        'primary': '#020659',
-        'secondary':"#F2F2F2",
-        'tertiary':"#023373",
-        'primary-text':'#023059'
+        'primary': '#00B4D8',
+        'secondary': "#000000",
+        'tertiary': "#0284C7",
+        'primary-text': '#F8FAFC',
+        'dark-card': '#0d1117',
+        'dark-border': '#1e293b',
       },
       keyframes: {
         "accordion-down": {

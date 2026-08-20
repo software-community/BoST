@@ -4,9 +4,12 @@ import { BlogCard } from "../ui/BlogCard";
 
 export default async function OurBlogs() {
   const Blogs = await getAllBlogs(process.env.SUPER_ADMIN);
+  if (!Array.isArray(Blogs)) {
+    return null;
+  }
   return (
-    <div className=" w-full mx-auto py-12 pb-24  rounded-lg  flex flex-col  ">
-      <h2 className="text-4xl sm:text-5xl font-semibold text-center mb-6 text-black">
+    <div className=" w-full mx-auto py-12 pb-24 rounded-lg flex flex-col">
+      <h2 className="text-4xl sm:text-5xl font-semibold text-center mb-6 text-white">
         Our Recent Blogs
       </h2>
 

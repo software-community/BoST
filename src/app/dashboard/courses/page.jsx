@@ -6,7 +6,7 @@ let columnData = ["Image Preview", "Title", "Description", "Duration", "Club", "
 const page = () => {
   return (
     <div>
-      <h1 className="text-left  text-2xl font-bold text-primary">Course Details </h1>
+      <h1 className="text-left text-2xl font-bold text-black">Course Details</h1>
         <Table colData={columnData} page="courses"></Table>
     </div>
   )

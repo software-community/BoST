@@ -8,8 +8,12 @@ export default async function Page({ params }) {
   const session = await auth();
   const club = clubCodes[session?.user.email.split("@")[0]];
   let clubData = await getClubDetails(club);
-  clubData = clubData.toJSON();
-  clubData._id = clubData._id.toString();
+  if (clubData && typeof clubData.toJSON === "function") {
+    clubData = clubData.toJSON();
+    clubData._id = clubData._id ? clubData._id.toString() : "";
+  } else {
+    clubData = { name: "", introduction: "", logo: "", club: club || "" };
+  }
 
   return <Form clubData={clubData} />;
 }

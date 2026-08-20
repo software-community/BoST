@@ -3,11 +3,14 @@ import { getAllImages } from '@/app/actions/GalleryData';
 
 const Gallery = async () => {
     const arr = await getAllImages(process.env.SUPER_ADMIN);
+    if (!Array.isArray(arr)) {
+        return null;
+    }
     const approvedImages = arr.filter(image => image.approved === true);
 
     return (
         <div className='mt-12 pb-0'>
-            <h1 className='text-4xl sm:text-5xl font-bold text-center mb-8'>Gallery</h1>
+            <h1 className='text-4xl sm:text-5xl font-bold text-center mb-8 text-white'>Gallery</h1>
             <div className='flex flex-wrap'>
                 {approvedImages.map((item, index) => (
                     <div key={index} className='w-full sm:w-1/2 lg:w-1/3 '>

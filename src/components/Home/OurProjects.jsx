@@ -8,6 +8,9 @@ const slugify = (str) =>
 
 const OurProjects = async () => {
   const projects = await getAllProjects(process.env.SUPER_ADMIN);
+  if (!Array.isArray(projects)) {
+    return null;
+  }
   const approvedProjects = projects.filter((project) => project.approved);
 
   return (

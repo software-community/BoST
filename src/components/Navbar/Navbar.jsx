@@ -5,12 +5,10 @@ import NavDropdown from "./NavDropdown";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
 import { handleLogin } from "@/app/actions/authentication";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import logoImage from '@/../public/Logo.png';
 gsap.registerPlugin(useGSAP);
 
 export default function Navbar({ session }) {
@@ -24,7 +22,7 @@ export default function Navbar({ session }) {
 
   useGSAP(
     () => {
-      gsap.from([".hamburger",".Logo"], { y:-50,
+      gsap.from(".hamburger", { y:-50,
         opacity:0,
         duration:1
       });
@@ -40,26 +38,25 @@ export default function Navbar({ session }) {
 
   return (
     <header
-      // ref={container}
-      className="flex  select-none  h-[10vh] bg-secondary w-full justify-between shrink-0 items-center px-4 md:px-6"
+      className="flex select-none h-[10vh] bg-black/90 backdrop-blur-md border-b border-zinc-900/80 w-full justify-between shrink-0 items-center px-4 md:px-6 z-40"
     >
-      <Sheet  open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
-            className="lg:hidden hamburger  overflow-hidden p-0"
+            className="lg:hidden hamburger overflow-hidden p-0 border-zinc-800 bg-zinc-900 text-primary hover:bg-zinc-800"
             size="icon"
             variant="outline"
           >
-            <MenuIcon className="h-full w-full  bg-secondary text-tertiary" />
+            <MenuIcon className="h-full w-full p-2 text-primary" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right">
-          <div className="grid gap-2 py-6">
+        <SheetContent side="right" className="bg-[#0d1117] border-zinc-800 text-white">
+          <div className="grid gap-4 py-6">
             {session ? (
               <>
                 <Link
-                  className="flex w-full items-center py-1 border-2 rounded-none  justify-center transition-all bg-slate-300 px-2 border-primary text-lg font-semibold"
+                  className="flex w-full items-center py-2 rounded-lg justify-center transition-all bg-primary hover:bg-cyan-400 text-black font-semibold text-lg"
                   href="/dashboard"
                 >
                   Dashboard
@@ -73,7 +70,7 @@ export default function Navbar({ session }) {
                     type="submit"
                     value="google"
                     name="action"
-                    className="flex  w-full items-center py-2 text-lg font-semibold"
+                    className="flex w-full items-center py-2 text-lg font-semibold bg-primary hover:bg-cyan-400 text-black"
                   >
                     Login
                   </Button>
@@ -84,15 +81,12 @@ export default function Navbar({ session }) {
           </div>
         </SheetContent>
       </Sheet>
-      <Link className="mr-6 Logo hidden lg:flex" href="/">
-        <Image src={logoImage} height={60} width={60} alt="BoST" />
-      </Link>
-      <nav className="ml-auto hidden hamburger  lg:flex gap-6">
+      <nav className="ml-auto hidden hamburger lg:flex gap-6 items-center">
         {session ? (
           <>
             <NavDropdown />
             <Link
-              className="flex w-full bg-gray-900 hover:bg-gray-700 text-secondary transition-all border-primary items-center py-2  px-2 text-lg font-semibold"
+              className="flex items-center bg-zinc-900 hover:bg-zinc-800 text-white border border-primary/50 transition-all rounded-lg py-2 px-4 text-base font-semibold shadow-sm hover:shadow-cyan-900/30"
               href="/dashboard"
             >
               Dashboard
@@ -106,20 +100,14 @@ export default function Navbar({ session }) {
                 type="submit"
                 value="google"
                 name="action"
-                className="flex w-full transition-all items-center rounded-none py-2 bg-gray-800 hover:bg-gray-900 text-lg font-semibold"
+                className="flex items-center rounded-lg py-2 px-5 bg-primary hover:bg-cyan-400 text-black text-base font-bold transition-all shadow-md hover:shadow-cyan-500/25"
               >
-                <span>Login</span>
-                {/* <span className="ml-2 h-1/2  transition-all px-2 py-3 font-bold flex items-center justify-center bg-gray-600  rounded-sm text-[12px] hover:bg-gray-900  ">
-                  L
-                </span> */}
+                Login
               </Button>
             </form>
           </>
         )}
       </nav>
-      <Link href="/" className="lg:hidden Logo">
-        <Image src={logoImage} height={60} width={60} alt="BoST" />
-      </Link>
     </header>
   );
 }

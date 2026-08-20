@@ -14,7 +14,7 @@ const Sidenav = async () => {
 
       <form action={handleLogout}>
         <button
-          className="flex h-[48px] w-full grow items-center justify-center gap-2 md:rounded-md bg-secondary p-3 text-sm font-medium hover:bg-tertiary transition-all hover:text-secondary md:flex-none md:justify-start md:p-2 md:px-3"
+          className="flex h-[48px] w-full grow items-center justify-center gap-2 md:rounded-md bg-white text-[#020659] p-3 text-sm font-semibold hover:bg-slate-200 transition-all md:flex-none md:justify-start md:p-2 md:px-3 shadow-sm"
           type="submit"
           value="logout"
           name="action"

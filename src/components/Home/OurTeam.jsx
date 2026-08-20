@@ -31,13 +31,16 @@ export default async function OurTeam() {
     //     ],
     // };
     const team=await getAllTeamMembers(process.env.SUPER_ADMIN)
+    
+    if (!Array.isArray(team)) {
+        return null;
+    }
+
     return (
-
-        <div className=" w-full mx-auto py-12 pb-24  rounded-lg  flex flex-col  ">
-            <h2 className="text-4xl sm:text-5xl font-semibold text-center mb-6 text-black">
-                Meet  Our Team
+        <div className=" w-full mx-auto py-12 pb-24 rounded-lg flex flex-col">
+            <h2 className="text-4xl sm:text-5xl font-semibold text-center mb-6 text-white">
+                Meet Our Team
             </h2>
-
 
             <div className="gap-6 flex flex-row flex-wrap justify-center items-center w-full ">
                 {team.map((member, index) => (
@@ -53,7 +56,6 @@ export default async function OurTeam() {
                 ))}
             </div>
         </div>
-
     );
 
 }

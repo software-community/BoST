@@ -5,6 +5,9 @@ import { getClubDetails } from "@/app/actions/ClubData";
 
 const OurEvents = async () => {
   const eventsInitial = await getEventsForClub(process.env.SUPER_ADMIN);
+  if (!Array.isArray(eventsInitial)) {
+    return null;
+  }
   const approvedEvents = eventsInitial.filter((ev) => ev.ap === true);
 
   // Ensure all events are plain objects first
