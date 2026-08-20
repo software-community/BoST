@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import NavDropdown from "./NavDropdown";
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet";
 import Link from "next/link";
-import { handleLogin } from "@/app/actions/authentication";
+import { handleLogin, handleLogout } from "@/app/actions/authentication";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import gsap from "gsap";
@@ -31,14 +31,13 @@ export default function Navbar({ session }) {
         duration:1
       });
     },
-    {  }
+    { scope: container }
   );
-
-  if (pathname.startsWith("/dashboard")) return null;
 
   return (
     <header
-      className="flex select-none h-[10vh] bg-black/90 backdrop-blur-md border-b border-zinc-900/80 w-full justify-between shrink-0 items-center px-4 md:px-6 z-40"
+      ref={container}
+      className="flex h-20 w-full shrink-0 items-center px-4 md:px-6 fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-md border-b border-zinc-900/80 shadow-lg"
     >
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
@@ -51,7 +50,7 @@ export default function Navbar({ session }) {
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="bg-[#0d1117] border-zinc-800 text-white">
+        <SheetContent side="left" className="bg-[#0d1117] border-zinc-800 text-white">
           <div className="grid gap-4 py-6">
             {session ? (
               <>
@@ -61,6 +60,15 @@ export default function Navbar({ session }) {
                 >
                   Dashboard
                 </Link>
+                <form action={handleLogout} className="w-full">
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                  >
+                    Logout
+                  </Button>
+                </form>
                 <NavDropdown />
               </>
             ) : (
@@ -81,31 +89,37 @@ export default function Navbar({ session }) {
           </div>
         </SheetContent>
       </Sheet>
-      <nav className="ml-auto hidden hamburger lg:flex gap-6 items-center">
+      <nav className="ml-auto hidden hamburger lg:flex gap-4 items-center">
+        <NavDropdown />
         {session ? (
           <>
-            <NavDropdown />
             <Link
               className="flex items-center bg-zinc-900 hover:bg-zinc-800 text-white border border-primary/50 transition-all rounded-lg py-2 px-4 text-base font-semibold shadow-sm hover:shadow-cyan-900/30"
               href="/dashboard"
             >
               Dashboard
             </Link>
-          </>
-        ) : (
-          <>
-            <NavDropdown />
-            <form action={handleLogin}>
+            <form action={handleLogout}>
               <Button
                 type="submit"
-                value="google"
-                name="action"
-                className="flex items-center rounded-lg py-2 px-5 bg-primary hover:bg-cyan-400 text-black text-base font-bold transition-all shadow-md hover:shadow-cyan-500/25"
+                variant="outline"
+                className="flex items-center rounded-lg py-2 px-3 border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:text-white hover:bg-zinc-800 text-sm font-medium transition-all"
               >
-                Login
+                Logout
               </Button>
             </form>
           </>
+        ) : (
+          <form action={handleLogin}>
+            <Button
+              type="submit"
+              value="google"
+              name="action"
+              className="flex items-center rounded-lg py-2 px-5 bg-primary hover:bg-cyan-400 text-black text-base font-bold transition-all shadow-md hover:shadow-cyan-500/25"
+            >
+              Login
+            </Button>
+          </form>
         )}
       </nav>
     </header>
