@@ -15,6 +15,7 @@ const allowedEmails = [
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  basePath: "/bost/api/auth",
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
