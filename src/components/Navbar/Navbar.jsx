@@ -52,7 +52,7 @@ export default function Navbar({ session }) {
         </SheetTrigger>
         <SheetContent side="left" className="bg-[#0d1117] border-zinc-800 text-white">
           <div className="grid gap-4 py-6">
-            {session ? (
+            {session?.user?.email ? (
               <>
                 <Link
                   className="flex w-full items-center py-2 rounded-lg justify-center transition-all bg-primary hover:bg-cyan-400 text-black font-semibold text-lg"
@@ -82,7 +82,7 @@ export default function Navbar({ session }) {
       </Sheet>
       <nav className="ml-auto hidden hamburger lg:flex gap-6 items-center">
         <NavDropdown />
-        {session ? (
+        {session?.user?.email ? (
           <Link
             className="flex items-center bg-zinc-900 hover:bg-zinc-800 text-white border border-primary/50 transition-all rounded-lg py-2 px-4 text-base font-semibold shadow-sm hover:shadow-cyan-900/30"
             href="/dashboard"
