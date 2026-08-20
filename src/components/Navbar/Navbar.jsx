@@ -60,15 +60,6 @@ export default function Navbar({ session }) {
                 >
                   Dashboard
                 </Link>
-                <form action={handleLogout} className="w-full">
-                  <Button
-                    type="submit"
-                    variant="outline"
-                    className="w-full border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
-                  >
-                    Logout
-                  </Button>
-                </form>
                 <NavDropdown />
               </>
             ) : (
@@ -89,26 +80,15 @@ export default function Navbar({ session }) {
           </div>
         </SheetContent>
       </Sheet>
-      <nav className="ml-auto hidden hamburger lg:flex gap-4 items-center">
+      <nav className="ml-auto hidden hamburger lg:flex gap-6 items-center">
         <NavDropdown />
         {session ? (
-          <>
-            <Link
-              className="flex items-center bg-zinc-900 hover:bg-zinc-800 text-white border border-primary/50 transition-all rounded-lg py-2 px-4 text-base font-semibold shadow-sm hover:shadow-cyan-900/30"
-              href="/dashboard"
-            >
-              Dashboard
-            </Link>
-            <form action={handleLogout}>
-              <Button
-                type="submit"
-                variant="outline"
-                className="flex items-center rounded-lg py-2 px-3 border border-zinc-800 bg-zinc-900/80 text-zinc-300 hover:text-white hover:bg-zinc-800 text-sm font-medium transition-all"
-              >
-                Logout
-              </Button>
-            </form>
-          </>
+          <Link
+            className="flex items-center bg-zinc-900 hover:bg-zinc-800 text-white border border-primary/50 transition-all rounded-lg py-2 px-4 text-base font-semibold shadow-sm hover:shadow-cyan-900/30"
+            href="/dashboard"
+          >
+            Dashboard
+          </Link>
         ) : (
           <form action={handleLogin}>
             <Button
