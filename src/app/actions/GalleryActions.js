@@ -15,7 +15,14 @@ const ImageSchema = z.object({
 // Server action to add an image
 export async function addImage(prevState, formData) {
   const session = await auth();
-  const club = clubCodes[session?.user.email.split("@")[0]];
+  const emailPrefix = session?.user?.email ? session.user.email.split("@")[0] : "";
+  const club = clubCodes[emailPrefix] || emailPrefix;
+
+  if (!club) {
+    return {
+      message: "Unauthorized: Club not found for current session.",
+    };
+  }
 
   const validatedFields = ImageSchema.safeParse({
     image: formData.get("image"),
@@ -34,7 +41,8 @@ export async function addImage(prevState, formData) {
   const imageObject = {
     name: uuidv4(), // Generate a random unique ID for the image
     url: image,
-    order:0
+    order: 0,
+    approved: false,
   };
 
   // Insert data into the database
@@ -42,20 +50,22 @@ export async function addImage(prevState, formData) {
     await connectMongoDB();
     const gallery = await Gallery.findOne({ club });
 
-
-    imageObject.order = gallery.images.length+1;
-
-
     if (gallery) {
+      if (!gallery.images) {
+        gallery.images = [];
+      }
+      imageObject.order = gallery.images.length + 1;
       gallery.images.push(imageObject);
       await gallery.save();
     } else {
+      imageObject.order = 1;
       await Gallery.create({
         club,
         images: [imageObject],
       });
     }
   } catch (error) {
+    console.error("Error adding image to gallery:", error);
     // If a database error occurs, return a more specific error.
     return {
       message: "Database Error: Failed to add image.",
@@ -70,8 +80,8 @@ export async function addImage(prevState, formData) {
 export async function updateGalleryImageURL(prevState, formData) {
   // Get the user's session and club
   const session = await auth();
-  const club = clubCodes[session?.user.email.split("@")[0]];
- 
+  const emailPrefix = session?.user?.email ? session.user.email.split("@")[0] : "";
+  const club = clubCodes[emailPrefix] || emailPrefix;
 
   // Extract the image name (UUID) and new URL from form data
   const name = formData.get("name");
@@ -125,7 +135,8 @@ export async function updateGalleryImageURL(prevState, formData) {
 
 export async function deleteImageByName(imageName) {
   const session = await auth();
-  const club = clubCodes[session?.user.email.split("@")[0]];
+  const emailPrefix = session?.user?.email ? session.user.email.split("@")[0] : "";
+  const club = clubCodes[emailPrefix] || emailPrefix;
 
   // Connect to the database
   try {

@@ -12,6 +12,10 @@ export default function AddImageForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (!imageURL) {
+      alert("Please upload an image first.");
+      return;
+    }
     const formData = new FormData(event.target);
     formData.set("image", imageURL); // Set the image URL in the form data
     dispatch(formData);
@@ -48,7 +52,9 @@ export default function AddImageForm() {
               }}
               onClientUploadComplete={(res) => {
                 alert("Upload Completed");
-                setImageURL(res[0].url);
+                if (res && res[0]?.url) {
+                  setImageURL(res[0].url);
+                }
               }}
               onUploadError={(error) => {
                 alert(`ERROR! ${error.message}`);
@@ -59,7 +65,12 @@ export default function AddImageForm() {
           <p className="text-gray-500 text-sm mt-8">A smaller resolution image around 200kbs is preferred as it is a part of gallery.</p>
           <p className="text-gray-500 text-sm mb-8 mt-4"> ProTip: Try to keep total images a multiple of 3 or 2. </p>
           <div id="image-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.image &&
+            {state?.message && (
+              <p className="mt-2 text-sm text-red-500">
+                {state.message}
+              </p>
+            )}
+            {state?.errors?.image &&
               state.errors.image.map((error) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
@@ -74,7 +85,7 @@ export default function AddImageForm() {
           >
             Cancel
           </Link>
-          <button type="submit" className="bg-primary text-white p-2 rounded-lg">
+          <button type="submit" className="bg-primary text-white p-2 rounded-lg hover:opacity-90 transition-opacity">
             Add Image
           </button>
         </div>
